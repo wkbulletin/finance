@@ -1,0 +1,68 @@
+<!--#include file="/common/header_detail.html" -->
+ 
+<script src="/resources/js/plugins/validate/jquery.validate.min.js"></script>
+<script src="/resources/js/plugins/validate/messages_zh.min.js"></script>
+
+<div style="overflow: hidden;position: relative;width: 100%; padding-top:5px;">
+ 
+<table class="table table-striped table-hover">
+	
+      			<tbody  id="ptable">
+                </tbody>
+       
+        	
+            	 
+                <!-- for(row : list) -->
+                 
+                <tr><td align="left">
+                ${row.log_time}  - ${row.log_module}.${row.log_department}: ${row.log_content} 
+                </td></tr>
+                <!-- end -->
+       
+   
+      
+      
+      <tr><td></td></tr>
+      <tr><td colspan="2">${pageStr}</td></tr>
+</table>
+
+<div >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="edit_table_label"></div>
+<div style="height:71px"></div>
+<div class="modal-footer">
+					<a    href="javascript:void(0);" class="btn btn-primary "   onclick="upload()">修改</a>	
+</div>
+</form>  
+<iframe src="#" width="0" height="0" id="ifr" name="ifr"></iframe>
+ <script>
+ var lastid = '${lastid}';
+ setInterval(function(){
+	$.getJSON('viewlog.do?task_id=${task_id}&lastid=' + lastid,function(json){
+		if(json.emptry){
+			return;
+		}
+		lastid = json.lastid;
+		var list = json.list;
+		for(i=list.length-1;i>-0;i--){
+			var row = list[i]
+			var str = "<tr><td>"  + row.log_time + " - " + row.log_module + "."	+ row.log_department +" : " + row.log_content +"</td></tr>";
+			$("#ptable").after(str)
+		}
+	});
+}, 8000);
+  function upload(){
+	  $("#edit_from").submit();
+	 }
+
+function isInt(str) {
+   // var g = /^[1-9]*[1-9][0-9]*$.[\d]{2}/;
+    var g = /^[\d]+\.[\d]{2}$/;
+    return g.test(str);
+}
+function g(str) {
+	   var g = /^[1-9]*[1-9][0-9]*$/;
+	    return g.test(str);
+	}
+    </script>
+    
+</div>
+<!--#include file="/common/footer.html" -->

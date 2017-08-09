@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
+	<appender name="myConsole" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{MM-dd HH:mm:ss,SSS\} %-5p] [%t] [%c:%L] - %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="levelMin" value="debug" />
+			<param name="levelMax" value="off" />
+			<param name="AcceptOnMatch" value="true" />
+		</filter>
+	</appender>
+
+	<appender name="myAppender" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/app/finance/boss.out.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{MM-dd HH:mm:ss SSS\} %-5p] [%t] [%c:%L] - %m%n" />
+		</layout>
+	</appender>
+	<appender name="ERROR" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/app/finance/boss.err.log" />
+		<param name="Threshold" value="ERROR" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{HH:mm:ss}] [%t] %5p [%c:%L] - %m%n" />
+		</layout>
+	</appender>
+
+	 
+	 
+	
+	<logger name="org.apache.ibatis" additivity="false">
+	   <level value="debug" />
+	   <appender-ref ref="myConsole" />
+	   <appender-ref ref="myAppender" />
+	</logger>
+	<logger name="org.mybatis.spring.SqlSessionUtils" additivity="false">
+	   <level value="info" />
+	   <appender-ref ref="myConsole" />
+	   <appender-ref ref="myAppender" />
+	</logger>
+	 
+	<root>
+		<level value="debug" />
+		<appender-ref ref="myConsole" />
+		<appender-ref ref="myAppender" />
+		<appender-ref ref="ERROR" />
+	</root>
+</log4j:configuration>

@@ -1,0 +1,21 @@
+<!--#include file="/common/header_detail.html" -->
+  
+<script src="/resources/js/plugins/validate/messages_zh.min.js"></script>
+    
+<script>
+var error_msg = '${error_msg}';
+var ok_msg = '${ok_msg}';
+if(error_msg != ''){
+	window.parent.my_alert(error_msg,function(){
+		 
+	});		
+}
+if(ok_msg != ''){
+	window.parent.my_alert(ok_msg,function(){
+		window.top.location.href = window.top.location.href;
+	});
+}
+</script>
+    
+ 
+<!--#include file="/common/footer.html" -->

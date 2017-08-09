@@ -1,0 +1,100 @@
+<!--#include file="/common/header_detail.html" -->
+
+<!-- if(role_id>0) -->
+<form action="/privilege/role_edit.do" method="post" name="edit_from" id="edit_from" onsubmit="return submit_form(this)">
+<!-- else -->
+<form action="/privilege/role_add.do" method="post" name="edit_from" id="edit_from" onsubmit="return submit_form(this)">
+<!-- end -->
+<div class="box_space" style="height:20px;"></div>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="edit_table">
+	<input name="act" type="hidden" value="save"/>
+	<input name="role_id" type="hidden" value="${role_id}"/>
+	<tr>
+		<td width="120" align="right" class="title">角色名称：</td>
+		<td><input name="role_name" v_rule='{"model":"text_cn_en","blen":"2,40","def_check_fun":"check_name","msg_fail":"输入错误，长度2-40位中英文字符","msg_ok":"输入正确"}' type="text" value="${role_name}" size="48" maxlength="40" style="width:300px"/></td>
+	</tr>
+	 
+	<tr>
+		<td align="right" class="title">角色状态：</td>
+		<td>
+			<select name="role_status" style="width:300px">
+				<option value="1" <!-- if(role_status==1) -->selected<!-- end -->>启用</option>
+				<option value="0" <!-- if(role_status==0) -->selected<!-- end -->>禁用</option>
+			</select> 
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="title">备注信息：</td>
+		<td><textarea name="role_desc" type="text"  v_rule='{"blen":"0,200","msg_fail":"输入错误，长度最多200字符","msg_ok":"输入正确"}' style="width:300px;height:150px;"/>${role_desc}</textarea></td>
+	</tr>
+</table>
+<div class="box_space" style="height:20px;"></div>
+	<table width="100%" border="0" cellpadding="0" cellspacing="0" class="edit_table">
+    	<tr>
+		<td width="120" align="right"></td>
+		<td>
+            <input type="submit" value="确认" id="btn_submit" />
+            <input type="button" value="返回" id="btn_close"  />
+	</td></tr>
+	</table>
+</form>
+
+<script>
+$(document).ready(function(){
+	$("#edit_from").newforms();
+	form_v.init(document.edit_from);
+
+	$("#btn_close").click(function (event){
+		event.preventDefault();
+		parent.x_open.close();
+	});
+
+	check_form_modify.add("#edit_from");
+});
+function submit_form(frm){
+	if(!form_v.check(frm)){
+		return false;
+	}
+	var frm = $(frm);
+	//验证
+	
+	//submit
+	frm.mask("请稍候...");
+	
+	
+	var post_data = frm.serialize();
+	
+	$.post(frm.attr("action"), post_data, function (data){
+		$(frm).unmask();
+		if(data && data.result == 1){
+			check_form_modify.setForceClose(true);
+			my_alert(data.message, function (){
+				parent.page_reload();
+				parent.x_open.close();
+			});
+			return;
+		}else if(data){
+			my_alert(data.message, function (){
+
+			});
+			return;
+		}
+		my_alert('操作失败');
+		
+	}, "json");
+	return false;
+}
+
+function check_name(inp, fn){
+	$.post("/privilege/role_check.do?_t="+getTime(), { "act": "name", "role_name": inp.value, "role_id":"${role_id}" },
+		function(data){
+			if(data.result == 1){
+				fn(true, data.message);
+			}else{
+				fn(false, data.message);
+			}
+		}, "json");
+
+}
+</script>
+<!--#include file="/common/footer_detail.html" -->

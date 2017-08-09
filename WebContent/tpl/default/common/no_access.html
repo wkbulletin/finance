@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无权访问</title>
+<link rel="stylesheet" type="text/css" href="images/css/style.css" />
+
+
+<style type="text/css">
+body{
+	overflow:hidden;
+	padding:3px;
+}
+
+.no_access_box1{
+	background:#fff;
+	border:1px solid #818181;
+	width:320px;
+	height:120px;
+	line-height:120px;
+	margin:60px auto 10px auto;
+
+
+	box-shadow: inset 0px 0px 1px 1px rgba(255, 255, 255, 0.88),0px 2px 6px 1px rgba(216, 201, 201, 0.88);
+	-moz-box-shadow: inset 0px 0px 1px 1px rgba(255, 255, 255, 0.88),0px 2px 6px 1px rgba(216, 201, 201, 0.88);
+	-webkit-box-shadow: inset 0px 0px 1px 1px rgba(255, 255, 255, 0.88),0px 2px 6px 1px rgba(216, 201, 201, 0.88);
+ 
+
+}
+.no_access_box1 p{
+	font-size:14px;
+	color:#ff0000;
+	text-align:center;
+}
+.no_access_box2{
+	background:#fff;
+	width:320px;
+	height:60px;
+	margin:0px auto;
+	text-align:center;
+}
+.btn{
+	display:inline-block;
+	border:0px;
+	padding:0px 10px !important;
+	height:25px;
+	line-height:25px;
+
+	margin:5px;
+
+	font-size:14px;
+	font-weight:bold;
+	color:#ffffff;
+	font-family:"宋体", Arial, Helvetica, sans-serif;
+	text-decoration:none;
+	background:#6A9C2F;
+	
+	cursor:pointer;
+
+
+
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	
+
+}
+.btn:hover,.btn:active{
+	background:#666666;
+	color:#ffffff;
+
+	-webkit-transition: all 0.20s ease-in;
+	-moz-transition: all 0.20s ease-in;
+	-o-transition: all 0.20s ease-in;
+	-ms-transition: all 0.20s ease-in;
+	transition: all 0.20s ease-in;
+}
+
+</style>
+
+
+</head>
+
+<body scroll="no">
+<script src="/resources/js/jquery-2.1.1.min.js"></script>
+
+<!-- <link href="/js/jquery/plugins/loadmask/jquery.loadmask.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/js/jquery/plugins/loadmask/jquery.loadmask.min.js"></script>
+
+<script language="javascript" src="/js/common.js"></script>
+<script language="javascript" src="images/js/common.js"></script> -->
+
+
+<div class="no_access_box1">
+	<p>
+	对不起！您没有此权限，请联系管理员！
+	</p>
+</div>
+<div class="no_access_box2">
+	<a  href="/" id="btn_back" class="btn" >返回</a>
+</div>
+
+<script>
+
+$(document).ready(function() {
+	/* var nstr = window.name+"";
+	if(window&&nstr.indexOf("x_open")>=0){
+		$("#btn_back").click(function (event){
+			event.preventDefault();
+			//window.parent.x_open.close();
+			window.location="/";
+		});
+	}else{
+		$("#btn_back").click(function (event){
+			//event.preventDefault();
+			window.location="/";
+		});
+	} */
+	
+	//$("#btn_back").click(function (event){
+			//event.preventDefault();
+		//	parent.location.reload();
+		/	//window.location="/";
+	//	});
+
+
+});
+
+</script>
+</body>
+</html>

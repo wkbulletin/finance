@@ -1,0 +1,340 @@
+*{ margin:0; padding:0;}
+img{ border:none;}
+body{
+	background:#fff;
+	padding: 0;
+	margin:0;
+}
+.container{
+	width: 1184px;
+	margin: 0 auto;
+	padding: 0;
+}
+.container .top-nav{
+	width: 100%;
+	height: 30px;
+	clear: #fff;
+}
+.container .top-nav .small{
+	background: url(../small.png)  no-repeat;
+	width: 12px;
+	height: 12px;
+	display: inline-block;
+	cursor: pointer;
+	margin-right: 15px;
+	 margin-top: 9px
+}
+
+.container .top-nav .close-but{
+	background: url(../close.png) no-repeat;
+	width: 12px;
+	height: 12px;
+	display: inline-block;
+	cursor: pointer;
+	 margin-top: 9px;
+	 margin-right: 10px;
+}
+.container .top-nav .small:hover,.container .top-nav .close-but:hover{
+	filter:alpha(opacity=50);
+   -moz-opacity:0.5; 
+    opacity:0.5;
+    margin-top: 9px
+}
+.container .top-box{
+	float: left;
+	background: url(../login_bg.png) no-repeat;
+	width: 100%;
+	height: 420px;
+	position: relative;
+}
+.container .top-box .left{
+	float: left;
+	width: 730px;
+	overflow: hidden;
+}
+
+.container .top-box .left .logo-info{
+	float: left;
+	width: 100%;
+	font-size: 24px;
+	color: #fff;
+	margin: 10px 0px 0px 20px;
+	font-family: 'microsoft yahei';
+	height: 50px;
+}
+.container .top-box .left .logo-info img{
+	float: left;
+
+}
+.container .top-box .left .logo-info .text{
+	float: left;
+	margin-left: 10px;
+	line-height: 40px;
+
+}
+.container .top-box .left .logo-info .line{
+	background: url(../login_line.png) no-repeat;
+	width: 1px;
+	height: 25px;
+	margin: 8px 10px 0 20px;
+}
+.container .top-box .left .logo-info .font22{
+	font-size: 21px;
+}
+.container .top-box .left .slide{
+	float: left;
+	width: 730px;
+	height: 350px;
+	clear: both;
+	margin-top: 10px;
+	position: relative;
+}
+.container .top-box .left .slide ul{
+	margin: 0;
+	padding: 0;
+	width: 6450px;
+	height: 317px;
+	margin-left:43px;
+	position: absolute;
+}
+.container .top-box .left .slide ul li{
+	width: 645px;
+	height: 317px;
+	float:left;
+}
+.container .top-box .left .slide ul img{
+	margin: 0;
+	padding: 0;
+	width: 645px;
+	height: 317px;
+	border:none;
+}
+.container .top-box .left .slide .banner{
+	  bottom: 20px;
+    height: 14px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    z-index: 10;
+}
+.container .top-box .left .slide .banner a {
+    display: inline-block;
+   width: 8px;
+   height: 8px;
+   -moz-border-radius: 4px;    
+   -webkit-border-radius: 4px; 
+   border-radius:4px;  
+   background: #848E97;
+   margin-left: 10px;
+}
+
+.container .top-box .left .slide .banner .on{
+   display: inline-block;
+   width: 8px;
+   height: 8px;
+   -moz-border-radius: 4px;    
+   -webkit-border-radius: 4px; 
+   border-radius:4px;  
+   background: #fff
+}
+.container .top-box .opacity{
+	float: left;
+	width: 414px;
+	height: 420px;
+	background: #fff;
+	filter:alpha(opacity=1);  
+    -moz-opacity:0.1;  
+    -khtml-opacity: 0.1;  
+    opacity: 0.1; 
+}
+.container .top-box .login{
+	width: 414px;
+	height: 420px;
+	position: absolute;
+	top: 0;
+	right: 40px;
+}
+.container .top-box .login .title{
+	color: #fff;
+	font-size:40px;
+	  margin: 60px 0 40px;
+	font-family: 'microsoft yahei';
+	font-weight: bold;
+}
+.container .top-box .login .m-t{
+	margin: 0 24px;
+}
+
+.container .top-box .login input,.container .top-box .login #reload_vcode{
+    -moz-border-radius: 5px;    
+    -webkit-border-radius: 5px; 
+    border-radius:5px;  
+    font-size:16px;
+    font-family: 'microsoft yahei';
+}
+.container .top-box .login input{
+	line-height: 38px;
+	height: 38px;
+}
+.container .top-box .login #reload_vcode{
+	background: #fff;
+	padding: 4px;
+	float: right;
+}
+.container .top-box .login #btn{
+	float: left;
+	margin-top: 18px;
+	line-height: 38px;
+	padding:0;
+	font-size: 24px;
+	font-family: 'microsoft yahei';
+}
+.icon-name{
+	position: absolute;
+	top: 5px;
+	right: 15px;
+	width: 18px;
+	height: 21px;
+	background: url(../icon-name.png) no-repeat
+}
+.icon-pass{
+	position: absolute;
+	top: 8px;
+	right: 14px;
+	width: 19px;
+	height: 18px;
+	background: url(../icon-pass.png) no-repeat
+}
+.form-group{
+	position: relative
+}
+
+.container .login-footer{
+	float: left;
+	width: 100%;
+}
+.container .login-footer .item{
+	float: left;
+	width: 33.3%;
+	margin-top: 28px;
+	position: relative;
+}
+.container .login-footer .item .title{
+	color: #333;
+	font-size: 24px;
+	font-family: 'microsoft yahei';
+	margin-bottom: 10px;
+	padding-left: 20px;
+}
+.container .login-footer .item ul{
+	padding-left: 20px;
+}
+.container .login-footer .item ul li{
+	line-height: 40px;
+	font-size:14px;
+	color: #333;
+	text-align: right;
+	padding-right: 50px;
+}
+.container .login-footer .item ul li a{
+	float: left;
+	color: #333;
+	font-size: 14px;
+}
+.container .login-footer .item ul li a:hover{
+	color: #E30000;
+}
+.container .login-footer .item .line{
+	position: absolute;
+	right: 10px;
+	top: 35px;
+	background: url(../bottom_line.png) no-repeat;
+	width: 1px;
+	height: 128px;
+}
+.container .login-footer .item .service{
+	width: 100%;
+	clear: both;
+	height: 30px;
+	margin: 15px auto;
+}
+.container .login-footer .item .service div{
+	float: left;
+	line-height: 30px;
+	margin-left: 20px;
+}
+.container .login-footer .item .service div a{
+	float: left;
+	color: #333;
+	margin-left: 5px;
+	font-size: 14px;
+}
+.container .login-footer .item .service div a:hover{
+	color: #E30000;
+}
+.container .login-footer .item .service div span{
+	margin-left: 5px;
+	color: #333;
+	font-size: 14px;
+}
+.container .login-footer .item .service div span span{
+	color: #F63232;
+	font-weight: bold;
+	margin-left: 0px;
+}
+.container .login-footer .item .service div s{
+	float: left;
+	background: url(../icon_login.png) no-repeat;
+	width: 30px;
+	height: 30px;
+	display: inline-block;
+}
+
+.container .login-footer .item .service .icon01{
+	background-position: 0px 0px;
+
+}
+.container .login-footer .item .service .icon02{
+	background-position: -33px 0px;
+
+}
+
+.container .login-footer .item .service .icon03{
+	background-position: -65px 0px;
+
+}
+
+.container .login-footer .item .service .icon04{
+	background-position: 0px -32px;
+
+}
+
+.container .login-footer .item .service .icon05{
+	background-position: -33px -32px;
+
+}
+
+.container .login-footer .item .service .icon06{
+	background-position: -65px -32px;
+
+}
+
+.container .login-footer .item p{
+	float: left;
+	margin-left: 45px;
+	font-size: 14px;
+	line-height: 25px;
+	margin-top:5px;
+	width: 340px;
+
+	position: relative;
+}
+.container .login-footer .item p i{
+	position: absolute;
+	left: -25px;
+	color: #0060FF;
+	font-size: 18px;
+	font-weight: bold;
+	font-family: "宋体";
+}
+

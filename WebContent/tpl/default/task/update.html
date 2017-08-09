@@ -1,0 +1,103 @@
+<!--#include file="/common/header_detail.html" -->
+ <!--{var sf = native  com.huacai.web.controller.task.TaskController.getSimpleFilename(String);}-->
+<script src="/resources/js/plugins/validate/jquery.validate.min.js"></script>
+<script src="/resources/js/plugins/validate/messages_zh.min.js"></script>
+
+<div style="overflow: hidden;position: relative;width: 100%; padding-top:5px;">
+ <form action='/task/edit.do?actType=save' method='post' name="edit_from" id="edit_from"  target="ifr"     class="form-horizontal"   enctype="multipart/form-data">
+  <input type="hidden"  name="task_id"   value="${task_id}" /> 
+   <input type="hidden"  name="task_status_old"   value="${task_status}" /> 
+
+ <table class="table table-striped table-hover">
+	  <tr>
+      	<td>任务名称
+        </td>
+        <td>
+        	<input type="text" name="task_name"  value="${task_name}"/>
+        </td>
+      </tr>
+      <tr>
+      	<td>创建时间
+        </td>
+        <td>
+        	${getDate(task_createtime,"yyyy-MM-dd HH:mm:ss")}
+        </td>
+      </tr>
+      <tr>
+      	<td>任务类型
+        </td>
+        <td>
+        	<!--if(task_type== 1) -->ALS评估任务<!--else-->最低资本变动分析任务<!--end-->
+        </td>
+      </tr>
+      <tr>
+      	<td>状态
+        </td>
+        <td>
+        	<!-- {var checked1= task_m1status == 1 ? "checked" : " ";}-->
+            <!-- {var checked2= task_m2status == 1 ? "checked" : " ";}-->
+            <!-- {var checked3= task_m3status == 1 ? "checked" : " ";}-->
+            <!-- {var checked4= task_m4status == 1 ? "checked" : " ";}-->
+            <!-- {var checked5= task_m5status == 1 ? "checked" : " ";}-->
+            <!-- {var checkedt= task_status == 1 ? "checked" : " ";}-->
+             <!-- if(task_type == 1) -->
+        	<label ><input type="checkbox"  ${checked1} name="task_m1status" value="1"/>初始化(模块1)</label>&nbsp;&nbsp;
+            <label ><input type="checkbox"  ${checked2}  name="task_m2status" value="1"/>--(模块2)</label>&nbsp;&nbsp;
+            <label ><input type="checkbox"  ${checked3}  name="task_m3status" value="1"/>--化(模块3)</label>&nbsp;&nbsp;
+            <label ><input type="checkbox"  ${checked5}  name="task_m5status" value="1"/>--(模块5)</label>&nbsp;&nbsp;
+            <label ><input type="checkbox"  ${checkedt}  name="task_status" value="1"/>--已完结</label>
+            <input type="hidden" value="${task_m1status}" name="task_m1status_old"/>
+            <input type="hidden" value="${task_m2status}" name="task_m2status_old"/>
+            <input type="hidden" value="${task_m3status}" name="task_m3status_old"/>
+            <input type="hidden" value="${task_m5status}" name="task_m5status_old"/>
+            
+            
+            <!--else-->
+            <input type="hidden" value="task_m4status" name="task_m4status_old"/>
+            <label ><input type="checkbox"  ${checked4}  name="task_m4status" value="1"/>--(模块4)</label>&nbsp;&nbsp;
+            <label ><input type="checkbox"  ${checkedt}  name="task_status" value="1"/>--已完结</label>
+            <!-- end -->
+            <input type="hidden" value="${task_type}" name="task_type"/>
+        </td>
+      </tr>
+      <tr>
+      	<td>评估时间
+        </td>
+        <td>
+        	${getDate(task_estimate,"yyyy-MM-dd")}
+        </td>
+      </tr>
+      <tr>
+      	<td>简介
+        </td>
+        <td>
+        	<textarea name="task_remark">${task_remark}</textarea>
+        </td>
+      </tr>
+</table>
+ 
+<div >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="edit_table_label"></div>
+<div style="height:71px"></div>
+<div class="modal-footer">
+					<a    href="javascript:void(0);" class="btn btn-primary "   onclick="upload()">修改</a>	
+</div>
+</form>  
+<iframe src="#" width="0" height="0" id="ifr" name="ifr"></iframe>
+ <script>
+  function upload(){
+	  $("#edit_from").submit();
+	 }
+
+function isInt(str) {
+   // var g = /^[1-9]*[1-9][0-9]*$.[\d]{2}/;
+    var g = /^[\d]+\.[\d]{2}$/;
+    return g.test(str);
+}
+function g(str) {
+	   var g = /^[1-9]*[1-9][0-9]*$/;
+	    return g.test(str);
+	}
+    </script>
+    
+</div>
+<!--#include file="/common/footer.html" -->

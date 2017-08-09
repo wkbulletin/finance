@@ -1,0 +1,102 @@
+<!--#include file="/common/header.html" -->
+
+<link rel="stylesheet" href="/resources/js/jsmind/jsmind.css" />
+<script src="/resources/js/jsmind/jsmind.js"></script>
+
+<div id="list_body" style="background: #FAFAFA;">
+	<div class="box_space" style="height: 30px;"></div>
+	
+	<div style="height:1200px;overflow:auto;">
+	
+		<div id="mod_menus_tree"></div>
+	
+	</div>
+</div>
+
+<script>
+	function load_jsmind() {
+		var node_arr = new Array();
+		node_arr.push({
+			"id" : 0+"",
+			"isroot" : true,
+			"url" : '',
+			"topic" : '${nav_title}'
+			
+		});
+		var arr2 = menu_child[0];
+		if(arr2 && arr2.length > 0){
+			
+			for(var j = 0; j < arr2.length; j++){
+				var arr3 = menu_child[arr2[j].id];
+				node_arr.push({
+					"id" : arr2[j].id+"",
+					"parentid" : arr2[j].pid+"",
+					"url" : arr2[j].url,
+					"topic" : arr2[j].title
+					
+				});
+ 				if(arr3 && arr3.length > 0){
+					for(var k = 0; k < arr3.length; k++){
+						var arr4 = menu_child[arr3[k].id];
+
+						node_arr.push({
+							"id" : arr3[k].id+"",
+							"parentid" : arr3[k].pid+"",
+							"url" : arr3[k].url,
+							"topic" : arr3[k].title
+							
+						});
+
+						if(arr4 && arr4.length > 0){
+							for(var m = 0; m < arr4.length; m++){
+								node_arr.push({
+									"id" : arr4[m].id+"",
+									"parentid" : arr4[m].pid+"",
+									"url" : arr4[m].url,
+									"topic" : arr4[m].title
+									
+								});
+							}
+						}
+					}
+				}
+			}
+		}
+		var mind = {
+			"meta" : {
+				"name" : "mod menu",
+			},
+			"format" : "node_array",
+			"data" :node_arr
+		};
+		var options = {
+			container : 'mod_menus_tree',
+			editable : false,
+			theme : 'primary',
+			evt_click : function(nodeid, node) {
+				if(node&&node.url&&node.url.length>1){
+					window.location=node.url;
+				}
+				
+			}
+		}
+		var jm = jsMind.show(options, mind);
+	}
+
+	$(document).ready(function() {
+		var resize_fun = function (){
+			//$('#mod_menus_tree').height(1200);//$(window).height()
+			$('#mod_menus_tree').width(($(window).width()-$('#frame_box_left').width()-36));
+			
+			load_jsmind();
+		}
+		resize_fun();
+		$(window).resize(resize_fun);
+		
+		
+	});
+	
+	
+</script>
+
+<!--#include file="/common/footer.html" -->

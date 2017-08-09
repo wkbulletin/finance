@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+
+<body style="background:#DFE9F6">
+<script src="/boss/js/jquery/jquery.min.js"></script>
+<link href="js/newforms/skins/edit/css/style.css" rel="stylesheet" type="text/css" />
+<script src="js/newforms/jquery.newforms.js"></script>
+<link href="js/calendar/skins/lhgcalendar.css" rel="stylesheet" type="text/css" />
+<script src="js/calendar/lhgcalendar.js"></script>
+
+
+<script src="js/form_validate/form_validate.idcard.js"></script>
+<script src="js/form_validate/form_validate.bankcard.js"></script>
+
+<link href="js/form_validate/skins/default/style.css" rel="stylesheet" type="text/css" />
+<script src="js/form_validate/form_validate.js"></script>
+
+
+<script>
+$(document).ready(function(){
+	$("#form1").newforms();
+	
+	form_v.init(document.form1);
+});
+
+
+</script>
+<table width="100%" border="1" cellpadding="1" cellspacing="1">
+	<tr>
+		<td><p>需要加载：</p>
+		<p>&lt;script src=&quot;js/form_validate/form_validate.idcard.js&quot;&gt;&lt;/script&gt;<br />
+			&lt;script src=&quot;js/form_validate/form_validate.bankcard.js&quot;&gt;&lt;/script&gt;<br />
+		</p></td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+	</tr>
+</table>
+
+<form id="form1" name="form1" method="post" action="" onsubmit="return form_v.check(this)">
+<table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#666666">
+	<tr>
+		<td width="200" align="right" bgcolor="#FFFFFF"><strong>身份证</strong></td>
+		<td width="300" bgcolor="#FFFFFF"><input name="textfield" type="text" size="22" maxlength="64" style="width:280px;"  v_rule='{"model":"idcard","msg_fail":"身份证格式错误","msg_ok":"输入正确"}'/>		</td>
+		<td bgcolor="#FFFFFF"> v_rule='{&quot;model&quot;:&quot;idcard&quot;,&quot;msg_fail&quot;:&quot;身份证格式错误&quot;,&quot;msg_ok&quot;:&quot;输入正确&quot;}'</td>
+	</tr>
+	<tr>
+		<td align="right" bgcolor="#FFFFFF"><strong>银行卡</strong></td>
+		<td bgcolor="#FFFFFF"><input name="textfield" type="text" size="22" maxlength="64" style="width:280px;"  v_rule='{"model":"bankcard","msg_fail":"银行卡格式错误","msg_ok":"输入正确"}' />
+		</td>
+		<td bgcolor="#FFFFFF"> v_rule='{&quot;model&quot;:&quot;bankcard&quot;,&quot;msg_fail&quot;:&quot;银行卡格式错误&quot;,&quot;msg_ok&quot;:&quot;输入正确&quot;}'</td>
+	</tr>
+
+	<tr>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+		<td bgcolor="#FFFFFF"><input type="submit" name="Submit" value="  提 交  " />
+			<input type="reset" name="Submit" value="  重  置  " />
+			<input type="button" name="Submit" value="  按 钮  " /></td>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+	</tr>
+	<tr>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+	</tr>
+	<tr>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+</table>
+</form>
+
+
+
+</body>
+</html>

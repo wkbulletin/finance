@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+
+<body style="background:#DFE9F6">
+<script src="/boss/js/jquery/jquery.min.js"></script>
+<link href="js/newforms/skins/edit/css/style.css" rel="stylesheet" type="text/css" />
+<script src="js/newforms/jquery.newforms.js"></script>
+<link href="js/calendar/skins/lhgcalendar.css" rel="stylesheet" type="text/css" />
+<script src="js/calendar/lhgcalendar.js"></script>
+
+
+
+<link href="js/form_validate/skins/default/style.css" rel="stylesheet" type="text/css" />
+<script src="js/form_validate/form_validate.js"></script>
+
+
+<script>
+$(document).ready(function(){
+	$("#form1").newforms();
+	
+	form_v.init(document.form1);
+});
+
+
+</script>
+
+<form id="form1" name="form1" method="post" action="" onsubmit="return form_v.check(this)">
+<table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#666666">
+	<tr>
+		<td width="200" align="right" bgcolor="#FFFFFF"><strong>选择类型</strong></td>
+		<td width="300" bgcolor="#FFFFFF">
+			<select name="select1" size="1" id="select1" style="width:200px;"  v_rule='{"len":"1","msg_fail":"需要选择1项"}' onchange="sel_rule(this, 'text1')" >
+				<option value=""></option>
+				<option value="1">只能输入数字</option>
+				<option value="2">只能输入英文</option>
+				<option value="3">只能输入手机号</option>
+			</select>	</td>
+		<td bgcolor="#FFFFFF"> v_rule='{&quot;len&quot;:&quot;1&quot;,&quot;msg_fail&quot;:&quot;需要选择1项&quot;}'</td>
+	</tr>
+	<tr>
+		<td align="right" bgcolor="#FFFFFF"><strong>验证</strong></td>
+		<td bgcolor="#FFFFFF"><input name="text1" id="text1" type="text" size="22" maxlength="64" style="width:280px;"  />		</td>
+		<td bgcolor="#FFFFFF" id="text1_info">&nbsp;</td>
+	</tr>
+
+	<tr>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+		<td bgcolor="#FFFFFF"><input type="submit" name="Submit" value="  提 交  " />
+			<input type="reset" name="Submit" value="  重  置  " />
+			<input type="button" name="Submit" value="  按 钮  " /></td>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+	</tr>
+	<tr>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+	</tr>
+	<tr>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+</table>
+</form>
+<script>
+function sel_rule(sel, inp_id){
+	switch(sel.value){
+		case '1':
+			form_v.set_rule('text1', '{"model":"number","msg_fail":"输入错误", "msg_ok":"输入正确", "msg":"请输入数字"}');
+		break;
+		case '2':
+			form_v.set_rule('text1', '{"model":"letter","msg_fail":"输入错误", "msg_ok":"输入正确", "msg":"请输入英文字母和数字"}');
+		break;
+		case '3':
+			form_v.set_rule('text1', '{"model":"mobile","msg_fail":"手机号码输入错误", "msg_ok":"输入正确", "msg":"请输入手机号码"}');
+		break;	
+		
+	}
+
+}
+
+</script>
+
+</body>
+</html>

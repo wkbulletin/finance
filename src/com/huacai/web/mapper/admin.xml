@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huacai.web.dao.privilege.AdminMyDao">
+
+	<select id="getTemplateById"   resultType="hashmap">
+		select *
+		from boss_admin_user
+		where admin_id = #{adminId}
+	</select>
+
+	<insert  id="insertAdmin" parameterType="Map" useGeneratedKeys="true" keyProperty="adminId">
+		insert into boss_admin_user
+		  (
+			admin_loginname,
+			admin_status,
+			admin_password,
+			admin_password_salt,
+			admin_realname,
+			admin_department,
+			admin_tel,
+			admin_mobile,
+			admin_email,
+			admin_sex,
+			admin_type,
+			admin_create_time,
+			admin_update_time
+		  )
+		values
+		  (
+		   #{admin_loginname},
+		   #{admin_status},
+		   #{admin_password},
+		   #{admin_password_salt},
+		   #{admin_realname},
+		   #{admin_department},
+		   #{admin_tel},
+		   #{admin_mobile},
+		   #{admin_email},
+		   #{admin_sex},
+		   #{admin_type},
+		   #{admin_create_time},
+		   #{admin_update_time}
+		   )	 
+	</insert >
+	
+	 
+
+</mapper>

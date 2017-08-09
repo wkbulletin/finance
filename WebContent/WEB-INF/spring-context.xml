@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:oxm="http://www.springframework.org/schema/oxm"
+	xsi:schemaLocation="
+     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+     http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-3.0.xsd">
+
+
+	<context:property-placeholder location="classpath:jdbc.properties" />
+	<bean class="com.huacai.web.service.SpringContextHolder"></bean>
+	
+	<!-- db1配置 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<!-- 以下为可选参数 -->
+		<property name="initialSize">
+			<value>10</value>
+		</property>
+		<property name="minIdle">
+			<value>10</value>
+		</property>
+		<property name="maxActive">
+			<value>100</value>
+		</property>
+		<property name="maxIdle">
+			<value>100</value>
+		</property>
+		<property name="validationQuery">
+			<value>SELECT 'x'</value>
+		</property>
+		<property name="testOnBorrow">
+			<value>true</value>
+		</property>
+		<property name="testOnReturn">
+			<value>true</value>
+		</property>
+		<property name="testWhileIdle">
+			<value>true</value>
+		</property>
+		<!--大于0 ，进行连接空闲时间判断，或为0，对空闲的连接不进行验证 -->
+		<property name="minEvictableIdleTimeMillis">
+			<value>60000</value>
+		</property>
+		<!--失效检查线程运行时间间隔，如果小于等于0，不会启动检查线程 -->
+		<property name="timeBetweenEvictionRunsMillis">
+			<value>300000</value>
+		</property>
+
+	</bean>
+	 
+	<bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:mybatis-conf.xml" />
+		<property name="mapperLocations" value="classpath*:com/huacai/web/mapper/*.xml"></property>
+	</bean>
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!-- 配置dao与sqlSessionFactory的映射关系，多个dao包时，用逗号分隔 -->
+		<property name="basePackage" value="com.huacai.web.dao" />
+		<property name="sqlSessionFactoryBeanName" value="sessionFactory"></property>
+	</bean>
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+	
+	<!-- 事务配置，全注解形式 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+
+	<context:component-scan base-package="com.huacai">  
+        <context:include-filter type="annotation"   
+                 expression="org.aspectj.lang.annotation.Aspect"/>  
+    </context:component-scan>  
+      
+   <aop:aspectj-autoproxy/>
+
+   <bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">  
+     <property name="host">  
+      <value>${mail.host}</value>  
+     </property>  
+     <property name="javaMailProperties">  
+            <props>  
+              <prop key="mail.smtp.auth">true</prop>  
+              <prop key="mail.smtp.timeout">25000</prop>  
+            </props>  
+      </property>     
+     <property name="username">  
+      <value>${mail.username}</value>  
+     </property>  
+     <property name="password">  
+      <value>${mail.password}</value>  
+     </property> 
+     <property name="defaultEncoding">  
+      <value>UTF-8</value>  
+     </property> 
+    </bean>  
+    
+    <bean id="simpleMailMessage" class="org.springframework.mail.SimpleMailMessage">
+        <property name="from" value="${mail.from}" />
+        <property name="subject" value="${mail.subject}" />
+         <property name="to" value="${mail.to}" />
+        <!--
+        <property name="text" value="邮件内容" />
+        -->
+    </bean>
+	
+</beans>

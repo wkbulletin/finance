@@ -1,0 +1,89 @@
+<!--#include file="/common/header_detail.html" -->
+ <!--{var sf = native  com.huacai.web.controller.task.TaskController.getSimpleFilename(String);}-->
+<script src="/resources/js/plugins/validate/jquery.validate.min.js"></script>
+<script src="/resources/js/plugins/validate/messages_zh.min.js"></script>
+<script src="/resources/js/plugins/layer/laydate/laydate.js"></script> 
+<script>
+	$(document).ready(function(e) {
+         //日期范围限制
+		var task_estimate = {
+			elem: '#task_estimate',
+			format: 'YYYY-MM-DD',
+			//min: '${nowdate}', //laydate.now()设定最小日期为当前日期
+			//max: '${end_time}', //最大日期
+			//start: '${nowdate}',
+			istime: false,
+			fixed: true, //是否固定在可视区域
+			istoday: false,
+			choose: function (datas) {
+				end_time.min = datas;
+			}
+		};
+		 
+		
+	  
+		laydate(task_estimate)
+		 
+		
+    });
+	
+</script>
+<div style="overflow: hidden;position: relative;width: 100%; padding-top:5px;">
+ <form action='/task/create.do?actType=save&task_type=${task_type}' method='post' name="edit_from" id="edit_from"  target="ifr"     class="form-horizontal"    >
+  
+ <table class="table table-striped table-hover">
+	  <tr>
+      	<td>任务名称
+        </td>
+        <td>
+        	<input type="text" name="task_name" />
+        </td>
+      </tr>
+      <tr>
+      	<td>任务类型
+        </td>
+        <td>
+        	<!--if(task_type== 1) -->ALS评估任务<!--else-->最低资本变动分析任务<!--end-->
+        </td>
+      </tr>
+      <tr>
+      	<td>评估日期
+        </td>
+        <td>
+        	<input type="text" name="task_estimate" id="task_estimate" value="${task_estimate}" readonly="readonly" class="input-sm form-control"  style="width:100px;"/>
+        </td>
+      </tr>
+      <tr>
+      	<td>简介
+        </td>
+        <td>
+        	<textarea name="task_remark"></textarea>
+        </td>
+      </tr>
+</table>
+ 
+<div >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="edit_table_label"></div>
+<div style="height:71px"></div>
+<div class="modal-footer">
+					<a    href="javascript:void(0);" class="btn btn-primary "   onclick="upload()">修改</a>	
+</div>
+</form>  
+<iframe src="#" width="0" height="0" id="ifr" name="ifr"></iframe>
+ <script>
+  function upload(){
+	  $("#edit_from").submit();
+	 }
+
+function isInt(str) {
+   // var g = /^[1-9]*[1-9][0-9]*$.[\d]{2}/;
+    var g = /^[\d]+\.[\d]{2}$/;
+    return g.test(str);
+}
+function g(str) {
+	   var g = /^[1-9]*[1-9][0-9]*$/;
+	    return g.test(str);
+	}
+    </script>
+    
+</div>
+<!--#include file="/common/footer.html" -->

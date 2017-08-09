@@ -1,0 +1,71 @@
+<!--#include file="/common/header_detail.html" -->
+ <!--{var sf = native  com.huacai.web.controller.task.TaskController.getSimpleFilename(String);}-->
+<script src="/resources/js/plugins/validate/jquery.validate.min.js"></script>
+<script src="/resources/js/plugins/validate/messages_zh.min.js"></script>
+
+<div style="overflow: hidden;position: relative;width: 100%; padding-top:5px;">
+ <form action='?actType=save' method='post' name="edit_from" id="edit_from"  target="ifr"     class="form-horizontal"   enctype="multipart/form-data">
+  <input type="hidden"  name="template_id"   value="${template_id}" /> 
+   
+ <table class="table table-striped table-hover">
+	  <tr>
+      	<td>模块
+        </td>
+        <td>
+        	${template_module}
+        </td>
+      </tr>
+      <tr>
+      	<td>事件
+        </td>
+        <td>
+        	${template_event}
+        </td>
+      </tr>
+      <tr>
+      	<td>状态
+        </td>
+        <td>
+        	<select name="template_status" id="template_status">
+            <option value="1">启用</option>
+            <option value="2">关闭</option>
+            </select>
+            <script>
+				$("#template_status").val('${template_status}');
+			</script>
+        </td>
+      </tr>
+       <tr>
+      	<td>内容
+        </td>
+        <td>
+        	<textarea name="template_content">${template_content}</textarea>
+        </td>
+      </tr>
+</table>
+ 
+<div >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="edit_table_label"></div>
+<div style="height:71px"></div>
+<div class="modal-footer">
+					<a    href="javascript:void(0);" class="btn btn-primary "   onclick="upload()">修改</a>	
+</div>
+</form>  
+<iframe src="#" width="0" height="0" id="ifr" name="ifr"></iframe>
+ <script>
+  function upload(){
+	  $("#edit_from").submit();
+	 }
+
+function isInt(str) {
+   // var g = /^[1-9]*[1-9][0-9]*$.[\d]{2}/;
+    var g = /^[\d]+\.[\d]{2}$/;
+    return g.test(str);
+}
+function g(str) {
+	   var g = /^[1-9]*[1-9][0-9]*$/;
+	    return g.test(str);
+	}
+    </script>
+    
+</div>
+<!--#include file="/common/footer.html" -->

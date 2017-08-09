@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+	<meta id="viewport" name="viewport" content="width=1280, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>boss演示页面</title>
+	<meta http-equiv="pragma" content="no-cache" />
+	<meta name="keywords" content="${keywords}">
+	<meta name="description" content="${description}">
+
+	<link href="/resources/css/plugins/summernote/summernote.css" rel="stylesheet">
+    <link href="/resources/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
+
+	<link href="/resources/js/plugins/layer/layim/layim.css" rel="stylesheet">
+	<link href="/resources/css/bootstrap.min.css?v=3.4.0" rel="stylesheet" />
+	<link href="/resources/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet" />
+	
+	<!-- Morris -->
+	<link href="/resources/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet" />
+	
+	<!-- Gritter -->
+	<link href="/resources/js/plugins/gritter/jquery.gritter.css" rel="stylesheet" />
+	<link href="/resources/css/animate.css" rel="stylesheet" />
+	
+	<link href="/resources/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+	<link href="/resources/js/plugins/layer/skin/layer.css" rel="stylesheet">
+	<link href="/resources/css/plugins/iCheck/custom.css" rel="stylesheet">
+	
+	<link href="/resources/css/style.css?v=2.2.0" rel="stylesheet" />
+	<script src="/resources/js/jquery-2.1.1.min.js"></script>
+	<script src="/resources/js/common.js"></script>
+
+	<style>
+		.org_info{
+			padding-top:20px;
+			float:left;
+		}
+		
+	</style>
+</head>
+
+<body>
+
+<div id="wrapper">
+        
+ <!-- left -->
+ <nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element"> <span>
+                    <img alt="image" class="img-circle" src="/resources/img/profile_small.jpg" />
+                     </span>
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">admin</strong>
+                     </span>  <span class="text-muted text-xs block">管理员<b class="caret"></b></span> </span>
+                    </a>
+                    <ul class="dropdown-menu animated fadeInRight m-t-xs" id="login_info">
+                        <li id="info"><a href="javascript:;">修改资料</a></li>
+                        <li id="pwd"><a href="javascript:;">修改密码</a></li>
+                        <li class="divider"></li>
+                        <li id="exit"><a href="javascript:;">安全退出</a></li>
+                    </ul>
+                </div>
+                <div class="logo-element">
+                   	中国体育彩票
+                </div>
+            </li>
+              <li class="active">
+                  <a href="javascript:;"><i class="fa fa-sitemap"></i> <span class="nav-label">boss演示页面</span><span class="fa arrow"></span></a>
+                  <ul class="nav nav-second-level collapse in" aria-expanded="true">
+                      <li class="active">
+                          <a href="javascript:;">表单验证<span class="fa arrow"></span></a>
+                          <ul class="nav nav-third-level collapse in" aria-expanded="true">
+                          		<li>
+                                  <a href="/demo/winForm.do">所有表单</a>
+                              </li>
+                              <li>
+                                  <a href="/demo/winForm1.do">普通表单验证</a>
+                              </li>
+                              <li>
+                                  <a href="/demo/winForm2.do">二级表单验证</a>
+                              </li>
+                              <li>
+                                  <a href="/demo/openWin.do">弹出框表单验证</a>
+                              </li>
+                          </ul>
+                      </li>
+                      <li><a href="/demo/openWin.do">弹出层页面</a>
+                      </li>
+                      <li class="active">
+                          <a href="javascript:;">查询列表显示页面<span class="fa arrow"></span></a>
+                          <ul class="nav nav-third-level collapse in" aria-expanded="true">
+                              <li>
+                                  <a href="/demo/list.do">普通搜索</a>
+                              </li>
+                              <li>
+                                  <a href="/demo/listMore.do">多个搜索</a>
+                              </li>
+                          </ul>
+                      </li>
+                      <li>
+                          <a href="/demo/detail.do">详情显示页面</a>
+                      </li>
+                      <li>
+                          <a href="/demo/webImg.do">图库显示页面</a>
+                      </li>
+                       <li class="active">
+                          <a href="javascript:;">图表显示页面<span class="fa arrow"></span></a>
+                          <ul class="nav nav-third-level collapse in" aria-expanded="true">
+                              <li>
+                                  <a href="/demo/bar_list.do">图表+列表</a>
+                              </li>
+                              <li>
+                                  <a href="/demo/map.do">地图</a>
+                              </li>
+                              <li>
+                                  <a href="/demo/pie.do">饼状图</a>
+                              </li>
+                              <li>
+                                  <a href="/demo/bar.do">柱状图</a>
+                              </li>
+                              <li>
+                                  <a href="/demo/line.do">线形图</a>
+                              </li>
+                              <li>
+                                  <a href="/demo/funnel.do">漏斗图</a>
+                              </li>
+                              <li>
+                                  <a href="/demo/gauge.do">系统服务器监控图</a>
+                              </li>
+                          </ul>
+                      </li>
+                        <li class="active">
+                          <a href="javascript:;">测试显示页面<span class="fa arrow"></span></a>
+                          <ul class="nav nav-third-level collapse in" aria-expanded="true">
+                              <li>
+                                  <a href="/test/testList.do">查询数据</a>
+                              </li>
+                              <li>
+                                  <a href="/test/testChar.do">图表</a>
+                              </li>
+                              <li>
+                                  <a href="/test/listMore.do">多个搜索</a>
+                              </li>
+                          </ul>
+                      </li>
+                  </ul>
+              </li>
+        </ul>
+
+    </div>
+</nav>
+ <!-- left -->
+ 
+  <div id="page-wrapper" class="gray-bg dashbard-1">
+    <div class="row border-bottom">
+        <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                <form role="search" class="navbar-form-custom">
+                    <div class="form-group">
+                    	<h2 style="margin-top:15px;">中国福利彩票</h2>
+                    </div>
+                </form>
+            </div> 
+            <div class="org_info tooltip-demo">
+				<div id="prov_info" data-toggle="tooltip" data-original-title="管理地区：北京市，北京市市辖区" data-placement="bottom" >管理地区：北京市，北京...</div>
+			</div>    
+ 
+             <ul class="nav navbar-top-links navbar-right">
+                <li>
+                    <span class="m-r-sm text-muted welcome-message"><a href="/" title="返回首页"><i class="fa fa-home"></i></a>欢迎使用中国福利彩票-管理系统</span>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle count-info" data-toggle="dropdown" href="javascript:;" title="消息中心">
+                        <i class="fa fa-envelope"></i>  <span class="label label-warning" id="msg_count">2</span>                      
+                    </a>
+                    <ul class="dropdown-menu dropdown-messages" id="message_list">
+                    	<li>
+                            <div class="dropdown-messages-box">
+                                <div class="media-body">
+                                    <small class="pull-right">46小时前</small>
+                                    <strong>小四</strong> 项目已处理完结
+                                    <br>
+                                    <small class="text-muted">3天前 2014.11.8</small>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <div class="dropdown-messages-box">
+                                <div class="media-body ">
+                                    <small class="pull-right text-navy">25小时前</small>
+                                    <strong>国民岳父</strong> 这是一条测试信息
+                                    <br>
+                                    <small class="text-muted">昨天</small>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <div class="text-center link-block">
+                                <a href="/demo/list.do">
+                                    <i class="fa fa-envelope"></i>  <strong> 查看所有消息</strong>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li id="exit_top">
+                    <a href="javascript:;">
+                        <i class="fa fa-sign-out"></i> 退出
+                    </a>
+                </li>
+            </ul>
+
+        </nav>
+    </div>
+

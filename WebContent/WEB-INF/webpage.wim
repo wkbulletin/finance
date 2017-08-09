@@ -1,0 +1,20 @@
+engine.looseVar=true
+engine.suffix=.html
+DEFAULT_ENCODING=UTF-8
+
+[engine]
+encoding=${DEFAULT_ENCODING}
+resourceLoader=tpl.webit.ServletLoader
+
+[tpl.webit.ServletLoader]
+encoding=${DEFAULT_ENCODING}
+root=/tpl/default/
+#root=/tpl/
+
+[global]
+registers+= tpl.common.TplGlobalRegister
+
+
+@modules +='''
+  lib-type.wim
+'''

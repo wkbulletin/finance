@@ -1,0 +1,175 @@
+<!--#include file="/common/header_detail.html" -->
+<div id="body">
+
+<form role="frm" id="frm" method="post" class="form-horizontal" >
+	<input name="act" type="hidden" value="save"/>
+<div class="row">
+ <div class="col-lg-12">
+	<div class="ibox-content" style="height:450px;">
+		
+		<div class="form-group">
+			<label class="col-sm-2 control-label">*登录名：</label>
+	      <div class="col-sm-5">
+	          <input name="admin_loginname"  type="text"  value="${admin_loginname}" class="form-control"  readonly/>
+	      </div>
+	      <div class="col-sm-5"></div>
+	   </div>
+
+	     
+	   <div class="form-group">
+		  <label class="col-sm-2 control-label">*姓名：</label>
+	      <div class="col-sm-5">
+	          <input name="admin_realname"  type="text"  value="${admin_realname}" class="form-control" />
+	      </div>
+	      <div class="col-sm-5"></div>
+	   </div>
+	   
+	   <div class="form-group">
+			<label class="col-sm-2 control-label">所属部门：</label>
+	      <div class="col-sm-5">
+	          <input name="admin_department" type="text"  value="${admin_department}" class="form-control" />
+	      </div>
+	      <div class="col-sm-5"></div>
+	   </div>
+	   
+	   <div class="form-group">
+			<label class="col-sm-2 control-label">联系电话：</label>
+	      <div class="col-sm-5">
+	          <input name="admin_tel"  type="text"  value="${admin_tel}" class="form-control" />
+	      </div>
+	      <div class="col-sm-5"></div>
+	   </div>
+	   
+	   <div class="form-group">
+			<label class="col-sm-2 control-label">手机号码：</label>
+	      <div class="col-sm-5">
+	          <input name="admin_mobile"  type="text"  value="${admin_mobile}" class="form-control" />
+	      </div>
+	      <div class="col-sm-5"></div>
+	   </div>
+	   
+	   <div class="form-group">
+			<label class="col-sm-2 control-label">email地址：</label>
+	      <div class="col-sm-5">
+	          <input name="admin_email"  type="text"  value="${admin_email}" class="form-control" />
+	      </div>
+	      <div class="col-sm-5"></div>
+	   </div>
+	   
+	   <div class="form-group">
+			<label class="col-sm-2 control-label">性别：</label>
+	      <div class="col-sm-5">
+	          <select name="admin_sex" class="form-control">
+				<option value="1" <!-- if(admin_sex==1) -->selected<!-- end -->>男</option>
+				<option value="2" <!-- if(admin_sex==2) -->selected<!-- end -->>女</option>
+			</select>
+	      </div>
+	      <div class="col-sm-5"></div>
+	   </div>
+	   
+	</div>
+</div>
+</div>
+
+<div class="modal-footer">
+	
+	<button class="btn btn-primary" id="save-data" type="submit" >保存</button>
+	<button data-dismiss="modal" class="btn btn-white" type="button">关闭</button>
+</div>
+</form>
+</div>
+
+
+
+<script>
+
+function submit_form(){
+
+	var frm = $("#frm");
+	var post_data = frm.serialize();
+	$.post("/cp/my_info.do", post_data, function (data){
+		if(data && data.result == 1){
+			layer.alert(data.message,1 ,function (index){
+				layer.close(index);
+			//	parent.$('#my_modal_win').modal('hide');
+				parent.page_reload();
+			});
+			return;
+		}else if(data){
+			layer.alert(data.message,8,function(index){
+				layer.close(index);
+			});
+			return;
+		}
+		layer.alert('操作失败');
+		
+	}, "json");
+	return false;
+}
+
+$(function(){
+	parent.update_ifrmae_height('500');
+
+	 jQuery.validator.addMethod("isMobile", function(value, element) {
+	  var length = value.length;
+	  var mobile = /^(((13[0-9]{1})|(15[0-9]{1}))+\d{8})$/;
+	  return this.optional(element) || (length == 11 && mobile.test(value));
+	 }, "请正确填写您的手机号码");
+	
+	 jQuery.validator.addMethod("isphone", function(value, element) {
+	  var length = value.length;
+	  var phone = /(^(\d{3,4}-)?\d{6,8}$)|(^(\d{3,4}-)?\d{6,8}(-\d{1,5})?$)|(\d{11})/;
+	  return this.optional(element) || (phone.test(value));
+	 }, "请填写正确的电话号码");
+	 
+	$("#frm").validate({
+			submitHandler:function() {
+	            submit_form();
+	        },
+	        rules: {
+	            admin_realname: {
+	                required: true,
+	                rangelength:[2,40]
+	            },
+	            admin_department: {
+	                rangelength:[2,40]
+	            },
+	            admin_tel: {
+	            	isphone:true,
+	                maxlength:20
+	            },
+	            admin_mobile: {
+	            	isMobile:true,
+	                maxlength:20
+	            },
+	            admin_email: {
+	            	email:true,
+	                maxlength:50
+	            }
+	            
+	        },
+	        messages: {
+	            role_name: {
+	                required: "请输入姓名",
+	                rangelength: "请输入{0}-{1}个中英文字符"
+	            },
+	            admin_department: {
+	                rangelength: "请输入{0}-{1}个中英文字符"
+	            },
+	            admin_tel: {
+	            	isphone:"请输入正确的联系电话",
+	             	maxlength:"不能超过20个字符"
+	            },
+	            admin_mobile: {
+	            	isMobile:"请输入正确的手机号",
+	                maxlength:"不能超过20个字符"
+	            },
+	            admin_email: {
+	            	email:"请输入正确的电子邮箱",
+	                maxlength:"不能超过50个字符",
+	            }
+		     }
+	    });
+});
+</script>
+<!--#include file="/common/footer_detail.html" -->

@@ -1,0 +1,130 @@
+<!--#include file="/common/header_detail.html" -->
+<style>
+.edit_group_box{
+	margin:0px;
+	padding: 5px 8px;
+	background:#FFFFFF;
+	border-left: 1px solid #AEAEAE;
+	border-top: 1px solid #B1B1B1;
+	border-right: 1px solid #C6E1CC;
+	border-bottom: 1px solid #C6E1CC;
+	box-shadow: inset 1px 0px 1px #CCCCCC,inset 0px 1px 1px #D2D2D2,inset -1px -1px 1px #F2F2F2, 1px 1px 1px #C3E0CA, -1px -1px 0px #CAE5D0;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+
+}
+.edit_group_box>ul>li{
+	display:inline-block;
+	line-height:150%;
+	margin-right:5px;
+}
+</style>
+<div id="body">
+
+<form action="/privilege/admin_role.do" method="post" class="form-horizontal" name="edit_from" role="frm" id="frm" onsubmit="return submit_form(this)">
+<input name="act" type="hidden" value="save"/>
+<input name="admin_id" type="hidden" value="${admin_id}"/>
+<div class="row">
+ <div class="col-lg-12">
+	<div class="ibox-content" style="height:400px;">
+		
+		<div class="form-group">
+			<label class="col-sm-2 control-label">登录名：</label>
+	      <div class="col-sm-5">
+	          <input name="admin_loginname" id="role_name" type="text"  value="${admin_loginname}" class="form-control" readonly />
+	      </div>
+	      <div class="col-sm-5"></div>
+	   </div>
+	  
+	    <div class="form-group">
+	       <label class="col-sm-2 control-label">操作：</label>
+	       <div class="col-sm-5">
+	           <a href="#" id="btn_role_ids_sel_all" class="link_green">全部选择</a>&nbsp;&nbsp;&nbsp;&nbsp;
+	           <a href="#" id="btn_role_ids_dsel_all" class="link_green">取消选择</a>
+	       </div>
+	       <div class="col-sm-5"></div>
+	    </div>
+	    <div class="form-group">
+	       <label class="col-sm-2 control-label">分配角色：</label>
+	       <div class="col-sm-5">
+		       <div class="edit_group_box" style="width:460px">
+					<ul>
+					<!-- for(row : roleList) -->
+					<li><input type="checkbox" name="role_ids" id="role_ids_${row.role_id}" value="${row.role_id}"
+					<!-- if(row.relation_admin_id&&row.relation_admin_id>0) -->
+					checked
+					<!-- end -->
+					/><label for="role_ids_${row.role_id}">${row.role_name}</label></li>
+					<!-- end -->
+					</ul>
+			   </div>
+	       </div>
+	       <div class="col-sm-5"></div>
+	    </div>   
+	</div>
+</div>
+</div>
+
+<div class="modal-footer">
+	
+	<button class="btn btn-primary" id="save-data" type="submit" >保存</button>
+	<button data-dismiss="modal" class="btn btn-white" type="button">关闭</button>
+</div>
+</form>
+</div>
+
+
+
+
+<script>
+
+$(document).ready(function(){
+	//$("input[name=role_ids]").last().attr('v_rule', '{"model":"checkbox", "area":"1", "msg_fail":"请选择角色"}');
+	$("#btn_role_ids_sel_all").click(function (event){
+		event.preventDefault();
+		$("input[name=role_ids]").each(function (){
+			this.checked=true;
+		}).change();
+	});
+
+	$("#btn_role_ids_dsel_all").click(function (event){
+		event.preventDefault();
+		$("input[name=role_ids]").each(function (){
+			this.checked=false;
+		}).change();
+	});
+
+});
+function submit_form(frm){
+
+	var frm = $(frm);
+	//submit
+	setTimeout(function(){
+	    layer.load("请稍候......", 10);
+	}, 0);
+	
+	var post_data = frm.serialize();
+	$.post(frm.attr("action"), post_data, function (data){
+		layer.closeAll('loading');
+		if(data && data.result == 0){
+			layer.alert(data.message,8,function(index){
+				layer.close(index);
+			});
+			return;
+		}else if(data && data.result > 0){
+			layer.alert(data.message,1 ,function (index){
+				layer.close(index);
+				parent.$('#myModal').modal('hide');
+				parent.page_reload();
+			});
+			return;
+		}
+		layer.alert('操作失败');
+		
+	}, "json");
+	return false;
+}
+ 
+</script>
+<!--#include file="/common/footer_detail.html" -->

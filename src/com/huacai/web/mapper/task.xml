@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huacai.web.dao.task.TaskMyDao">
+
+	<select id="getTemplateEmails" parameterType="string"
+		resultType="string">
+		select group_concat(DISTINCT admin_email SEPARATOR ';') from boss_admin_user
+		where admin_status =1 and admin_id IN
+		(select baru.relation_admin_id
+		from boss_admin_privilege bap left join
+		boss_admin_relation_rp barr on bap.privilege_id = barr.relation_priv_id
+		left JOIN boss_admin_relation_ru baru on barr.relation_role_id =
+		baru.relation_role_id
+		where bap.privilege_alias in (${privs})
+		)
+	</select>
+	<select id="getModuleFilePathById"  
+		resultType="string">
+		select ${module}
+		from task_detail
+		where task_id = #{task_id}
+	</select>
+
+	<select id="getTaskCountByName" parameterType="string"
+		resultType="int">
+		select count(task_id)
+		from task
+		where task_name = #{task_name}
+	</select>
+
+	<update id="updateTask" parameterType="Map">
+		update task
+		set task_name = #{task_name},
+		task_remark = #{task_remark},
+		task_status = #{task_status},
+		task_m1status = #{task_m1status},
+		task_m2status = #{task_m2status},
+		task_m3status = #{task_m3status},
+		task_m4status = #{task_m4status},
+		task_m5status = #{task_m5status}
+		where task_id = #{task_id}
+	</update>
+	<update id="updateTaskM5" parameterType="Map">
+		update task_detail
+		set m5_param1 = #{m5_param1},
+		m5_param2 = #{m5_param2}
+		where task_id = #{task_id}
+	</update>
+	<update id="updateTaskDetailRunStatus" parameterType="Map">
+		update task_detail
+		set ${module} = #{module_value}
+		where task_id = #{task_id}
+	</update>
+
+	<update id="stopTask" parameterType="Map">
+		update task_detail
+		set ${module} = #{module_value}
+		where task_id = #{task_id}
+	</update>
+	<update id="runTask" parameterType="Map">
+		update task_detail
+		set ${module} = #{module_value}
+		<if test="clearreport != null and clearreport != ''">
+			${clearreport}
+		</if>
+		where task_id = #{task_id}
+	</update>
+	<update id="delTask" parameterType="int">
+		delete from task
+		where task_id = #{task_id}
+	</update>
+	<update id="delTaskDetail" parameterType="int">
+		delete from task_detail
+		where task_id = #{task_id}
+	</update>
+	<update id="clearTask" parameterType="int">
+		update task_detail set
+		m1_status = 0,
+		m1_1file = null,
+		m1_1remark = null,
+		m1_1time = null,
+		m1_2file = null,
+		m1_2time = null,
+		m1_2remark = null,
+		m1_3file = null,
+		m1_3time = null,
+		m1_3remark = null,
+		m1_outfile = null,
+		m2_status = 0,
+		m2_1file = null,
+		m2_1time = null,
+		m2_1remark = null,
+		m2_2file = null,
+		m2_2time = null,
+		m2_2remark = null,
+		m2_3file = null,
+		m2_3time = null,
+		m2_3remark = null,
+		m2_outfile = null,
+		m3_status = 0,
+		m3_3file = null,
+		m3_3time = null,
+		m3_3remark = null,
+		m3_outfile = null,
+		m4_status = 0,
+		m4_1file = null,
+		m4_1time = null,
+		m4_1remark = null,
+		m4_2file = null,
+		m4_2time = null,
+		m4_2remark = null,
+		m4_outfile = null,
+		m5_status = 0,
+		m5_4file = null,
+		m5_4time = null,
+		m5_4remark = null,
+		m5_outfile = null,
+		m5_param1 = null,
+		m5_param2 = null
+		where task_id = #{task_id}
+	</update>
+	<update id="updateTask4upfile" parameterType="Map">
+		update task_detail
+		set ${module_time} = #{now},
+		${module_remark} = #{remark},
+		${module} = #{filepath}
+		where task_id = #{task_id}
+	</update>
+	<update id="updateTemplate" parameterType="Map">
+		update template
+		set template_status = #{template_status},
+		template_content = #{template_content}
+		where template_id = #{template_id}
+	</update>
+	<select id="getTemplateList" resultType="hashmap">
+		select *
+		from template
+		order by template_id asc
+	</select>
+	<select id="getTemplateById" parameterType="int" resultType="hashmap">
+		select *
+		from template
+		where template_id = #{template_id}
+	</select>
+
+	<select id="getLogList" resultType="hashmap">
+		select log_id,log_taskid,log_module,log_department,log_status,date_format(log_time,'%Y-%m-%d %k:%i:%s') log_time
+		,log_content
+		from log
+		where
+		log_taskid = #{task_id}
+		<if test="lastid != null and lastid != ''">
+			and log_id > #{lastid}
+		</if>
+		order by log_id desc
+		limit 5
+	</select>
+	
+	<select id="getTaskList" parameterType="Map" resultType="hashmap">
+		select t1.task_name,t1.task_type,t1.task_status,t1.task_createtime,
+		t1.task_m1status,t1.task_m2status,t1.task_m3status,t1.task_m4status,t1.task_m5status,
+		t2.*
+		from task t1 inner join task_detail t2 on t1.task_id = t2.task_id
+		where
+		task_status != -1
+		<if test="task_name != null and task_name != ''">
+			and t1.task_name like '%${task_name}%'
+		</if>
+		<if test="begin_time != null and begin_time != ''">
+			<![CDATA[ and t1.task_createtime >= #{begin_time} ]]>
+		</if>
+		<if test="end_time != null and end_time != ''">
+			<![CDATA[ and t1.task_createtime <= #{end_time} ]]>
+		</if>
+		order by t1.task_id desc
+	</select>
+
+	<select id="getTaskListCount" parameterType="Map" resultType="int">
+		select count(t1.task_id)
+		from task t1 inner join task_detail t2 on
+		t1.task_id = t2.task_id
+		where task_status != -1
+		<if test="task_name != null and task_name != ''">
+			and t1.task_name like '%${task_name}%'
+		</if>
+		<if test="begin_time != null and begin_time != ''">
+			<![CDATA[ and t1.task_createtime >= #{begin_time} ]]>
+		</if>
+		<if test="end_time != null and end_time != ''">
+			<![CDATA[ and t1.task_createtime <= #{end_time} ]]>
+		</if>
+	</select>
+
+	<select id="getTaskById" parameterType="int" resultType="hashmap">
+		select
+		td.*,
+		t.task_name,
+		t.task_type,
+		t.task_status,
+		t.task_createtime,
+		t.task_remark,
+		t.task_estimate,
+		t.task_m1status,t.task_m2status,t.task_m3status,t.task_m4status,t.task_m5status
+		from task_detail td, task t
+		where td.task_id = t.task_id
+		and td.task_id = #{task_id}
+	</select>
+	<select id="getHistoryFile" parameterType="Map" resultType="hashmap">
+		select t.task_name,td.${module} file ,td.${module_remark} remark,
+		td.${module_time} ctime
+		from task_detail td, task t
+		where td.task_id = t.task_id
+		and td.${module} is not null
+		and td.task_id != #{task_id}
+		order by
+		td.${module_time} desc
+		limit ${beginRow}, ${pageSize}
+	</select>
+
+	<select id="getHistoryFileCount" parameterType="Map" resultType="int">
+		select count(task_id)
+		from task_detail
+		where ${module} is not null
+		and task_id != #{task_id}
+		order by ${module_time}
+		desc
+	</select>
+
+	<insert id="insertlog" parameterType="Map" useGeneratedKeys="true"
+		keyProperty="logId">
+		insert into log
+		(
+		log_status,
+		log_taskid,
+		log_module,
+		log_department,
+		log_content,
+		log_time
+		)
+		values
+		(#{log_status},
+		#{log_taskid},
+		#{log_module},
+		#{log_department},
+		#{log_content},
+		#{log_time})
+	</insert>
+	<insert id="insertTask" parameterType="Map" useGeneratedKeys="true"
+		keyProperty="taskId">
+		insert into task
+		(
+		task_name,
+		task_type,
+		task_status,
+		task_createtime,
+		task_remark,
+		task_estimate
+		)
+		values
+		(#{task_name},
+		#{task_type},
+		#{task_status},
+		#{task_createtime},
+		#{task_remark},
+		#{task_estimate})
+	</insert>
+	<insert id="copyTask" parameterType="Map" useGeneratedKeys="true"
+		keyProperty="taskId">
+		insert into task (
+		task_name,
+		task_type,
+		task_status,
+		task_remark,
+		task_estimate,
+		task_fromid,
+		task_createtime)
+		select
+		CONCAT(task_name,(select concat('_',count(task_id)) from task where
+		task_fromid = #{task_id})),
+		task_type,
+		1,
+		task_remark,
+		task_estimate,
+		${task_id},now() from task where task_id = #{task_id}
+	</insert>
+	<insert id="insertTaskDetail" parameterType="Map">
+		insert into
+		task_detail
+		(
+		task_id ,
+		m1_status ,
+		m2_status ,
+		m3_status ,
+		m4_status ,
+		m5_status
+		)
+		values
+		(#{taskId},
+		0,
+		0,
+		0,
+		0,
+		0
+		)
+	</insert>
+	<insert id="copyTaskDetail" parameterType="Map">
+		insert into
+		task_detail(
+		task_id ,
+		m1_status ,
+		m1_1file ,
+		m1_1remark,
+		m1_1time ,
+		m1_2file ,
+		m1_2time ,
+		m1_2remark,
+		m1_3file ,
+		m1_3time ,
+		m1_3remark,
+		m1_outfile,
+		m2_status ,
+		m2_1file ,
+		m2_1time ,
+		m2_1remark,
+		m2_2file ,
+		m2_2time ,
+		m2_2remark,
+		m2_3file ,
+		m2_3time ,
+		m2_3remark,
+		m2_outfile,
+		m3_status ,
+		m3_3file ,
+		m3_3time ,
+		m3_3remark,
+		m3_outfile,
+		m4_status ,
+		m4_1file ,
+		m4_1time ,
+		m4_1remark,
+		m4_2file ,
+		m4_2time ,
+		m4_2remark,
+		m4_outfile,
+		m5_status ,
+		m5_4file ,
+		m5_4time ,
+		m5_4remark,
+		m5_outfile,
+		m5_param1,
+		m5_param2
+		)
+		select
+		${taskId} ,
+		m1_status ,
+		m1_1file ,
+		m1_1remark,
+		m1_1time ,
+		m1_2file ,
+		m1_2time ,
+		m1_2remark,
+		m1_3file ,
+		m1_3time ,
+		m1_3remark,
+		m1_outfile,
+		m2_status ,
+		m2_1file ,
+		m2_1time ,
+		m2_1remark,
+		m2_2file ,
+		m2_2time ,
+		m2_2remark,
+		m2_3file ,
+		m2_3time ,
+		m2_3remark,
+		m2_outfile,
+		m3_status ,
+		m3_3file ,
+		m3_3time ,
+		m3_3remark,
+		m3_outfile,
+		m4_status ,
+		m4_1file ,
+		m4_1time ,
+		m4_1remark,
+		m4_2file ,
+		m4_2time ,
+		m4_2remark,
+		m4_outfile,
+		m5_status ,
+		m5_4file ,
+		m5_4time ,
+		m5_4remark,
+		m5_outfile,
+		m5_param1,
+		m5_param2
+		from task_detail where task_id = #{task_id}
+
+	</insert>
+
+</mapper>

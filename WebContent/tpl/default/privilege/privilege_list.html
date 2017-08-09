@@ -1,0 +1,106 @@
+<!--#include file="/common/header.html" -->
+<div class="nav_title" id="nav_title">权限管理(批量模式)</div>
+
+<div id="list_edit_body">
+<!-- if(priv_level>0) -->
+<div class="list_title">
+权限导航：</strong>${priv_nav}
+</div>
+<!-- else -->
+<script>
+$(document).ready(function(){
+	layer.alert('注意：请谨慎操作，如无必要，请勿轻易点击删除或修改上级ID！');
+});
+
+</script>
+<!-- end -->
+<form action='/privilege/privilege_list.do'   method='post' name='edit_from' id="edit_from">
+<input type="hidden" name='act' value='save' />
+<input type="hidden" name='list_pid' value='${list_pid}' />
+
+	<table width="100%"  border="0"  cellpadding="3" cellspacing="0" class="list_table" style="min-width:1050px;">
+		<tr height="25">
+			<th>目录</strong></th>
+			<th width="70">上级</strong></th>
+			<th width="160">分类名称</strong></th>
+			<th width="175">介绍</strong></th>
+			<th width="200">URL</strong></th>
+			<th width="70">别名</strong></th>
+			<th width="60">排序</strong></th>
+			<th width="40">状态</strong></th>
+			<th width="40">菜单</strong></th>
+			<th width="40">删除</strong></th>
+		</tr>
+		<!-- {var privilege_order_new = 0;} -->
+		<!-- for(row : privList) -->
+		<!-- {privilege_order_new=row.privilege_order;} -->
+		<tr height="32">
+			<td align="left">
+				<!-- if(priv_level<4) -->
+				[${row.privilege_id}]<a href="/privilege/privilege_list.do?list_pid=${row.privilege_id}">[${row.privilege_name}]</a>
+				<!-- else -->
+				[${row.privilege_id}]-----
+				<!-- end -->
+				<input type="hidden" name='privilege_id'  value='${row.privilege_id}' />
+			</td>
+			<td align="center"><input type='text' name='privilege_pid' size='7' maxlength='10' value='${row.privilege_pid}' />						</td>
+			<td align="center">
+				<input type='text' name='privilege_name' size='23' maxlength='100' value='${row.privilege_name}' />						</td>
+			<td align="center">
+				<input type='text' name='privilege_desc' size='23' maxlength='200' value='${row.privilege_desc}' />						</td>
+			<td align="center"><input type='text' name='privilege_url' size='30' maxlength='200' value='${row.privilege_url}' />						</td>
+			<td align="center"><input type='text' name='privilege_alias' size='8' maxlength='20' value='${row.privilege_alias}' />						</td>
+			</td>
+			<td align="center" >
+				<input type='text' name='privilege_order'  size='5' maxlength='100' value='${row.privilege_order}' />						</td>
+			<td align="center">
+				<input type='checkbox' name='privilege_status_${row.privilege_id}' value='1' <!-- if(row.privilege_status==1) -->checked<!-- end --> />						</td>
+			<td align="center"><input type='checkbox' name='privilege_type_${row.privilege_id}' value='1' <!-- if(row.privilege_type==1) -->checked<!-- end --> />						</td>
+			<td align="center">
+				<input type='checkbox' name='privilege_del_id' value='${row.privilege_id}'/>						</td>
+		</tr>
+		<!-- end -->
+	</table>
+	<div class="box_space"></div>
+	<table width="100%"  border="0"  cellpadding="3" cellspacing="0"  class="list_table">
+		<tr height="25">
+			<td width="120">&nbsp;</td>
+			<td align="left">分类名称,URL</strong></td>
+			<td width="20" align="center">排序</strong></td>
+			<td width="40" align="center">状态</strong></td>
+			<td width="40" align="center">菜单</strong></td>
+		</tr>
+		<tr>
+			<td align="center">多行添加
+				<input type="hidden" name='pid'  value='{privilege_pid}' />						</td>
+			<td align="left">
+				<textarea name="privilege_name_new" rows="6" cols="30" style="width:680px"></textarea>						</td>
+			<td align="center">
+				<input type='text' name='privilege_order_new' size='5' maxlength='100' value='${privilege_order_new+=1}' />						</td>
+			<td align="center">
+				<input name='privilege_status_new' type='checkbox' value='1' checked />						</td>
+			<td align="center"><input name='privilege_type_new' type='checkbox' value='1' />						</td>
+		</tr>
+	</table>
+	<div class="box_space"></div>
+	<table width="100%"  border="0"  cellpadding="3" cellspacing="0"  class="list_table">
+		<tr height="45">
+			<td width="120">&nbsp;</td>
+			<td align="left">
+				&nbsp;<input type="submit" name="submit" value=" 批量提交 "  class="button"/>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="/privilege/privilege_all_list.do" target="_blank">查看所有菜单项</a>
+			</td>
+		</tr>
+	</table>
+
+</form>
+</div>
+<script>
+$(document).ready(function(){
+	$("#edit_from").newforms();
+	//form_v.init(document.edit_from,null,  null, "dialog");
+});
+
+</script>
+<!--#include file="/common/footer.html" -->

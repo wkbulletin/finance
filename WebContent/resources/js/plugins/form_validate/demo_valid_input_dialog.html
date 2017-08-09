@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+
+<body style="background:#DFE9F6">
+<script src="/boss/js/jquery/jquery.min.js"></script>
+<link href="js/newforms/skins/edit/css/style.css" rel="stylesheet" type="text/css" />
+<script src="js/newforms/jquery.newforms.js"></script>
+<link href="js/calendar/skins/lhgcalendar.css" rel="stylesheet" type="text/css" />
+<script src="js/calendar/lhgcalendar.js"></script>
+
+<script type="text/javascript" src="js/dialog/dialog.js?skin=huacai"></script>
+
+
+<link href="js/form_validate/skins/default/style.css" rel="stylesheet" type="text/css" />
+<script src="js/form_validate/form_validate.js"></script>
+
+
+<script>
+$(document).ready(function(){
+	$("#form1").newforms();
+	
+	form_v.init(document.form1,null,  "dialog");
+});
+
+
+</script>
+
+<form id="form1" name="form1" method="post" action="" onsubmit="return form_v.check(this)">
+	<table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#666666">
+	<tr>
+		<td width="200" align="right" bgcolor="#FFFFFF"><strong>数字(范围:1-3)</strong></td>
+		<td width="300" bgcolor="#FFFFFF">
+			<input name="textfield" type="text" size="22" maxlength="32" style="width:80px;" v_rule='{"model":"number","area":"1,3","msg_fail":"输入错误,输入数字，最小1,最大3", "msg_ok":"输入正确", "msg":"请输入数字，最小1,最大3"}'/>
+			个		</td>
+		<td bgcolor="#FFFFFF"> v_rule='{&quot;model&quot;:&quot;number&quot;,&quot;area&quot;:&quot;1,3&quot;,&quot;msg_fail&quot;:&quot;输入错误,输入数字，最小1,最大3&quot;, &quot;msg_ok&quot;:&quot;输入正确&quot;, &quot;msg&quot;:&quot;请输入数字，最小1,最大3&quot;}'</td>
+	</tr>
+	<tr>
+		<td align="right" bgcolor="#FFFFFF"><strong>数字(长度:1-3)</strong></td>
+		<td bgcolor="#FFFFFF"><input name="textfield" type="text" size="22" maxlength="32" style="width:80px;" v_rule='{"model":"number","len":"1,3","msg_fail":"输入错误,输入数字，最少1位,最多3位","msg_ok":"输入正确","msg":"请输入数字,最少1位,最多3位"}' />		</td>
+		<td bgcolor="#FFFFFF"> v_rule='{&quot;model&quot;:&quot;number&quot;,&quot;len&quot;:&quot;1,3&quot;,&quot;msg_fail&quot;:&quot;输入错误,输入数字，最少1位,最多3位&quot;,&quot;msg_ok&quot;:&quot;输入正确&quot;,&quot;msg&quot;:&quot;请输入数字,最少1位,最多3位&quot;}'</td>
+	</tr>
+	<tr>
+		<td align="right" bgcolor="#FFFFFF"><strong>字符(长度:1-3)</strong></td>
+		<td bgcolor="#FFFFFF"><input name="textfield" type="text" size="22" maxlength="32" style="width:80px;"  v_rule='{"len":"1,3","msg_fail":"输入错误，最少1位,最多3位","msg_ok":"输入正确","msg":"请输入,最少1位,最多3位"}' />		</td>
+		<td bgcolor="#FFFFFF"> v_rule='{&quot;len&quot;:&quot;1,3&quot;,&quot;msg_fail&quot;:&quot;输入错误，最少1位,最多3位&quot;,&quot;msg_ok&quot;:&quot;输入正确&quot;,&quot;msg&quot;:&quot;请输入,最少1位,最多3位&quot;}'</td>
+	</tr>
+	<tr>
+		<td align="right" bgcolor="#FFFFFF"><strong>邮箱</strong></td>
+		<td bgcolor="#FFFFFF"><input name="textfield" type="text" size="22" maxlength="64" style="width:280px;"  v_rule='{"model":"email","msg_fail":"邮箱格式错误","msg_ok":"输入正确"}' />		</td>
+		<td bgcolor="#FFFFFF"> v_rule='{&quot;model&quot;:&quot;email&quot;,&quot;msg_fail&quot;:&quot;邮箱格式错误&quot;,&quot;msg_ok&quot;:&quot;输入正确&quot;}'</td>
+	</tr>
+	<tr>
+		<td align="right" bgcolor="#FFFFFF"><strong>电话</strong></td>
+		<td bgcolor="#FFFFFF"><input name="textfield" type="text" size="22" maxlength="64" style="width:280px;"  v_rule='{"model":"tel","msg_fail":"电话格式错误","msg_ok":"输入正确"}' />		</td>
+		<td bgcolor="#FFFFFF"> v_rule='{&quot;model&quot;:&quot;tel&quot;,&quot;msg_fail&quot;:&quot;电话格式错误&quot;,&quot;msg_ok&quot;:&quot;输入正确&quot;}'</td>
+	</tr>
+	<tr>
+		<td align="right" bgcolor="#FFFFFF"><strong>手机(len=0时可以不输入)</strong></td>
+		<td bgcolor="#FFFFFF"><input name="textfield" type="text" size="22" maxlength="64" style="width:280px;" v_rule='{"model":"mobile","len":"0","msg_fail":"手机格式错误","msg_ok":"输入正确"}' />		</td>
+		<td bgcolor="#FFFFFF"> v_rule='{&quot;model&quot;:&quot;mobile&quot;,&quot;len&quot;:&quot;0&quot;,&quot;msg_fail&quot;:&quot;手机格式错误&quot;,&quot;msg_ok&quot;:&quot;输入正确&quot;}'</td>
+	</tr>
+	<tr>
+		<td align="right" bgcolor="#FFFFFF"><strong>昵称</strong></td>
+		<td bgcolor="#FFFFFF"><input name="textfield" type="text" size="22" maxlength="64" style="width:280px;"  v_rule='{"model":"nickname","msg_fail":"昵称格式错误","msg_ok":"输入正确"}' />		</td>
+		<td bgcolor="#FFFFFF"> v_rule='{&quot;model&quot;:&quot;nickname&quot;,&quot;msg_fail&quot;:&quot;昵称格式错误&quot;,&quot;msg_ok&quot;:&quot;输入正确&quot;}'</td>
+	</tr>
+	<tr>
+		<td align="right" bgcolor="#FFFFFF"><strong>日期</strong></td>
+		<td bgcolor="#FFFFFF"><input name="textfield" type="text" size="22" maxlength="64" style="width:280px;"  v_rule='{"model":"datetime","msg_fail":"时间格式错误","msg_ok":"输入正确","msg":"请输入 yyyy-MM-dd HH:mm:ss 格式时间"}' />		</td>
+		<td bgcolor="#FFFFFF"> v_rule='{&quot;model&quot;:&quot;datetime&quot;,&quot;msg_fail&quot;:&quot;时间格式错误&quot;,&quot;msg_ok&quot;:&quot;输入正确&quot;,&quot;msg&quot;:&quot;请输入 yyyy-MM-dd HH:mm:ss 格式时间&quot;}'</td>
+	</tr>
+	<tr>
+		<td align="right" bgcolor="#FFFFFF"><strong>自定义正则表达式</strong></td>
+		<td bgcolor="#FFFFFF"><input name="textfield" type="text" size="22" maxlength="64" style="width:280px;"  v_rule='{"model":"define","rule":"^[\\w]{2,5}$","msg_fail":"请输入2-5位英文","msg_ok":"输入正确","msg":"请输入2-5位英文"}'/>		</td>
+		<td bgcolor="#FFFFFF"> v_rule='{&quot;model&quot;:&quot;define&quot;,&quot;rule&quot;:&quot;^[\\w]{2,5}$&quot;,&quot;msg_fail&quot;:&quot;请输入2-5位英文&quot;,&quot;msg_ok&quot;:&quot;输入正确&quot;,&quot;msg&quot;:&quot;请输入2-5位英文&quot;}'</td>
+	</tr>
+	<tr>
+		<td height="30" align="right" bgcolor="#CCCCCC"><strong>其它</strong></td>
+		<td bgcolor="#CCCCCC">&nbsp;</td>
+		<td bgcolor="#CCCCCC">model=email,url,mobile,tel,number,domain,money,zip,oicq,int,double,english,chinese,username,password,char,datetime,date,time</td>
+	</tr>
+	<tr>
+		<td align="right" bgcolor="#FFFFFF"><strong>数字框(范围:4-100)</strong></td>
+		<td bgcolor="#FFFFFF"><input name="textfield" type="text" ntype="number" max="100" min="4"  v_rule='{"msg":"请输入数字，最小4,最大100"}'   value="4" size="22" maxlength="32" style="width:80px" />		</td>
+		<td bgcolor="#FFFFFF"> ntype=&quot;number&quot; max=&quot;100&quot; min=&quot;4&quot;  v_rule='{&quot;msg&quot;:&quot;请输入数字，最小4,最大100&quot;}'</td>
+	</tr>
+
+	<tr>
+		<td align="right" bgcolor="#FFFFFF"><strong>日期+时间</strong></td>
+		<td bgcolor="#FFFFFF"><input name="date1" type="text" ntype="date" cale_config='{ "format":"yyyy-MM-dd HH:mm:ss" }'  v_rule='{"len":"1","msg_fail":"请选择日期时间","msg_ok":"输入正确"}' size="32" maxlength="32" />		</td>
+		<td bgcolor="#FFFFFF"> ntype=&quot;date&quot; cale_config='{ &quot;format&quot;:&quot;yyyy-MM-dd HH:mm:ss&quot; }'  v_rule='{&quot;len&quot;:&quot;1&quot;,&quot;msg_fail&quot;:&quot;请选择日期时间&quot;,&quot;msg_ok&quot;:&quot;输入正确&quot;}'</td>
+	</tr>
+	<tr>
+		<td align="right" bgcolor="#FFFFFF"><strong>日期1</strong></td>
+		<td bgcolor="#FFFFFF"><input name="date11"  type="text" ntype="date" size="32" maxlength="32" />		</td>
+		<td bgcolor="#FFFFFF"> ntype=&quot;date&quot;  v_rule='{&quot;len&quot;:&quot;1&quot;,&quot;msg_fail&quot;:&quot;请选择日期&quot;,&quot;msg_ok&quot;:&quot;输入正确&quot;}'</td>
+	</tr>
+	<tr>
+		<td align="right" bgcolor="#FFFFFF"><strong>日期2</strong></td>
+		<td bgcolor="#FFFFFF"><input name="date12" type="text" ntype="date"  v_rule='{"len":"1", "model":"compare","to":"date11", "op":">=","msg_fail":"日期2不能小于日期1","msg_ok":"输入正确"}' size="32" maxlength="32" />
+		</td>
+		<td bgcolor="#FFFFFF"> ntype=&quot;date&quot;  v_rule='{&quot;len&quot;:&quot;1&quot;,&quot;msg_fail&quot;:&quot;请选择日期&quot;,&quot;msg_ok&quot;:&quot;输入正确&quot;}'</td>
+	</tr>
+	<tr>
+		<td align="right" bgcolor="#FFFFFF"><strong>密码</strong></td>
+		<td bgcolor="#FFFFFF"><input name="pwd1" type="password" size="22" maxlength="32"   v_rule='{"model":"password","msg_fail":"密码格式错误","msg_ok":"输入正确","msg":"密码格式为：英文字母、数字、特殊字符等组合"}'/></td>
+		<td bgcolor="#FFFFFF"> v_rule='{&quot;model&quot;:&quot;password&quot;,&quot;msg_fail&quot;:&quot;密码格式错误&quot;,&quot;msg_ok&quot;:&quot;输入正确&quot;,&quot;msg&quot;:&quot;密码格式为：英文字母、数字、特殊字符等组合&quot;}'</td>
+	</tr>
+	<tr>
+		<td align="right" bgcolor="#FFFFFF"><strong>重复密码</strong></td>
+		<td bgcolor="#FFFFFF"><input name="pwd2" type="password" size="22"   v_rule='{"model":"repeat","to":"pwd1","msg_fail":"两次输入密码不致","msg_ok":"输入正确","msg":"重复输入密码"}' maxlength="32" /></td>
+		<td bgcolor="#FFFFFF"> v_rule='{&quot;model&quot;:&quot;repeat&quot;,&quot;to&quot;:&quot;pwd1&quot;,&quot;msg_fail&quot;:&quot;两次输入密码不致&quot;,&quot;msg_ok&quot;:&quot;输入正确&quot;,&quot;msg&quot;:&quot;重复输入密码&quot;}'</td>
+	</tr>
+
+	<tr>
+		<td align="right" bgcolor="#FFFFFF"><strong>文件</strong></td>
+		<td bgcolor="#FFFFFF"><input name="textfield" type="file" size="22"  v_rule='{"model":"file","area":"jpg,png","msg_fail":"请选择jpg,png文件"}'/></td>
+		<td bgcolor="#FFFFFF"> v_rule='{&quot;model&quot;:&quot;file&quot;,&quot;area&quot;:&quot;jpg,png&quot;,&quot;msg_fail&quot;:&quot;请选择jpg,png文件&quot;}'</td>
+	</tr>
+	<tr>
+		<td align="right" bgcolor="#FFFFFF"><strong>文本</strong></td>
+		<td bgcolor="#FFFFFF"><textarea name="textfield" cols="50" rows="4" style="width:200px;" v_rule='{"len":"2","msg_fail":"输入错误","msg_ok":"输入正确","msg":"请输入2位以上"}'></textarea></td>
+		<td bgcolor="#FFFFFF"> v_rule='{&quot;len&quot;:&quot;2&quot;,&quot;msg_fail&quot;:&quot;输入错误&quot;,&quot;msg_ok&quot;:&quot;输入正确&quot;,&quot;msg&quot;:&quot;请输入2位以上&quot;}'</td>
+	</tr>
+
+	<tr>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+		<td bgcolor="#FFFFFF"><input type="submit" name="Submit" value="  提 交  " />
+			<input type="reset" name="Submit" value="  重  置  " />
+			<input type="button" name="Submit" value="  按 钮  " />&nbsp;&nbsp;<a href="#" onclick="add_line(this);return false;">增加</a></td>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+	</tr>
+	<tr>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+		<td bgcolor="#FFFFFF"></td>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+	</tr>
+	<tr>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+</table>
+	<table width="100%" border="1" cellpadding="1" cellspacing="1">
+		<tr>
+			<td><strong>加载：</strong><br />
+				&lt;link href=&quot;js/form_validate/skins/default/style.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;<br />
+				&lt;script src=&quot;js/form_validate/form_validate.js&quot;&gt;&lt;/script&gt;<br />
+				<br />
+				<strong>初始化：</strong>
+				</p>
+				<p>&lt;script&gt;<br />
+					$(document).ready(function(){ <br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form_v.init(document.form1);<br />
+					});<br />
+					&lt;/script&gt;</p>
+				<p><strong>FORM修改：</strong><br />
+					&lt;form id=&quot;form1&quot; name=&quot;form1&quot; method=&quot;post&quot; action=&quot;&quot; onsubmit=&quot;return form_v.check(this)&quot;&gt;<br />
+					<br />
+					<strong>表单修改：</strong><br />
+					&lt;input name=&quot;textfield&quot; type=&quot;text&quot; size=&quot;22&quot; maxlength=&quot;32&quot; style=&quot;width:80px;&quot; v_rule='{&quot;model&quot;:&quot;number&quot;,&quot;area&quot;:&quot;1,3&quot;,&quot;msg_fail&quot;:&quot;输入错误,输入数字，最小1,最大3&quot;, &quot;msg_ok&quot;:&quot;输入正确&quot;, &quot;msg&quot;:&quot;请输入数字，最小1,最大3&quot;}'/&gt;</p></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+	</table>
+</form>
+<script>
+
+function add_line(obj){
+
+	var str = 	'<tr>'+
+			'<td width="200" align="right" bgcolor="#FFFFFF"><strong>数字(范围:1-3)</strong></td>'+
+			'<td width="300" bgcolor="#FFFFFF">'+
+			'	<input name="textfield" type="text" size="22" maxlength="32" style="width:80px;" v_rule=\'{"model":"number","area":"1,3","msg_fail":"输入错误,输入数字，最小1,最大3", "msg_ok":"输入正确", "msg":"请输入数字，最小1,最大3"}\'/>'+
+			'	个		</td>'+
+			'<td bgcolor="#FFFFFF"><a href="#" onclick="del_line(this);return false;">删除</a></td>'+
+		'</tr>';
+	var tr = $(obj).parent("td").parent("tr");
+
+	tr.before(str);
+
+
+	$("#form1").newforms();
+	
+	form_v.init(document.form1);
+	
+	
+}
+function del_line(obj){
+	$(obj).parent("td").parent("tr").remove();
+
+	$("#form1").newforms();
+	
+	form_v.init(document.form1);
+	
+	
+}
+
+</script>
+
+</body>
+</html>

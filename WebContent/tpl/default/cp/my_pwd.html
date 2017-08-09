@@ -1,0 +1,61 @@
+<!--#include file="/common/header_detail.html" -->
+
+
+<script src="/resources/js/md5.js"></script>
+<form action="/cp/my_pwd.do" method="post" name="edit_from" id="edit_from" onsubmit="return ajax_submit_form(this, pwd_pre_fun)">
+	<input name="act" type="hidden" value="save"/>
+	<input name="admin_password_hash" type="hidden" value=""/>
+	<input name="admin_password_hash_old" type="hidden" value=""/>
+ <table class="table table-striped table-hover">
+	<tr>
+		<td width="120" align="right" class="edit_table_label">*登录名：</td>
+		<td>
+<input name="admin_loginname" type="text" value="${admin_loginname}" size="48" maxlength="20" style="width:300px" readonly class="form-control input-sm" />
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="edit_table_label">*旧密码：</td>
+		<td>
+	<input name="admin_password_old" v_rule='{"model":"password", "blen":"4,16","msg_fail":"输入错误，请输入4-16位字母数字组合","msg_ok":"输入正确"}' type="password" size="48" maxlength="16" style="width:300px" class="form-control input-sm"/>
+</td>
+	</tr>
+	<tr>
+		<td align="right" class="edit_table_label">*新密码：</td>
+		<td>
+	<input name="admin_password" v_rule='{"model":"password", "blen":"4,16","msg_fail":"输入错误，请输入4-16位字母数字组合","msg_ok":"输入正确"}' type="password" size="48" maxlength="16" style="width:300px" class="form-control input-sm"/>
+</td>
+	</tr>
+	<tr>
+		<td align="right" class="edit_table_label">*重复密码：</td>
+		<td><input name="admin_password2" v_rule='{"model":"repeat","to":"admin_password","msg_fail":"两次输入密码不致","msg_ok":"输入正确","msg":"重复输入密码"}' type="password"  size="48" maxlength="16" style="width:300px" class="form-control input-sm"/></td>
+	</tr>
+</table>
+<div style="height:71px"></div>
+<div class="modal-footer">
+	<button class="btn btn-primary" id="btn_submit" type="submit">保存</button>
+	<button data-dismiss="modal" class="btn btn-white" id="btn_close" type="button">关闭</button>
+</div>
+
+
+</form>
+
+<script>
+$(document).ready(function(){
+	form_v.init(document.edit_from);
+
+
+});
+
+function pwd_pre_fun(frm){
+	frm.find("input[name=admin_password_hash]").val(hex_md5(frm.find("input[name=admin_password]").val()));
+	frm.find("input[name=admin_password_hash_old]").val(hex_md5(frm.find("input[name=admin_password_old]").val()));
+	frm.find("input[name=admin_password]").val("");
+	frm.find("input[name=admin_password2]").val("");
+	frm.find("input[name=admin_password_old]").val("");
+
+	var post_data = frm.serialize();
+	return post_data;
+}
+
+</script>
+<!--#include file="/common/footer_detail.html" -->

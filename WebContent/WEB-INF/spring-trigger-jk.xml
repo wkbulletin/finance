@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"  "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans default-autowire="no" default-lazy-init="false" default-dependency-check="none">
+	
+	<bean id="bossAuditTask" class="com.huacai.web.task.JkTask"></bean>
+	
+	<bean id="taskDemoDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="bossAuditTask" />
+		<property name="targetMethod" value="start1" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+	
+	<!-- 定义触发时间 -->
+	<bean id="taskDemoTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		<!-- see the example of method invoking job above -->
+		<property name="jobDetail" ref="taskDemoDetail" />
+		<!-- 10 seconds -->
+		<property name="startDelay" value="10000" />
+		<!-- repeat every 30 seconds -->
+		<property name="repeatInterval" value="30000" />
+	</bean>
+	
+	
+	<bean id="autoBossAuditTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail">
+			<ref bean="taskDemoDetail" />
+		</property>
+		<property name="cronExpression">
+			<!-- <value>0 0 23 * * ?</value>--> 
+			<value>0 0/1 * * * ?</value>
+		</property>
+	</bean>
+	
+
+	<!-- 总管理类 如果将lazy-init='false'那么容器启动就会执行调度程序 -->
+	<bean id="startQuertz-demo" lazy-init="false" autowire="no"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+			<!-- 
+              <ref bean="autoBossAuditTrigger" /> 
+             -->   
+			</list>
+		</property>
+	</bean>
+
+
+
+</beans>

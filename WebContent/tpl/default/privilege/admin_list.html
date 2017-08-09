@@ -1,0 +1,307 @@
+<!--#include file="/common/header.html" -->
+<!-- <div class="search_box" id="search_box">
+<form action="/privilege/admin_list.do" method="get" name="search_from" id="search_from">
+	<table cellpadding="0" cellspacing="0" border="0" width="100%">
+    	<tr>
+		 <td>
+		<table cellpadding="0" cellspacing="0" border="0">
+			<tr>
+			<td width="50">&nbsp;</td>
+			<td align="right">&nbsp;类型：</td>
+			<td align="left">
+			<select name="admin_type" style="width:150px">
+				<option value="">全部</option>
+for(row : adminTypes)
+<option value="${row[key]}" if(admin_type==intval(row["key"]))selectedend>${row[val]}</option>
+end
+			</select> 
+			</td>
+			<td align="right">&nbsp;登录名：</td>
+			<td align="left"><input type="text" name="admin_loginname" value="${admin_loginname}" /></td>
+
+			<td align="right">&nbsp;姓名：</td>
+			<td align="left"><input type="text" name="admin_realname" value="${admin_realname}" /></td>
+			<td align="right">&nbsp;状态：</td>
+			<td align="left"><select name="admin_status">
+				<option value="*" if(admin_status=="*" || admin_status=="")selectedend>全部</option>
+				<option value="1" if(admin_status=="1")selectedend>启用</option>
+				<option value="0" if(admin_status=="0")selectedend>禁用</option>
+			</select></td>
+			<td>&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" class="btn btn-sm btn-primary">搜索</button></td>
+			<td>&nbsp;<input type="button" value="添加" id="add_btn" onclick="x_open.open('添加用户', '/privilege/admin_add.do',800,500);return false;" /></td>
+			<td>&nbsp;<input type="button" value="打印" id="print_btn" onclick="window.open('/privilege/admin_print.do?'+$('#search_from').serialize());" /></td>
+			<td>&nbsp;<input type="button" value="导出" id="print_btn" onclick="window.open('/privilege/admin_export.do?'+$('#search_from').serialize());" /></td>
+			 </tr>
+		</table>
+	</td>
+
+        </tr>
+    </table>
+</form>
+</div>
+
+<div class="nav_title" id="nav_title">系统用户列表</div>
+
+<div id="list_body">
+	<table width="100%"  border="0"  cellpadding="3" cellspacing="0" class="list_table">
+		<tr height="25">
+			<th width="40">序号</th>
+			<th width="100">登录名</th>
+			<th width="100">姓名</th>
+			<th width="100">联系电话</th>			
+			<th width="180">所属部门</th>
+			<th width="100">类型</th>
+			<th >所属角色</th>
+			<th width="70">当前状态</th>
+			<th colspan="5">操作</th>
+		</tr>
+		for(row : adminList)
+		<tr height="32">
+			<td align="center">${for.iter.index+1+pageSize*(curPage-1)}</td>
+			<td align="left" title="${row.admin_loginname}">${cutStr(row.admin_loginname,20,"...")}</td>
+			<td align="left" title="${row.admin_realname}">${cutStr(row.admin_realname,10,"...")}</td>
+			<td align="center">${row.admin_tel}</td>
+			<td align="center" title="${row.admin_department}">${cutStr(row.admin_department,20,"...")}</td>
+			<td align="center">${row.admin_type_name}</td>
+			<td align="center" title="${row.role_name}">${row.role_name}</td>
+			
+			<td align="center">
+
+			if(row.admin_loginname == "admin" || row.admin_loginname == ADMIN_INFO.adminLoginname)
+				if(row.admin_status == 1)
+				启用
+				else
+				<span class="font_gray">
+				禁用
+				</span>
+				end
+			else
+				<a class="btn" href="#" _confirm_ajax_url="/privilege/admin_status.do?admin_id=${row.admin_id}" _confirm_ajax_call="update_admin_status" _confirm_msg="确定要切换用户“${row.admin_loginname}”的状态？">
+				if(row.admin_status == 1)
+				启用
+				else
+				<span class="font_gray">
+				禁用
+				</span>
+				end
+				</a>
+			end
+
+			</td>
+			<td align="center" width="40"><a class="btn" href="#" _open_url="/privilege/admin_detail.do?admin_id=${row.admin_id}" _open_msg="“${row.admin_loginname}”用户详情">详情</a></td>
+			<td align="center" width="40"><a class="btn" href="#" _open_url="/privilege/admin_edit.do?admin_id=${row.admin_id}" _open_msg="编辑用户“${row.admin_loginname}”">编辑</a></td>
+
+			if(row.admin_loginname == ADMIN_INFO.adminLoginname)
+				<td align="center" width="40">-</td>
+			else
+				<td align="center" width="40"><a class="btn" href="#" _open_url="/privilege/admin_pwd.do?admin_id=${row.admin_id}" _open_msg="修改用户“${row.admin_loginname}”密码">密码</a></td>
+			end
+
+			
+			
+
+			if(row.admin_loginname == "admin" || row.admin_loginname == ADMIN_INFO.adminLoginname)
+				<td align="center" width="40">-</td>
+				<td align="center" width="40">-</td>
+			else
+				<td align="center" width="70"><a class="btn" href="#" _open_url="/privilege/admin_role.do?admin_id=${row.admin_id}" _open_msg="为用户“${row.admin_loginname}”分配角色">角色分配</a></td>
+				<td align="center" width="40"><a class="btn" href="#" _confirm_url="/privilege/admin_del.do?admin_id=${row.admin_id}" _confirm_msg="确认要删除用户“${row.admin_loginname}”吗？">删除</a></td>
+			end
+			
+		</tr>
+		end
+	</table>
+	<div class="box_space"></div>
+
+	<div class="pages">${pageStr}</div>
+
+</div> -->
+
+
+
+<style>
+.float-e-margins .btn{margin-bottom:0px;}
+.more{text-align:center; cursor: pointer;padding-top:6px;font-weight: bold;float:right;}
+.search{border:1px solid #E8E8E8;padding:10px 8px 6px;background:#F9F9F9;margin-left:-15px;margin-right:-15px;}
+</style>
+<div class="wrapper wrapper-content animated fadeInRight">
+	<div class="row">
+		<div class="col-lg-12">
+         
+			
+			<div class="ibox-content">
+			
+				<div class="m-b-sm m-t-sm">
+			<a  _open_url="/privilege/admin_add.do" _open_msg="添加" href="javascript:void(0);" class="btn btn-primary ">添加</a>
+			</div>
+			
+          	<div class="search_box" id="search_box">
+          	  <div class="row">
+          	   
+				<form action="/privilege/admin_list.do" method="get" name="search_from" id="search_from">
+					<table cellpadding="0" cellspacing="0" border="0" width="100%">
+				    	<tr>
+						 <td>
+							<table cellpadding="0" cellspacing="0" border="0">
+							<tr>
+								
+								<td align="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;类型：</td>
+								<td align="left">
+								<select name="admin_type"  class="form-control input-sm inline">
+									<option value="">全部</option>
+									<!-- for(row : adminTypes) -->
+									<option value="${row[key]}" <!-- if(admin_type==intval(row["key"])) -->selected<!-- end -->>${row[val]}</option>
+									<!-- end -->
+								</select> 
+								</td>
+								
+								
+								<td align="right">&nbsp;&nbsp;&nbsp;&nbsp;状态：</td>
+								<td align="left"><select name="admin_status"  class="form-control input-sm inline">
+									<option value="" <!-- if(admin_status=="*" || admin_status=="") -->selected<!-- end -->>全部</option>
+									<option value="1" <!-- if(admin_status=="1") -->selected<!-- end -->>启用</option>
+									<option value="0" <!-- if(admin_status=="0") -->selected<!-- end -->>禁用</option>
+								</select></td>
+								
+								
+							
+								<td align="right">&nbsp;&nbsp;&nbsp;&nbsp;登录名：</td>
+								<td align="left"><input type="text" name="admin_loginname" value="${admin_loginname}" class="input-sm form-control"/></td>
+					
+								<td align="right">&nbsp;&nbsp;&nbsp;&nbsp;姓名：</td>
+								<td align="left"><input type="text" name="admin_realname" value="${admin_realname}" class="input-sm form-control"/></td>
+							
+								<td>&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" class="btn btn-sm btn-primary">搜索</button></td>
+							
+								<!--<td>&nbsp;<input type="button" value="打印" id="print_btn" onclick="window.open('/privilege/admin_print.do?'+$('#search_from').serialize());" /></td>
+								<td>&nbsp;<input type="button" value="导出" id="print_btn" onclick="window.open('/privilege/admin_export.do?'+$('#search_from').serialize());" /></td>-->
+							</tr>
+								
+							</table>
+						</td>
+				
+				       </tr>
+				    </table>
+				</form>
+			</div>
+		</div>
+<hr />
+
+
+<div class="row" id="list_body">
+	<table class="table table-striped table-hover">
+	<thead>
+		<tr>
+			<th>序号</th>
+			<th>登录名</th>
+			<th style="width:120px">姓名</th>
+			<!--<th>联系电话</th>-->			
+			<!--<th style="width:100px">所属部门</th>-->
+			<th style="width:120px">类型</th>
+			<th>所属角色</th>
+			<th>当前状态</th>
+			<th>操作</th>
+		</tr>
+		</thead>
+		<!-- for(row : adminList) -->
+		<tr height="32">
+			<td>${for.iter.index+1+pageSize*(curPage-1)}</td>
+			<td title="${row.admin_loginname}">${cutStr(row.admin_loginname,20,"...")}</td>
+			<td title="${row.admin_realname}">${cutStr(row.admin_realname,10,"...")}</td>
+			<!--<td align="center">${row.admin_tel}</td>-->
+			<!--<td title="${row.admin_department}" >${cutStr(row.admin_department,20,"...")}</td>-->
+			<td>${row.admin_type_name}</td>
+			<td title="${row.role_name}">${cutStr(row.role_name,20,"...")}</td>
+			
+			<td>
+
+			<!-- if(row.admin_loginname != "admin" && "admin" == ADMIN_INFO.adminLoginname) -->
+			
+				<!-- if(row.admin_status == 1) -->
+				已启用
+				<a href="#" _confirm_ajax_url="/privilege/admin_status.do?admin_id=${row.admin_id}" _confirm_ajax_call="update_admin_status" _confirm_msg="确定要切换用户“${row.admin_loginname}”的状态？">
+				（禁用）
+				</a>
+				<!-- else -->
+				<span class="font_gray">
+				已禁用
+				<a href="#" _confirm_ajax_url="/privilege/admin_status.do?admin_id=${row.admin_id}" _confirm_ajax_call="update_admin_status" _confirm_msg="确定要切换用户“${row.admin_loginname}”的状态？">
+				（启用）
+				</a>
+				</span>
+				<!-- end -->
+			<!-- else -->
+				
+				<!-- if(row.admin_status == 1) -->
+				启用
+				<!-- else -->
+				<span class="font_gray">
+				禁用
+				</span>
+				<!-- end -->
+				</a>
+			<!-- end -->
+
+			</td>
+			<td>
+				
+						<a href="javascript:;" _open_msg="“${row.admin_loginname}”用户详情”"  _open_url="/privilege/admin_detail.do?admin_id=${row.admin_id}" class="btn btn-primary btn-outline btn-xs">详情</a>
+                   
+						<a href="javascript:;" _open_msg="编辑用户“${row.admin_loginname}”"  _open_url="/privilege/admin_edit.do?admin_id=${row.admin_id}" class="btn btn-primary btn-outline btn-xs">编辑</a>
+                   
+                     <!-- if(row.admin_loginname == ADMIN_INFO.adminLoginname) -->
+					<!-- else -->
+						<a href="javascript:;" _open_msg="修改用户“${row.admin_loginname}”密码"  _open_url="/privilege/admin_pwd.do?admin_id=${row.admin_id}" class="btn btn-primary btn-outline btn-xs">密码</a>
+					<!-- end -->
+						
+                   
+                     
+                     	<!-- if(row.admin_loginname == "admin" || row.admin_loginname == ADMIN_INFO.adminLoginname) -->
+						<!-- else -->
+						
+							<a href="javascript:;" _open_msg="为用户“${row.admin_loginname}”分配角色"  _open_url="/privilege/admin_role.do?admin_id=${row.admin_id}" class="btn btn-primary btn-outline btn-xs">角色分配</a>
+							
+						<!-- end -->
+                     
+				  	 
+				  	 	<!-- if(row.admin_loginname == "admin" || row.admin_loginname == ADMIN_INFO.adminLoginname) -->
+						<!-- else -->
+							
+							<a  href="#" class="btn btn-primary btn-outline btn-xs"  _confirm_url="/privilege/admin_del.do?admin_id=${row.admin_id}" _confirm_msg="确认要删除用户“${row.admin_loginname}”吗？">删除</a>
+							</li>
+						<!-- end -->
+			
+			</td>
+			
+		</tr>
+		<!-- end -->
+	</table>
+
+</div>
+
+			<div class="row">
+				 	
+				 	${pageStr}
+
+			 	</div>
+
+
+
+</div></div></div></div></div>
+
+
+
+
+<script>
+
+function update_admin_status(a, data){
+	if(data.admin_status == "1"){
+		a.html("（启用）");
+	}else{
+		a.html('<span class="font_gray">（禁用）</span>');
+	}
+	parent.page_reload();
+}
+
+</script>
+<!--#include file="/common/footer.html" -->

@@ -1,0 +1,77 @@
+<!--#include file="/common/header_detail.html" -->
+ <!--{var sf = native  com.huacai.web.controller.task.TaskController.getSimpleFilename(String);}-->
+<script src="/resources/js/plugins/validate/jquery.validate.min.js"></script>
+<script src="/resources/js/plugins/validate/messages_zh.min.js"></script>
+
+<div style="overflow: hidden;position: relative;width: 100%; padding-top:5px;">
+ <form action='/task/upload.do?actType=save&module=${module}&type=${type}' method='post' name="edit_from" id="edit_from"  target="ifr"     class="form-horizontal"   enctype="multipart/form-data">
+  <input type="hidden"  name="task_id"   value="${task_id}" /> 
+ 
+ <!-- if(type == 1) -->
+ <table class="table table-striped table-hover">
+	  <tr>
+      	<td>文件
+        </td>
+        <td>
+        	<input type="file" name="fname" />
+        </td>
+      </tr>
+      <tr>
+      	<td>简介
+        </td>
+        <td>
+        	<textarea name="remark"></textarea>
+        </td>
+      </tr>
+</table>
+<!--else-->
+<table class="table table-striped table-hover">
+	  <tr>
+      	<td>历史文件
+        </td>
+        <td>
+        	<table class="table ">
+            	<tr><td>选择</td><td>任务名称</td><td>文件名称</td><td>上传时间</td><td>备注</td></tr>
+                <!-- for(row : hfiles) -->
+                <tr><td><input  type="radio" name="hfile" value="${row.file}"/></td><td>${row.task_name}</td><td>${sf(row.file)}</td><td>${getDate(row.ctime,"yyyy-MM-dd")}</td><td>${row.remark}</td></tr>
+                <!-- end -->
+            </table>
+        </td>
+      </tr>
+      <tr>
+      	<td>简介
+        </td>
+        <td>
+        	<textarea name="remark"></textarea>
+        </td>
+      </tr>
+      
+      <tr><td></td></tr>
+      <tr><td colspan="2">${pageStr}</td></tr>
+</table>
+<!-- end -->
+<div >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="edit_table_label"></div>
+<div style="height:71px"></div>
+<div class="modal-footer">
+					<a    href="javascript:void(0);" class="btn btn-primary "   onclick="upload()">修改</a>	
+</div>
+</form>  
+<iframe src="#" width="0" height="0" id="ifr" name="ifr"></iframe>
+ <script>
+  function upload(){
+	  $("#edit_from").submit();
+	 }
+
+function isInt(str) {
+   // var g = /^[1-9]*[1-9][0-9]*$.[\d]{2}/;
+    var g = /^[\d]+\.[\d]{2}$/;
+    return g.test(str);
+}
+function g(str) {
+	   var g = /^[1-9]*[1-9][0-9]*$/;
+	    return g.test(str);
+	}
+    </script>
+    
+</div>
+<!--#include file="/common/footer.html" -->

@@ -1,0 +1,155 @@
+<!--#include file="/common/header.html" -->
+<script src="/resources/js/plugins/layer/laydate/laydate.js"></script>
+<script>
+$(document).ready(function () {
+    
+ //日期范围限制
+    var start = {
+        elem: '#start',
+        format: 'YYYY-MM-DD ',
+        //min: '2013', //laydate.now()设定最小日期为当前日期
+        //max: '2099-06-16', //最大日期
+        istime: false,
+        istoday: false,
+        choose: function (datas) {
+           end.min = datas; //结束日选好后，重置开始日的最大日期
+        }
+    };
+    var end = {
+        elem: '#end',
+        format: 'YYYY-MM-DD ',
+        min: '${start}', //laydate.now()设定最小日期为当前日期
+        // max: '2099-06-16',
+        istime: false,
+        istoday: false,
+        choose: function (datas) {
+            start.max = datas; //开始日选好后，重置结束日的最小日期
+        }
+    };
+    laydate(start);
+    laydate(end);
+});
+</script>
+<div class="wrapper wrapper-content animated fadeInRight">
+	<div class="row">
+		<div class="col-lg-12">
+        
+          	<div class="ibox-content">
+			
+		<!--	<div class="m-b-sm m-t-sm">
+					<a    href="javascript:void(0);" class="btn btn-primary " id="export_btn" name="export_btn">导出</a>	
+			</div>-->
+		
+<div class="search_box" id="search_box">
+<form action="/syslog/opt_log_list.do" method="get" name="search_from" id="search_from">
+	
+	<table cellpadding="0" cellspacing="0" border="0" width="100%">
+	   
+    	<tr>
+		 <td>
+		<table cellpadding="0" cellspacing="0" border="0">
+			<tr>
+		
+			<td align="right" >&nbsp;&nbsp;登录名：</td>
+			<td align="left"><input type="text" name="logs_admin_loginname" value="${logs_admin_loginname}"  class="input-sm form-control"/></td>
+			
+			
+			<td align="right" >&nbsp;&nbsp;姓名：</td>
+			<td align="left"><input type="text" name="logs_admin_realname" value="${logs_admin_realname}" class="input-sm form-control"/></td>
+			
+			
+			<td align="right" >&nbsp;&nbsp;系统：</td>
+			<td align="left"><select name="logs_app" class="form-control input-sm inline">
+				<option value="" <!-- if(logs_app=="") -->selected<!-- end -->>全部</option>
+				<!-- for(row : appNames) -->
+					<!-- if(row.key == "3"||row.key == "4") -->
+					
+					<!-- else -->
+						<option value="${row.key}" <!-- if(row.key == logs_app) -->selected<!-- end -->>${row.val}</option>
+					<!-- end -->
+				
+				<!-- end -->
+			</select></td>
+			</tr>
+			<tr height="10"> </tr>
+			<tr>
+		
+			<td align="right" >&nbsp;&nbsp;开始时间：</td>
+			<td align="left"><input type="text" name="begin_time" id="start" class="form-control input-sm" value="${begin_time}" /></td>
+			
+			
+			<td align="right" >&nbsp;&nbsp;结束时间：</td>
+			<td align="left"><input type="text" name="end_time" id="end" class="form-control input-sm" value="${end_time}" /></td>
+			
+			
+			<td>&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" class="btn btn-sm btn-primary">搜索</button></td>
+			 </tr>
+		</table>
+
+	</td>
+
+        </tr>
+    </table>
+</form>
+</div>
+<hr />
+
+<div class="row" id="list_body">
+	<table class="table table-striped table-hover">
+	<thead>
+		<tr >
+			<th >序号</th>
+			<th >登录名</th>
+			<th>姓名</th>
+			<th >系统</th>
+			<th >操作类型</th>
+			<th >结果</th>
+			<th >IP</th>
+			<th >时间</th>
+			<th>日志内容</th>
+		</tr>
+		</thead>
+		<!-- for(row : logList) -->
+		<tr height="32">
+			<td align="center">${for.iter.index+1+pageSize*(curPage-1)}</td>
+			<td align="left" title="${row.logs_admin_loginname}">${cutStr(row.logs_admin_loginname,30,"...")}</td>
+			<td align="center" title="${row.logs_admin_realname}">${cutStr(row.logs_admin_realname,10,"...")}</td>
+			<td align="center">${native com.huacai.web.common.SysLogConstants.BOSS_APP[intval(row.logs_app)]}</td>
+			<td align="center">${native com.huacai.web.common.SysLogConstants.OP_TYPE[intval(row.logs_op_type)]}</td>
+			<td align="center">
+			<!-- if(row.logs_status == 1) -->
+				${native com.huacai.web.common.SysLogConstants.OP_STATUS[intval(row.logs_status)]}
+			<!-- else -->
+			<span class="font_gray">
+				${native com.huacai.web.common.SysLogConstants.OP_STATUS[intval(row.logs_status)]}
+			</span>
+			<!-- end -->
+			</td>
+			<td align="left">${row.logs_ip}</td>
+			<td align="center">${date("Y-m-d H:i:s", row.logs_create_time)}</td>
+			<td align="left" title="${row.logs_title}">${cutStr(row.logs_title,100,"...")}</td>
+		</tr>
+		<!-- end -->
+	</table>
+	</div>
+
+				<div class="row">
+				 	
+				 	${pageStr}
+
+			 	</div>
+
+
+</div></div></div></div></div>
+
+</div>
+<script>
+
+
+
+$("#export_btn").click(function(){
+	 	window.location.href="/syslog/opt_log_export.do?"+$('#search_from').serialize();
+});
+
+</script>
+<!--#include file="/common/footer.html" -->

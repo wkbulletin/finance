@@ -1,0 +1,314 @@
+<!--#include file="/common/header_detail.html" -->
+<script src="/resources/js/plugins/layer/laydate/laydate.js"></script>
+<script>
+  $(document).ready(function () {
+
+	   //日期范围限制
+    var active_begindate = {
+        elem: '#active_begindate',
+        format: 'YYYY-MM-DD',
+         max: '${active_enddate}',
+        istime: false,
+        istoday: false,
+        choose: function (datas) {
+       			active_enddate.min = datas; //结束日选好后，重置开始日的最大日期
+        }
+    };
+    var active_enddate = {
+        elem: '#active_enddate',
+        format: 'YYYY-MM-DD',
+        min: '${active_begindate}', //laydate.now()设定最小日期为当前日期
+        istime: false,
+        istoday: false,
+        choose: function (datas) {
+            active_begindate.max = datas; //开始日选好后，重置结束日的最小日期
+        }
+    };
+
+    laydate(active_begindate);
+    laydate(active_enddate);
+    });
+    
+</script>
+<div id="body">
+
+<form action="/active/active_add.do" method="post" class="form-horizontal" name="edit_from" role="frm" id="frm" >
+<input name="act" type="hidden" value="save"/>
+<div class="row" >
+ <div class="col-lg-12" >
+	<div class="ibox-content" >
+		
+		<div class="form-group">
+			<label class="col-sm-2 control-label">活动编号：</label>
+	      <div class="col-sm-5">
+	          <input name="active_code" id="active_code" type="text"  value="${active_code}" class="input-sm form-control"  />
+	      </div>
+	      <div class="col-sm-5"></div>
+	   </div>
+	   
+	   <div class="form-group">
+			<label class="col-sm-2 control-label">活动名称：</label>
+	      <div class="col-sm-5">
+	          <input name="active_name"  type="text"  value="${active_name}" class="input-sm form-control" />
+	      </div>
+	      <div class="col-sm-5"></div>
+	   </div>
+	 
+	 
+	  <div class="form-group">
+			<label class="col-sm-2 control-label">活动发起人：</label>
+	      <div class="col-sm-5">
+	          <input name="active_founder"  type="text"  value="${active_founder}" class="input-sm form-control" />
+	      </div>
+	      <div class="col-sm-5"></div>
+	   </div>
+	   
+	   
+	    <div class="form-group">
+	       <label class="col-sm-2 control-label">活动类型：</label>
+	       <div class="col-sm-5">
+	       	<select name="active_type" class="form-control"  onchange="changType(this)" class="form-control input-sm inline">
+	      	 	 <option value="">请选择</option>
+				 <!-- for(row : activetype) -->
+						<option value="${row.key}">${row.value}</option>
+				 <!-- end -->
+			</select> 
+	       </div>
+	       <div class="col-sm-5"></div>
+	    </div>  
+	     
+		<div class="form-group">
+			<label class="col-sm-2 control-label">赠送条件：</label>
+			
+			
+		
+		 <div class="col-sm-5" id="activeTradeMoney_div" style="width:150px">
+		   满足金额(元)<input type="text" name="active_trademoney" id="active_trademoney"  maxlength="32" class="input-sm form-control"/>
+		 </div>
+		
+	      <div class="col-sm-5" style="width:150px">
+	        赠送彩金金额(元)  <input name="activeHandsel" id="activeHandsel" type="text"  class="input-sm form-control" />
+	      </div>
+	     
+	   </div>
+	   
+	   <div class="form-group">
+			<label class="col-sm-2 control-label">开始时间：</label>
+	      <div class="col-sm-5">
+	           <input type="text" name="active_begindate" id="active_begindate" class="form-control input-sm" value="${active_begindate}" /> 
+	      </div>
+	      <div class="col-sm-5"></div>
+	   </div>
+	   
+	   <div class="form-group">
+			<label class="col-sm-2 control-label">结束时间：</label>
+	      <div class="col-sm-5">
+	           <input type="text" name="active_enddate" id="active_enddate" class="form-control input-sm" value="${active_enddate}" /> 
+	      </div>
+	      <div class="col-sm-5"></div>
+	   </div>
+	   
+	      <div class="form-group">
+			<label class="col-sm-2 control-label">平台选择：</label>
+		 <div class="col-sm-5">
+		  <a href="#" id="btn_active_platform_ids_sel_all" class="link_green">全部选择</a>
+	      <a href="#" id="btn_active_platform_ids_dsel_all" class="link_green">取消选择</a>
+		 </div>		
+	   </div>
+	   
+	    <div class="form-group">
+			<label class="col-sm-2 control-label">参与平台：</label>
+	      <div class="col-sm-5">
+		  		 <!-- for(row : platform) -->
+						<input name="active_platform" type="checkbox" value="${row.key}" />${row.value}${row.br}
+				 <!-- end -->	            
+	      </div>
+	      <div class="col-sm-5"></div>
+	   </div>
+	   
+	    <div class="form-group">
+			<label class="col-sm-2 control-label">商户选择：</label>
+		 <div class="col-sm-5">
+		  <a href="#" id="btn_active_merchant_ids_sel_all" class="link_green">全部选择</a>
+	      <a href="#" id="btn_active_merchant_ids_dsel_all" class="link_green">取消选择</a>
+		 </div>		
+	   </div>
+	   
+		 <div class="form-group">
+			<label class="col-sm-2 control-label">参与商户：</label>
+	      <div class="col-sm-5">
+	           <!-- for(row : agentList) -->
+						<input name="active_merchant" type="checkbox" value="${row.key}" />${row.value}${row.br}
+				 <!-- end -->	
+	      </div>
+	   </div>
+	   
+	      <div class="form-group">
+			<label class="col-sm-2 control-label">地区选择：</label>
+		 <div class="col-sm-5">
+		  <a href="#" id="btn_active_area_ids_sel_all" class="link_green">全部选择</a>
+	      <a href="#" id="btn_active_area_ids_dsel_all" class="link_green">取消选择</a>
+		 </div>	
+	   </div>
+	   
+	    <div class="form-group">
+			<label class="col-sm-2 control-label">参与地区：</label>
+	      <div class="col-sm-5">
+	            <!-- for(row : area) -->
+						<input name="active_area" type="checkbox" value="${row.key}" />${row.value}${row.br}
+				 <!-- end -->	
+	      </div>
+	   </div>
+	   
+	   <div class="form-group">
+					       <label class="col-sm-2 control-label">活动描述：</label>
+					       <div class="col-sm-10">
+					       <td><textarea name="active_desc" cols="48" rows="4" >${active_desc}</textarea>
+						   </td>
+			  </div>
+		 </div>
+	
+					    			    
+	</div>
+</div>
+
+<div style="height:71px">
+</div>
+
+<div class="modal-footer">
+	<button class="btn btn-primary" id="save-data" type="submit" >保存</button>
+	<button data-dismiss="modal" class="btn btn-white" type="button">关闭</button>
+</div>
+</form>
+</div>
+
+<script>
+function changType(obj) {
+	
+	if(obj.value == "1") {
+		$("#activeTradeMoney_div").hide();
+		$("#activeTradeMoney").val("1");
+		
+	}else{
+		$("#activeTradeMoney_div").show();
+	}
+}
+
+$("#btn_active_platform_ids_sel_all").click(function (event){
+		event.preventDefault();
+		$("input[name=active_platform]").each(function (){
+			this.checked=true;
+		}).change();
+	});
+
+$("#btn_active_platform_ids_dsel_all").click(function (event){
+		event.preventDefault();
+		$("input[name=active_platform]").each(function (){
+			this.checked=false;
+		}).change();
+	});
+
+
+
+
+$("#btn_active_merchant_ids_sel_all").click(function (event){
+		event.preventDefault();
+		$("input[name=active_merchant]").each(function (){
+			this.checked=true;
+		}).change();
+	});
+
+$("#btn_active_merchant_ids_dsel_all").click(function (event){
+		event.preventDefault();
+		$("input[name=active_merchant]").each(function (){
+			this.checked=false;
+		}).change();
+	});
+
+
+
+$("#btn_active_area_ids_sel_all").click(function (event){
+		event.preventDefault();
+		$("input[name=active_area]").each(function (){
+			this.checked=true;
+		}).change();
+	});
+
+$("#btn_active_area_ids_dsel_all").click(function (event){
+		event.preventDefault();
+		$("input[name=active_area]").each(function (){
+			this.checked=false;
+		}).change();
+	});	
+	
+function submit_form(){
+
+	var frm = $("#frm");
+	var post_data = frm.serialize();
+	setTimeout(function(){
+	    layer.load("请稍候......", 10);
+	}, 0);
+	$.post(frm.attr("action"), post_data, function (data){
+		layer.closeAll('loading');
+		if(data && data.result == 1){
+			layer.alert(data.message,1 ,function (index){
+				layer.close(index);
+				parent.$('#myModal').modal('hide');
+				parent.page_reload();
+			});
+			return;
+		}else if(data){
+			layer.alert(data.message,8,function(index){
+				layer.close(index);
+			});
+			return;
+		}
+		layer.alert('操作失败');
+		
+	}, "json");
+	return false;
+}
+
+$(function(){
+$("#frm").validate({
+		submitHandler:function() {
+            submit_form();
+        },
+        rules: {
+            active_code: {
+                required: true
+            },
+			active_name: {
+                required: true
+            },
+			active_founder: {
+                required: true
+            },
+			active_type: {
+                required: true
+            },
+			active_trademoney: {
+                required: true
+            },
+			active_begindate: {
+                required: true
+            },
+			active_enddate: {
+                required: true
+            },
+			active_platform: {
+                required: true
+            },
+			active_merchant: {
+                required: true
+            },
+			active_area: {
+                required: true
+            }
+        }
+       
+    });
+});
+
+</script>
+<!--#include file="/common/footer_detail.html" -->

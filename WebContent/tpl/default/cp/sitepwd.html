@@ -1,0 +1,135 @@
+<!--#include file="/common/header.html" -->
+<script src="/js/md5.js"></script>
+<div class="nav_title" id="nav_title">设置充值提款密码</div>
+<div id="list_edit_body">
+	<form action="" method="post" name="edit_from" id="edit_from" onsubmit="return mySubmit(this)">
+	<div class="box_space" ></div>
+		<table cellpadding="0" cellspacing="2" border="0" class="list_edit_table" >
+			<tr>
+				<td align="right" class="title">渠道：</td>
+				<td align="left">
+					<select name="agentid" id="agentid" style="width:200px;" onchange="selectParm();">
+							<option value="">请选择渠道</option>
+							<!-- for(row:agentList) -->
+							<option value="${row.agentid},${row.cpwd},${row.tpwd}">${row.name}</option>
+							<!-- end-->
+					</select>
+				</td>
+			</tr>
+<!-- 充值密码设置 -->
+			<tr>
+				<td align="right" class="title">充值密码：</td>
+			</tr>
+			<tr>
+				<td align="right">原密码：</td>
+				<td align="left">
+					<input id="coldPwd" name="coldPwd" type="text" value="" style="width: 200px" maxlength="16" v_rule='{"model":"password", "len":"4,16","msg_fail":"充值原密码输入错误，请输入4-16位字母数字组合","msg_ok":"输入正确"}'/>
+					<input id="crealPwd" name="crealPwd" type="hidden" value=""/>
+					<input id="idx" name="idx" type="hidden" value=""/>
+				</td>
+			</tr>
+			<tr>
+				<td align="right">新密码：</td>
+				<td align="left"><input id="cnewPwd" name="cnewPdw" type="text" value="" maxlength="16" style="width: 200px" v_rule='{"model":"password", "len":"4,16","msg_fail":"充值新密码输入错误，请输入4-16位字母数字组合","msg_ok":"输入正确"}'/></td>
+			</tr>
+			<tr>
+				<td align="right">重复密码：</td>
+				<td align="left"><input id="crepeatPwd" name="crepeatPwd" type="text" value="" maxlength="16" style="width: 200px" v_rule='{"model":"repeat","to":"cnewPwd","msg_fail":"两次输入充值密码不一致","msg_ok":"输入正确"}'/></td>
+			</tr>
+<!-- 提款密码设置 -->			
+			<tr>
+				<td align="right" class="title">提款密码：</td>
+			</tr>
+			<tr>
+				<td align="right">原密码：</td>
+				<td align="left">
+					<input id="toldPwd" name="toldPwd" type="text" value="" style="width: 200px" maxlength="16" v_rule='{"model":"password", "len":"4,16","msg_fail":"提款原密码输入错误，请输入4-16位字母数字组合","msg_ok":"输入正确"}'/>
+					<input id="trealPwd" name="trealPwd" type="hidden" value=""/>
+				</td>
+			</tr>
+			<tr>
+				<td align="right">新密码：</td>
+				<td align="left"><input id="tnewPwd" name="tnewPdw" type="text" value="" maxlength="16" style="width: 200px" v_rule='{"model":"password", "len":"4,16","msg_fail":"提款新密码输入错误，请输入4-16位字母数字组合","msg_ok":"输入正确"}'/></td>
+			</tr>
+			<tr>
+				<td align="right">重复密码：</td>
+				<td align="left"><input id="trepeatPwd" name="trepeatPwd" type="text" value="" maxlength="16" style="width: 200px" v_rule='{"model":"repeat","to":"tnewPwd","msg_fail":"两次输入提款密码不一致","msg_ok":"输入正确"}'/></td>
+			</tr>
+			
+        	<tr>
+				<td align="right">&nbsp;</td>
+        		<td>
+            		<input type="submit" value="确认" id="btn_submit" />
+            		<input type="button" value="关闭" id="btn_close"  />
+            	</td>
+        	</tr>
+		</table>
+	</form>
+</div>
+<script>
+	$(document).ready(function() {
+		$("#edit_from").newforms();
+		form_v.init(document.edit_from,null,null,"dialog");
+
+		$("#btn_close").click(function (event){
+			event.preventDefault();
+			window.top.x_open.close();
+		});
+	});
+
+	function selectParm(){
+		var agent=$("#agentid").val();
+		var arr = agent.split(",")
+		$("#idx").val(arr[0]);
+		$("#crealPwd").val(arr[1]);
+		$("#trealPwd").val(arr[2]);	
+	}
+	
+	function mySubmit(frm){
+		var agentid=$("#agentid").val();
+		if(agentid==""){
+			my_alert("请选择渠道");
+			return false;
+		}
+		if(!form_v.check(frm)){
+			return false;
+		}
+		var frm = $(frm);
+//处理充值密码
+		//新密码获取加密
+		var crepeatPwd = document.getElementById("crepeatPwd").value;
+		var crepeatPwdD = hex_md5(crepeatPwd);
+		//document.getElementById("repeatPwd").value = repeatPwdD;
+		//老密码获取加密
+		var coldPwd = document.getElementById("coldPwd").value;		
+		var coldPwdD = hex_md5(coldPwd);		
+		//document.getElementById("oldPwd").value = oldPwdD;
+//处理提款密码
+		//新密码获取加密
+		var trepeatPwd = document.getElementById("trepeatPwd").value;
+		var trepeatPwdD = hex_md5(trepeatPwd);
+		//document.getElementById("repeatPwd").value = repeatPwdD;
+		//老密码获取加密
+		var toldPwd = document.getElementById("toldPwd").value;		
+		var toldPwdD = hex_md5(toldPwd);
+		var post_data = frm.serialize();
+		//请求后台
+		var url = "/cp/parm_site.do?act=pwd_save&coldPwdD="+coldPwdD+"&crepeatPwdD="+crepeatPwdD+"&trepeatPwdD="+trepeatPwdD+"&toldPwdD="+toldPwdD;
+		$.post(url, post_data, function (data){
+			if(data && data.result == 1){
+				my_alert(data.message, function (){
+					parent.location.reload();
+				});
+				return;
+			}else if(data){
+				my_alert(data.message, function (){
+
+				});
+				return;
+			}	
+		}, "json");
+		return false;
+	}
+	
+</script>
+<!--#include file="/common/footer.html" -->

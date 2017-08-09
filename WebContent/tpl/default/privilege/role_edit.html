@@ -1,0 +1,149 @@
+<!--#include file="/common/header_detail.html" -->
+<div id="body">
+
+<!-- if(role_id>0) -->
+<form action="/privilege/role_edit.do" method="post" class="form-horizontal" name="edit_from" role="frm" id="frm" >
+<!-- else -->
+<form action="/privilege/role_add.do" method="post" class="form-horizontal" name="edit_from" role="frm" id="frm" >
+<!-- end -->
+<input name="act" type="hidden" value="save"/>
+<input name="role_id" id="role_id" type="hidden" value="${role_id}"/>
+<div class="row">
+ <div class="col-lg-12">
+	<div class="ibox-content" style="height:400px;">
+		
+		<div class="form-group">
+			<label class="col-sm-2 control-label">角色名称：</label>
+	      <div class="col-sm-5">
+	     
+	          <input name="role_name" id="role_name" type="text"  value="${role_name}" class="form-control"  />
+	      </div>
+	      <div class="col-sm-5"></div>
+	   </div>
+	  
+	    <div class="form-group">
+	       <label class="col-sm-2 control-label">角色状态：</label>
+	       <div class="col-sm-5">
+	           <select name="role_status" class="form-control">
+				<option value="1" if(role_status==1)selectedend>启用</option>
+				<option value="0" if(role_status==0)selectedend>禁用</option>
+			</select>
+	       </div>
+	       <div class="col-sm-5"></div>
+	    </div>
+	    <div class="form-group">
+	       <label class="col-sm-2 control-label">备注信息：</label>
+	       <div class="col-sm-5">
+	           <textarea name="role_desc" type="text" class="form-control"  style="height:100px;"/>${role_desc}</textarea>
+	       </div>
+	       <div class="col-sm-5"></div>
+	    </div>   
+	</div>
+</div>
+</div>
+
+<div class="modal-footer">
+	
+	<button class="btn btn-primary" id="save-data" type="submit" >保存</button>
+	<button data-dismiss="modal" class="btn btn-white" type="button">关闭</button>
+</div>
+</form>
+</div>
+
+
+
+<script>
+function submit_form_pwd(){
+
+	var frm = $("#frm");
+	var post_data = frm.serialize();
+	setTimeout(function(){
+	    layer.load("请稍候......", 10);
+	}, 0);
+	$.post(frm.attr("action"), post_data, function (data){
+		layer.closeAll('loading');
+		if(data && data.result == 1){
+			layer.alert(data.message,1 ,function (index){
+				layer.close(index);
+				parent.$('#myModal').modal('hide');
+				parent.page_reload();
+			});
+			return;
+		}else if(data){
+			layer.alert(data.message,8,function(index){
+				layer.close(index);
+			});
+			return;
+		}
+		layer.alert('操作失败');
+		
+	}, "json");
+	return false;
+}
+
+$(function(){
+$("#frm").validate({
+		submitHandler:function() {
+            submit_form_pwd();
+        },
+        rules: {
+            role_name: {
+                required: true,
+                minlength: 2,
+                maxlength: 40,
+                remote:{                                          //验证用户名是否存在
+	               type:"POST",
+	               url:"/privilege/role_check.do",            
+	               data:{
+	                 act:"name",
+	                 role_name:function(){return $("#role_name").val();},
+	                 role_id:function(){return $("#role_id").val();}
+	               } 
+                } 
+            },
+            role_desc: {
+                maxlength: 200
+            }
+            
+        },
+        messages: {
+                role_name: {
+                    required: "请输入角色名称",
+                    minlength: "请输入2-40位字母数字组合",
+                    maxlength: "请输入2-40位字母数字组合",
+                    remote: "名称已存在"
+                },
+                role_desc: {
+                    maxlength: "最多输入200个字符"
+                }
+            }
+    });
+});
+$("button[data-dismiss='modal']").click(function(){
+	//关闭弹出层
+	parent.$('#myModal').modal('hide');
+});
+
+var h = parent.$("#recipient-name").attr("height");
+$('#body').slimScroll({
+	height: 'auto',
+});
+
+window.setTimeout(function(){
+	parent.$(".modal-content").removeClass("bounceInRight");
+},1000);
+
+function check_name(inp, fn){
+	$.post("/privilege/role_check.do?_t="+getTime(), { "act": "name", "role_name": inp.value, "role_id":"${role_id}" },
+		function(data){
+			if(data.result == 1){
+				fn(true, data.message);
+			}else{
+				fn(false, data.message);
+			}
+		}, "json");
+
+}
+</script>
+
+<!--#include file="/common/footer_detail.html" -->

@@ -1,0 +1,27 @@
+<!--#include file="/common/print_header.html" -->
+<table width="100%"  border="1" cellpadding="3" cellspacing="0" bordercolor="#000000"> 
+		<tr bgcolor="#E6E6E6"> 
+			<th align="center">ID</th>
+			<th align="center">登录名</th>
+			<th align="center">姓名</th>
+			<th align="center">联系电话</th>
+			<th align="center">所属部门</th>
+		</tr> 
+<!-- for(row : adminList) -->
+		<tr bgcolor="#F6F6F6"> 
+			<td align="center">${row.admin_id}</td>
+			<td align="center">${row.admin_loginname}</td>
+			<td align="center">${row.admin_realname}</td>
+			<td align="center">${row.admin_tel}</td>
+			<td align="center">${row.admin_department}</td>
+		</tr> 
+<!-- end -->
+</table>
+<script>
+$(document).ready(function(){
+	//根据需要可以设置默认宽度
+	//set_width("800");
+});
+
+</script>
+<!--#include file="/common/print_footer.html" -->

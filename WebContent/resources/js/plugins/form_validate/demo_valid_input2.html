@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+
+<body style="background:#DFE9F6">
+<script src="/boss/js/jquery/jquery.min.js"></script>
+<link href="js/newforms/skins/edit/css/style.css" rel="stylesheet" type="text/css" />
+<script src="js/newforms/jquery.newforms.js"></script>
+<link href="js/calendar/skins/lhgcalendar.css" rel="stylesheet" type="text/css" />
+<script src="js/calendar/lhgcalendar.js"></script>
+
+
+
+<link href="js/form_validate/skins/default/style.css" rel="stylesheet" type="text/css" />
+<script src="js/form_validate/form_validate.js"></script>
+
+
+<script>
+$(document).ready(function(){
+	$("#form1").newforms();
+	
+	form_v.init(document.form1);
+});
+
+
+</script>
+
+<form id="form1" name="form1" method="post" action="" onsubmit="return form_v.check(this)">
+<table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#666666">
+	<tr>
+		<td width="200" align="right" bgcolor="#FFFFFF"><strong>昵称（带服务器验证）</strong></td>
+		<td width="300" bgcolor="#FFFFFF"><input name="textfield" type="text" size="22" value="andyfoo" maxlength="64" style="width:280px;"  v_rule='{"model":"nickname","def_check_fun":"check_username","msg_fail":"昵称格式错误","msg_ok":"输入正确"}'/>		</td>
+		<td bgcolor="#FFFFFF"> v_rule='{&quot;model&quot;:&quot;nickname&quot;,&quot;def_check_fun&quot;:&quot;check_username&quot;,&quot;msg_fail&quot;:&quot;昵称格式错误&quot;,&quot;msg_ok&quot;:&quot;输入正确&quot;}'</td>
+	</tr>
+
+	<tr>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+		<td bgcolor="#FFFFFF"><input type="submit" name="Submit" value="  提 交  " />
+			<input type="reset" name="Submit" value="  重  置  " />
+			<input type="button" name="Submit" value="  按 钮  " /></td>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+	</tr>
+	<tr>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+	</tr>
+	<tr>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+</table>
+<table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#999999">
+	<tr>
+		<td width="13%" bgcolor="#FFFFFF">&nbsp;</td>
+		<td width="87%" bgcolor="#FFFFFF">check_username为自定义函数，内容如下： </td>
+		</tr>
+	<tr>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+		<td bgcolor="#FFFFFF"><pre>
+&lt;script&gt;
+
+function <strong>check_username</strong>(inp, fn){
+	$.post("demo_valid_input.php", { "act": "check_nickname", "nickname": inp.value },
+		function(data){
+			if(data.result == 0){//可以注册
+				fn(true, data.message);
+			}else{//不可以注册
+				fn(false, data.message);
+			}
+		}, "json");
+
+}
+
+&lt;/script&gt;
+		
+		</pre></td>
+		</tr>
+</table>
+</form>
+
+<script>
+
+function check_username(inp, fn){
+	$.post("demo_valid_input.php", { "act": "check_nickname", "nickname": inp.value },
+		function(data){
+			if(data.result == 0){
+				fn(true, data.message);
+			}else{
+				fn(false, data.message);
+			}
+		}, "json");
+
+}
+
+</script>
+</body>
+</html>

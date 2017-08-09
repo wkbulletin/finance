@@ -1,0 +1,148 @@
+<!--#include file="/common/header_detail.html" -->
+<script src="/resources/js/plugins/summernote/summernote.min.js"></script>
+<script src="/resources/js/plugins/summernote/summernote-zh-CN.js"></script>
+<link href="/resources/css/plugins/summernote/summernote.css" rel="stylesheet">
+<link href="/resources/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
+<div id="body">
+
+<form action="/sysnotice/notice_edit.do" method="post" class="form-horizontal" name="edit_from" role="frm" id="frm" >
+<input name="act" type="hidden" value="save"/>
+<div class="row" >
+ <div class="col-lg-12" >
+	<div class="ibox-content" >
+		
+		<div class="form-group">
+			<label class="col-sm-2 control-label">公告编号：</label>
+	      <div class="col-sm-5">
+	          <input name="noticeId" id="noticeId" type="text"  value="${id}" class="input-sm form-control" readonly/>
+	      </div>
+	      <div class="col-sm-5"></div>
+	   </div>
+	   
+	   
+	    <div class="form-group">
+	       <label class="col-sm-2 control-label">所属系统：</label>
+	       <div class="col-sm-5">
+	       	<select name="systemId"  id="systemId" class="input-sm form-control"  class="form-control input-sm inline">
+				<option value="" >请选择</option>
+				 <!-- for(row : system) -->
+						<option value="${row.id}" <!-- if(systemid==row.id) -->selected<!-- end -->>${row.name}</option>
+				 <!-- end -->
+			</select> 
+	       </div>
+	       <div class="col-sm-5"></div>
+	    </div>  
+		
+		  <div class="form-group">
+	       <label class="col-sm-2 control-label">公告类型：</label>
+	       <div class="col-sm-5">
+	       	<select name="type"  id="type" class="form-control input-sm inline">
+				<option value="" >请选择</option>
+				<option value="1" <!-- if(type==1) -->selected<!-- end -->>系统公告</option>
+				<option value="2" <!-- if(type==2) -->selected<!-- end -->>大奖播报</option>
+				<option value="3" <!-- if(type==3) -->selected<!-- end -->>紧急通知</option>
+			</select> 
+	       </div>
+	       <div class="col-sm-5"></div>
+	    </div>  
+	     
+		<div class="form-group">
+			<label class="col-sm-2 control-label">标题：</label>
+	      <div class="col-sm-5">
+	          <input name="title" id="title" type="text"  value="${title}" class="input-sm form-control" />
+	      </div>
+	      <div class="col-sm-5"></div>
+	   </div>
+	   
+	 	  
+	 <div class="form-group">
+			 <label class="col-sm-2 control-label">内容：</label>
+					       <div class="col-sm-10">
+					     	  <div class="ibox-content no-padding">
+				  <div class="summernote" id="summernote" name="summernote" >${content}</div>
+				</div>
+			 </div>
+		</div>
+	
+					    			    
+	</div>
+</div>
+
+<div style="height:71px">
+</div>
+
+<div class="modal-footer">
+	<button class="btn btn-primary" id="save-data" type="submit" >保存</button>
+	<button data-dismiss="modal" class="btn btn-white" type="button">关闭</button>
+</div>
+</form>
+</div>
+
+<script>
+function submit_form(){
+
+	var frm = $("#frm");
+	var post_data = frm.serialize();
+	setTimeout(function(){
+	    layer.load("请稍候......", 10);
+	}, 0);
+	
+	var sHTML = $('.summernote').code();
+	
+	//alert(sHTML);
+	$.post(frm.attr("action"), {systemId:$("#systemId").val(),title:$("#title").val(),content:sHTML,act:'save',noticeId:$("#noticeId").val(),type:$("#type").val()}, function (data){
+		layer.closeAll('loading');
+		if(data && data.result == 1){
+			layer.alert(data.message,1 ,function (index){
+				layer.close(index);
+				parent.$('#myModal').modal('hide');
+				parent.page_reload();
+			});
+			return;
+		}else if(data){
+			layer.alert(data.message,8,function(index){
+				layer.close(index);
+			});
+			return;
+		}
+		layer.alert('操作失败');
+		
+	}, "json");
+	return false;
+}
+
+$(function(){
+$("#frm").validate({
+		submitHandler:function() {
+            submit_form();
+        },
+        rules: {
+            title: {
+                required: true
+            },
+			type: {
+                required: true
+            },
+            systemId: {
+                required: true
+            },
+            content: {
+                required: true
+            }
+            
+        }
+       
+    });
+});
+
+
+		
+$(document).ready(function(){
+	 $('.summernote').summernote({
+            lang: 'zh-CN'
+ 	}); 
+ 
+
+});
+</script>
+<!--#include file="/common/footer_detail.html" -->

@@ -1,0 +1,76 @@
+/*公共属性*/
+body, dl, dt, dd, ol, ul, pre, form, field, p, blockquote,  h1, h2, h3, h4, h5, h6 { font-family:"宋体",Arial, Helvetica, sans-serif; margin:0; padding:0; color:#333; font-size:12px;}
+th, td { font-family:"宋体",Arial, Helvetica, sans-serif;  color:#333; font-size:12px;}
+
+body {text-align:left; }
+a{text-decoration:none;color:#444444;}
+a:hover{text-decoration:underline; }
+ul, ol { list-style:none;list-style-type:none;}
+input, textarea, select, button, file {	font-size:12px;}
+img { border:0;}
+.img {display:block;}
+.icon {margin-right:3px;vertical-align:-2px;}
+
+b{font-size:bold;}
+
+
+/*表单相关*/
+input,select{	font-family:"宋体";}
+textarea,.textarea_style{	font-family:"宋体";	border:1px solid #CCCCCC;}
+
+
+
+
+
+/*布局*/
+.clear { clear:both;font-size:0px; }
+
+
+
+/*login*/
+.login_wrap {width: 970px;margin: 0 auto;}
+.login {height: 30px;line-height:30px;background-image: url(../login_bg.png);background-repeat: repeat-x;border-bottom: 1px solid #dadada;}
+.login_01 {
+	float:left;overflow:hidden;
+	width:790px;
+	height: 30px;
+}
+.login_02{float:right;width:140px;overflow:hidden;text-align:right;margin-top:5px; height:20px;line-height:20px; margin-right:2px;}
+.login_02 img{ margin-bottom:-3px;margin-right:2px;}
+.login_02 a:link, .login_02 a:visited { text-decoration:underline; color:#D72C00;}
+.login_02 a:hover, .login_02 a:active { text-decoration:underline; color:#D72C00;}
+
+
+
+.nav{margin:0 auto;width:970px}
+
+
+/*quickWay*/
+.quickWay{margin:6px 0 5px 0;height:70px}
+.quickWay .logo{float:left;padding:20px 0 0 33px; width:200px;}
+.quickWay .btns{
+	float:right;height:70px;width:260px;
+	overflow:hidden; 
+}
+.quickWay ul { clear:both; padding-left:5px; padding-top:52px;}
+.quickWay li {float:left;margin:0px 3px;  }
+
+.quickWay a{text-decoration:none;color:#333333}
+.quickWay a:hover{text-decoration:underline}
+
+
+
+
+
+.bottom{width:970px;margin:0 auto}
+
+/*footer*/
+.footer{height:15px;line-height:15px;padding:5px 0 5px 250px;background:url(../footer_bg.png);clear:both;text-align:center;color:white}
+.footer li{float:left;border-right:1px solid white;padding:0 10px;}
+.footer li a{text-decoration:none;color:white}
+.footer li a:hover{text-decoration:underline}
+.footer ul{margin:5px 0}
+.under_line{text-decoration:underline}
+.en_font{font-family:Arial, Helvetica, sans-serif}
+
+.extra_info p{text-align:center;line-height:20px}

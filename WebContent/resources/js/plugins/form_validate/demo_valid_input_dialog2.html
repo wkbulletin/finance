@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+
+<body style="background:#DFE9F6">
+<script src="/boss/js/jquery/jquery.min.js"></script>
+<link href="js/newforms/skins/edit/css/style.css" rel="stylesheet" type="text/css" />
+<script src="js/newforms/jquery.newforms.js"></script>
+<link href="js/calendar/skins/lhgcalendar.css" rel="stylesheet" type="text/css" />
+<script src="js/calendar/lhgcalendar.js"></script>
+
+<script type="text/javascript" src="js/dialog/dialog.js?skin=huacai"></script>
+
+
+<link href="js/form_validate/skins/default/style.css" rel="stylesheet" type="text/css" />
+<script src="js/form_validate/form_validate.js"></script>
+
+
+<script>
+$(document).ready(function(){
+	$("#form1").newforms();
+	
+	form_v.init(document.form1);
+});
+
+
+</script>
+
+<form id="form1" name="form1" method="post" action="" onsubmit="return form_v.check(this)">
+	<table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#666666">
+		<tr>
+		<td width="200" align="right" bgcolor="#FFFFFF">&nbsp;</td>
+		<td width="300" bgcolor="#FFFFFF"><input name="aaa"  type="text"  size="32" maxlength="32"  v_rule='{ "model":"number","msg_fail":"asdfas","msg_ok":"输入正确"}'/>		</td>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+	</tr>
+	<tr>
+		<td width="200" align="right" bgcolor="#FFFFFF"><strong>a1</strong></td>
+		<td width="300" bgcolor="#FFFFFF"><input name="a1"  type="text"  size="32" maxlength="32" />		</td>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" bgcolor="#FFFFFF"><strong>a2</strong></td>
+		<td bgcolor="#FFFFFF"><input name="a2" type="text"   v_rule='{ "model":"compare","op":">=","to":"a1", "msg_fail":"a2不能小于a1","msg_ok":"输入正确"}' size="32" maxlength="32" />		</td>
+		<td bgcolor="#FFFFFF">v_rule='{ &quot;model&quot;:&quot;compare&quot;,&quot;op&quot;:&quot;&gt;=&quot;,&quot;to&quot;:&quot;a1&quot;, &quot;msg_fail&quot;:&quot;a2不能小于a1&quot;,&quot;msg_ok&quot;:&quot;输入正确&quot;}'</td>
+	</tr>
+	<tr>
+		<td width="200" align="right" bgcolor="#FFFFFF"><strong>日期1</strong></td>
+		<td width="300" bgcolor="#FFFFFF"><input name="date11"  type="text" ntype="date" size="32" maxlength="32" />		</td>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" bgcolor="#FFFFFF"><strong>日期2</strong></td>
+		<td bgcolor="#FFFFFF"><input name="date12" type="text" ntype="date"  v_rule='{ "model":"compare","op":">=","to":"date11", "msg_fail":"日期2不能小于日期1","msg_ok":"输入正确"}' size="32" maxlength="32" />		</td>
+		<td bgcolor="#FFFFFF">v_rule='{ &quot;model&quot;:&quot;compare&quot;,&quot;op&quot;:&quot;&gt;=&quot;,&quot;to&quot;:&quot;date11&quot;, &quot;msg_fail&quot;:&quot;日期2不能小于日期1&quot;,&quot;msg_ok&quot;:&quot;输入正确&quot;}'</td>
+	</tr>
+	<tr>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+		<td bgcolor="#FFFFFF"><input type="submit" name="Submit" value="  提 交  " />
+			<input type="reset" name="Submit" value="  重  置  " />
+			<input type="button" name="Submit" value="  按 钮  " />&nbsp;&nbsp;<a href="#" onclick="add_line(this);return false;">增加</a></td>
+		<td bgcolor="#FFFFFF">当前字段要（&gt;=）to所指的字段，op:&gt;=,&gt;,&lt;,&lt;=,=,!=</td>
+	</tr>
+	<tr>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+		<td bgcolor="#FFFFFF"></td>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+	</tr>
+	<tr>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+		<td bgcolor="#FFFFFF">&nbsp;</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+</table>
+	<table width="100%" border="1" cellpadding="1" cellspacing="1">
+		<tr>
+			<td><strong>加载：</strong><br />
+				&lt;link href=&quot;js/form_validate/skins/default/style.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;<br />
+				&lt;script src=&quot;js/form_validate/form_validate.js&quot;&gt;&lt;/script&gt;<br />
+				<br />
+				<strong>初始化：</strong>
+				</p>
+				<p>&lt;script&gt;<br />
+					$(document).ready(function(){ <br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form_v.init(document.form1);<br />
+					});<br />
+					&lt;/script&gt;</p>
+				<p><strong>FORM修改：</strong><br />
+					&lt;form id=&quot;form1&quot; name=&quot;form1&quot; method=&quot;post&quot; action=&quot;&quot; onsubmit=&quot;return form_v.check(this)&quot;&gt;<br />
+					<br />
+					<strong>表单修改：</strong><br />
+					&lt;input name=&quot;textfield&quot; type=&quot;text&quot; size=&quot;22&quot; maxlength=&quot;32&quot; style=&quot;width:80px;&quot; v_rule='{&quot;model&quot;:&quot;number&quot;,&quot;area&quot;:&quot;1,3&quot;,&quot;msg_fail&quot;:&quot;输入错误,输入数字，最小1,最大3&quot;, &quot;msg_ok&quot;:&quot;输入正确&quot;, &quot;msg&quot;:&quot;请输入数字，最小1,最大3&quot;}'/&gt;</p></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+	</table>
+</form>
+<script>
+
+function add_line(obj){
+
+	var str = 	'<tr>'+
+			'<td width="200" align="right" bgcolor="#FFFFFF"><strong>数字(范围:1-3)</strong></td>'+
+			'<td width="300" bgcolor="#FFFFFF">'+
+			'	<input name="textfield" type="text" size="22" maxlength="32" style="width:80px;" v_rule=\'{"model":"number","area":"1,3","msg_fail":"输入错误,输入数字，最小1,最大3", "msg_ok":"输入正确", "msg":"请输入数字，最小1,最大3"}\'/>'+
+			'	个		</td>'+
+			'<td bgcolor="#FFFFFF"><a href="#" onclick="del_line(this);return false;">删除</a></td>'+
+		'</tr>';
+	var tr = $(obj).parent("td").parent("tr");
+
+	tr.before(str);
+
+
+	$("#form1").newforms();
+	
+	form_v.init(document.form1);
+	
+	
+}
+function del_line(obj){
+	$(obj).parent("td").parent("tr").remove();
+
+	$("#form1").newforms();
+	
+	form_v.init(document.form1);
+	
+	
+}
+
+</script>
+
+</body>
+</html>

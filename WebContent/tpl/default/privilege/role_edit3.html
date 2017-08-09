@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+	<meta id="viewport" name="viewport" content="width=1280, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>boss演示页面</title>
+	<meta http-equiv="pragma" content="no-cache" />
+	<meta name="keywords" content="${keywords}">
+	<meta name="description" content="${description}">
+
+	<link href="/resources/css/bootstrap.min.css?v=3.4.0" rel="stylesheet" />
+	<link href="/resources/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet" />
+	
+	<!-- Morris -->
+	<link href="/resources/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet" />
+	
+	<!-- Gritter -->
+	<link href="/resources/js/plugins/gritter/jquery.gritter.css" rel="stylesheet" />
+	<link href="/resources/css/animate.css" rel="stylesheet" />
+	<link href="/resources/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+	<link href="/resources/js/plugins/layer/skin/layer.css" rel="stylesheet">
+	<link href="/resources/js/plugins/layer/layim/layim.css" rel="stylesheet">
+	<link href="/resources/css/plugins/iCheck/custom.css" rel="stylesheet">
+	
+	<link href="/resources/css/style.css?v=2.2.0" rel="stylesheet" />
+	
+	<script src="/resources/js/jquery-2.1.1.min.js"></script>
+	<script src="/resources/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="/js/md5.js"></script>
+	<script src="/js/common.js"></script>
+	<link rel="stylesheet" type="text/css" href="/js/jquery/plugins/x_dialog/skins/default/style.css" />
+	<script type="text/javascript" src="/js/jquery/plugins/x_dialog/x_dialog.min.js"></script>
+	
+	<script src="/resources/js/plugins/validate/jquery.validate.js"></script>
+	<script src="/resources/js/plugins/validate/messages_zh.min.js"></script>
+	<script src="/resources/js/plugins/layer/laydate/laydate.js"></script>
+	<script src="/resources/js/plugins/layer/layim/layim.js"></script>
+	<script src="/resources/js/plugins/layer/layer.min.js"></script> 
+
+<style>
+	body{background:#F8FAFB;}
+	.modal-footer{
+		position:fixed;
+		bottom:0;
+		width:100%;
+		background:#F8FAFB;
+	}
+</style>
+
+</head>
+
+<body>
+<div id="body">
+
+<!-- if(role_id>0) -->
+<form action="/privilege/role_edit.do" method="post" name="edit_from" role="frm" id="frm" >
+<!-- else -->
+<form action="/privilege/role_add.do" method="post" name="edit_from" role="frm" id="frm" >
+<!-- end -->
+<input name="act" type="hidden" value="save"/>
+<input name="role_id" type="hidden" value="${role_id}"/>
+
+<div class="row">
+ <div class="col-lg-12">
+	<div class="ibox-content">
+		
+		<div class="form-group">
+			<label class="col-sm-2 control-label">登录名</label>
+	      <div class="col-sm-5">
+	     
+	          <input name="admin_loginname" type="text" value="${admin_loginname}" class="form-control"  readonly />
+	      </div>
+	      <div class="col-sm-5"></div>
+	   </div>
+	  
+	    <div class="form-group">
+	       <label class="col-sm-2 control-label">*旧密码</label>
+	       <div class="col-sm-5">
+	           <input type="password" placeholder="请输入旧密码" class="form-control" name="admin_password_old">
+	       </div>
+	       <div class="col-sm-5"></div>
+	    </div>
+	    <div class="form-group">
+	       <label class="col-sm-2 control-label">*新密码</label>
+	       <div class="col-sm-5">
+	           <input type="password" placeholder="请输入新密码" class="form-control" name="admin_password" id="admin_password">
+	       </div>
+	       <div class="col-sm-5"></div>
+	    </div>
+	    <div class="form-group">
+	       <label class="col-sm-2 control-label">*确认新密码</label>
+	       <div class="col-sm-5">
+	           <input type="password" placeholder="请确认新密码" class="form-control" name="admin_password2">
+	       </div>
+	       <div class="col-sm-5"></div>
+	    </div>
+	   
+	</div>
+</div>
+</div>
+<!-- <div class="row">
+ <div class="col-lg-12">
+	<div class="ibox-content">
+		
+		<div class="form-group">
+			<label class="col-sm-2 control-label">角色名称：</label>
+	      <div class="col-sm-5">
+	     
+	          <input name="role_name" type="text" v_rule='{"def_check_fun":"check_name"}' value="${role_name}" class="form-control"  />
+	      </div>
+	      <div class="col-sm-5"></div>
+	   </div>
+	   <div class="form-group">
+			<label class="col-sm-2 control-label">角色名称：</label>
+	      <div class="col-sm-5">
+	     
+	          <input name="role_name" type="text" v_rule='{"def_check_fun":"check_name"}' value="${role_name}" class="form-control"  />
+	      </div>
+	      <div class="col-sm-5"></div>
+	   </div>
+	  
+	    <div class="form-group">
+	       <label class="col-sm-2 control-label">角色状态：</label>
+	       <div class="col-sm-5">
+	           <select name="role_status" class="form-control">
+				<option value="1" if(role_status==1)selectedend>启用</option>
+				<option value="0" if(role_status==0)selectedend>禁用</option>
+			</select>
+	       </div>
+	       <div class="col-sm-5"></div>
+	    </div>
+	    <div class="form-group">
+	       <label class="col-sm-2 control-label">备注信息：</label>
+	       <div class="col-sm-5">
+	           <textarea name="role_desc" type="text" class="form-control"  style="width:300px;height:100px;"/>${role_desc}</textarea>
+	       </div>
+	       <div class="col-sm-5"></div>
+	    </div>   
+	</div>
+</div>
+</div> -->
+
+<div class="modal-footer">
+	
+	<button class="btn btn-primary" id="save-data" type="submit" >保存</button>
+	<button data-dismiss="modal" class="btn btn-white" type="button">关闭</button>
+</div>
+</form>
+</div>
+
+
+<script>
+function submit_form_pwd(){
+
+	var frm = $("#frm");
+	var post_data = frm.serialize();
+
+	$.post(frm.attr("action"), post_data, function (data){
+		
+		if(data && data.result == 1){
+			layer.alert(data.message,1 ,function (){
+				layer.close(index);
+				parent.$('#myModal').modal('hide');
+			});
+			return;
+		}else if(data){
+			layer.alert(data.message,8,function(index){
+				layer.close(index);
+			});
+			return;
+		}
+		layer.alert('操作失败');
+		
+	}, "json");
+	return false;
+}
+
+$(function(){
+$("#frm").validate({
+		submitHandler:function() {
+            submit_form_pwd();
+        },
+        rules: {
+            role_name: {
+                required: true,
+                minlength: 2,
+                maxlength: 40
+            },
+            role_desc: {
+                maxlength: 200
+            }
+            
+        },
+        messages: {
+                role_name: {
+                    required: "请输入角色名称",
+                    minlength: "请输入2-40位字母数字组合",
+                    maxlength: "请输入4-16位字母数字组合"
+                },
+                role_desc: {
+                    maxlength: "最多输入200个字符"
+                }
+            }
+    });
+});
+$("button[data-dismiss='modal']").click(function(){
+	//关闭弹出层
+	parent.$('#myModal').modal('hide');
+});
+
+var h = parent.$("#recipient-name").attr("height");
+$('#body').slimScroll({
+	height: 'auto',
+});
+
+window.setTimeout(function(){
+	parent.$(".modal-content").removeClass("bounceInRight");
+},1000);
+
+function check_name(inp, fn){
+	$.post("/privilege/role_check.do?_t="+getTime(), { "act": "name", "role_name": inp.value, "role_id":"${role_id}" },
+		function(data){
+			if(data.result == 1){
+				fn(true, data.message);
+			}else{
+				fn(false, data.message);
+			}
+		}, "json");
+
+}
+</script>
+</body>
+</html>

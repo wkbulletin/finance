@@ -1,0 +1,243 @@
+<!--#include file="/common/header.html" -->
+<link href="/js/x_tab/skins/fucai1/style.css" rel="stylesheet" type="text/css" />
+<script src="/js/x_tab/xtab.js"></script>
+
+<script src="/js/md5.js"></script>
+
+
+	<div class="xtab">
+		<div class='xtab_out' id='edit_tab0'  xtab_out='xtab_out' xtab_over='xtab_over' xtab_select='xtab_select'>
+			<div class="left"></div>
+			<div class="center">个人信息</div>
+			<div class="right"></div>
+		</div>
+		<div class='xtab_out' id='edit_tab1'  xtab_out='xtab_out' xtab_over='xtab_over' xtab_select='xtab_select'>
+			<div class="left"></div>
+			<div class="center">修改密码</div>
+			<div class="right"></div>
+		</div>
+	</div>
+	<div class="clear"></div>
+	<div id="pn_edit_tab0" class="xtab_pane">
+<form action="/cp/my_info.do" method="post" name="edit_from" id="edit_from" onsubmit="return submit_form(this)">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="edit_table">
+	<input name="act" type="hidden" value="save"/>
+	<tr>
+		<td width="120" align="right" class="title">登录名：</td>
+		<td>
+<input name="admin_loginname" type="text" value="${admin_loginname}" size="48" maxlength="20" style="width:280px" readonly />
+		</td>
+	</tr>
+	<tr>
+		<td width="120" align="right" class="title">*姓名：</td>
+		<td><input name="admin_realname" v_rule='{"model":"text_cn_en", "blen":"2,40", "msg_fail":"输入错误，请输入2到40个中英文字符","msg_ok":"输入正确"}' type="text" value="${admin_realname}" size="48" maxlength="40" style="width:280px"/></td>
+	</tr>
+	<tr>
+		<td width="120" align="right" class="title">所属部门：</td>
+		<td><input name="admin_department" v_rule='{"model":"text_cn_en", "blen":"0,40", "msg_fail":"输入错误，最多40个中英文字符","msg_ok":"输入正确"}' type="text" value="${admin_department}" size="48" maxlength="40" style="width:280px"/></td>
+	</tr>
+	<tr>
+		<td width="120" align="right" class="title">联系电话：</td>
+		<td><input name="admin_tel" v_rule='{"model":"tel", "blen":"0,20", "msg_fail":"输入错误，请输入电话号码，最多20个字符","msg_ok":"输入正确"}' type="text" value="${admin_tel}" size="48" maxlength="20" style="width:280px"/></td>
+	</tr>
+	<tr>
+		<td width="120" align="right" class="title">手机号码：</td>
+		<td><input name="admin_mobile" v_rule='{"model":"mobile", "blen":"0,20", "msg_fail":"输入错误，请输入手机号码，最多20个字符","msg_ok":"输入正确"}' type="text" value="${admin_mobile}" size="48" maxlength="20" style="width:280px"/></td>
+	</tr>
+	<tr>
+		<td width="120" align="right" class="title">email地址：</td>
+		<td><input name="admin_email" v_rule='{"model":"email", "blen":"0,50", "msg_fail":"输入错误，请输入邮箱，最多50个字符","msg_ok":"输入正确"}' type="text" value="${admin_email}" size="48" maxlength="50" style="width:280px"/></td>
+	</tr>
+	<tr>
+		<td width="120" align="right" class="title">性别：</td>
+		<td>
+			<select name="admin_sex" style="width:280px">
+				<option value="1" <!-- if(admin_sex==1) -->selected<!-- end -->>男</option>
+				<option value="2" <!-- if(admin_sex==2) -->selected<!-- end -->>女</option>
+			</select> 
+		</td>
+	</tr>
+</table>
+<div class="box_space" style="height:20px;"></div>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="edit_table">
+<tr>
+	<td width="120" align="right"></td>
+	<td>
+    <input type="submit" value="确认" id="btn_submit" />
+    <input type="button" value="返回" id="btn_close"  />
+</td></tr>
+</table>
+</form>
+	</div>
+	<div id="pn_edit_tab1" class="xtab_pane">
+<form action="/cp/my_info.do" method="post" name="edit_from_pwd" id="edit_from_pwd" onsubmit="return submit_form_pwd(this)">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="edit_table">
+	<input name="act" type="hidden" value="save_pwd"/>
+	<input name="admin_password_hash_old" type="hidden" value=""/>
+	<input name="admin_password_hash" type="hidden" value=""/>
+	<tr>
+		<td width="120" align="right" class="title">登录名：</td>
+		<td>
+<input name="admin_loginname" type="text" value="${admin_loginname}" size="48" maxlength="20" style="width:280px" readonly />
+		</td>
+	</tr>
+	<tr>
+		<td width="120" align="right" class="title">*旧密码：</td>
+		<td>
+	<input name="admin_password_old" v_rule='{"model":"password", "blen":"4,16","msg_fail":"输入错误，请输入4-16位字母数字组合","msg_ok":"输入正确"}' type="password" size="48" maxlength="16" style="width:280px"/>
+</td>
+	</tr>
+	<tr>
+		<td width="120" align="right" class="title">*密码：</td>
+		<td>
+	<input name="admin_password" v_rule='{"model":"password", "blen":"4,16","msg_fail":"输入错误，请输入4-16位字母数字组合","msg_ok":"输入正确"}' type="password" size="48" maxlength="16" style="width:280px"/>
+</td>
+	</tr>
+	<tr>
+		<td width="120" align="right" class="title">*重复密码：</td>
+		<td><input name="admin_password2" v_rule='{"model":"repeat","to":"admin_password","msg_fail":"两次输入密码不致","msg_ok":"输入正确","msg":"重复输入密码"}' type="password"  size="48" maxlength="16" style="width:280px"/></td>
+	</tr>
+
+</table>
+
+<div class="box_space" style="height:20px;"></div>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="edit_table">
+<tr>
+	<td width="120" align="right"></td>
+	<td>
+    <input type="submit" value="确认" id="btn_submit_pwd" />
+    <input type="button" value="返回" id="btn_close_pwd"  />
+</td></tr>
+</table>
+</form>
+	</div>
+
+
+
+
+
+
+
+<script>
+
+
+var edit_tab = new xtab('edit_tab');
+
+edit_tab.useCookie = false;
+edit_tab.cookieSuffix = "edit_tab";
+
+var curr_tab = 0;
+edit_tab.onClick = function (sel, selTab, selPane){
+	var url = "";	
+	switch(sel){
+		case 0:
+			form_v.hideAll(document.edit_from_pwd);
+			check_form_modify.setCheckFrm("#edit_from");
+			parent.x_open.resize_open(800, 400);
+		break;
+		case 1:
+			form_v.hideAll(document.edit_from);
+			check_form_modify.setCheckFrm("#edit_from_pwd");
+			parent.x_open.resize_open(800, 300);
+		break;
+	}
+	
+}
+
+$(document).ready(function(){
+	
+
+	$("#edit_from").newforms();
+	form_v.init(document.edit_from);
+
+	$("#edit_from_pwd").newforms();
+	form_v.init(document.edit_from_pwd);
+
+	$("#btn_close,#btn_close_pwd").click(function (event){
+		event.preventDefault();
+		parent.x_open.close();
+	});
+	
+	edit_tab.init(2);
+
+
+	var def_tab = getParameter("tab");
+	if(def_tab){
+		edit_tab.select_item(toInt(def_tab));
+	}
+	check_form_modify.add("#edit_from");
+	check_form_modify.add("#edit_from_pwd");
+});
+ 
+function submit_form(frm){
+	if(!form_v.check(frm)){
+		return false;
+	}
+	var frm = $(frm);
+	//验证
+	
+	//submit
+	frm.mask("请稍候...");
+	
+	var post_data = frm.serialize();
+
+	$.post(frm.attr("action"), post_data, function (data){
+		
+		$(frm).unmask();
+		if(data && data.result == 1){
+			check_form_modify.setForceClose(true);
+			my_alert(data.message, function (){
+				parent.x_open.close();
+			});
+			return;
+		}else if(data){
+			my_alert(data.message, function (){
+
+			});
+			return;
+		}
+		my_alert('操作失败');
+		
+	}, "json");
+	return false;
+}
+function submit_form_pwd(frm){
+	if(!form_v.check(frm)){
+		return false;
+	}
+	var frm = $(frm);
+	//验证
+	
+	//submit
+	frm.mask("请稍候...");
+	
+	frm.find("input[name=admin_password_hash]").val(hex_md5(frm.find("input[name=admin_password]").val()));
+	frm.find("input[name=admin_password_hash_old]").val(hex_md5(frm.find("input[name=admin_password_old]").val()));
+	var post_data = frm.serialize();
+	post_data = post_data.replace(/[&]*admin_password[\d]*=[\d\w]*/ig,"");
+	post_data = post_data.replace(/[&]*admin_password_old*=[\d\w]*/ig,"");
+	
+
+	$.post(frm.attr("action"), post_data, function (data){
+		
+		$(frm).unmask();
+		if(data && data.result == 1){
+			check_form_modify.setForceClose(true);
+			my_alert(data.message, function (){
+				window.top.location='/logout.do';
+				parent.x_open.close();
+			});
+			return;
+		}else if(data){
+			my_alert(data.message, function (){
+
+			});
+			return;
+		}
+		my_alert('操作失败');
+		
+	}, "json");
+	return false;
+}
+</script>
+<!--#include file="/common/footer.html" -->

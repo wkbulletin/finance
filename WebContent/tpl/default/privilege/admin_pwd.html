@@ -1,0 +1,111 @@
+<!--#include file="/common/header_detail.html" -->
+<script src="/resources/js/md5.js"></script>
+<div id="body">
+
+<form action="/privilege/admin_pwd.do" method="post" class="form-horizontal" name="edit_from" role="frm" id="frm" >
+<input name="act" type="hidden" value="save"/>
+	<input name="admin_id" type="hidden" value="${admin_id}"/>
+	<input name="admin_password_hash" type="hidden" value=""/>
+<div class="row">
+ <div class="col-lg-12">
+	<div class="ibox-content" style="height:400px">
+		
+		<div class="form-group">
+			<label class="col-sm-2 control-label">登录名：</label>
+	      <div class="col-sm-5">
+	          <input name="admin_loginname" id="admin_loginname" type="text"  value="${admin_loginname}" class="form-control" readonly/>
+	      </div>
+	      <div class="col-sm-5"></div>
+	   </div>
+	  
+	    <div class="form-group">
+	       <label class="col-sm-2 control-label">*密码：</label>
+	       <div class="col-sm-5">
+	          <input name="admin_password" id="admin_password" type="password" class="form-control"/>
+	       </div>
+	       <div class="col-sm-5"></div>
+	    </div>
+	    <div class="form-group">
+	       <label class="col-sm-2 control-label">*重复密码：</label>
+	       <div class="col-sm-5">
+	          <input name="admin_password2" id="admin_password2" type="password"  class="form-control"/>
+	       </div>
+	       <div class="col-sm-5"></div>
+	    </div>   
+	</div>
+</div>
+</div>
+
+<div class="modal-footer">
+	<button class="btn btn-primary" id="save-data" type="submit" >保存</button>
+	<button data-dismiss="modal" class="btn btn-white" type="button">关闭</button>
+</div>
+</form>
+</div>
+
+
+
+<script>
+$(document).ready(function(){
+	$("#frm").validate({
+		submitHandler:function() {
+            submit_form();
+        },
+        rules: {
+            admin_password: {
+                required: true,
+                rangelength:[4,16]
+            },
+            admin_password2: {
+            	required: true,
+                rangelength:[4,16],
+                equalTo:"#admin_password"
+            }
+        },
+        messages: {
+            admin_password: {
+                required: "请输入密码",
+                rangelength: "请输入{0}-{1}个中英文字符"
+            },
+            admin_password2: {
+            	required: "请再次输入密码",
+                rangelength: "请输入{0}-{1}个中英文字符",
+                equalTo:"两次输入的密码不一致"
+            }
+	     }
+    });
+});
+
+function submit_form(){
+	var frm = $("#frm");
+	setTimeout(function(){
+	    layer.load("请稍候......", 10);
+	}, 0);
+	
+	frm.find("input[name=admin_password_hash]").val(hex_md5(frm.find("input[name=admin_password]").val()));
+	var post_data = frm.serialize();
+	post_data = post_data.replace(/[&]*admin_password[\d]*=[\d\w]*/ig,"");
+	
+	$.post(frm.attr("action"), post_data, function (data){
+		layer.closeAll('loading');
+		if(data && data.result == 1){
+			layer.alert(data.message,1 ,function (index){
+				layer.close(index);
+				parent.$('#myModal').modal('hide');
+				parent.page_reload();
+			});
+			return;
+		}else if(data){
+			layer.alert(data.message,8,function(index){
+				layer.close(index);
+			});
+			return;
+		}
+		layer.alert('操作失败');
+		
+	}, "json");
+	return false;
+}
+
+</script>
+<!--#include file="/common/footer_detail.html" -->

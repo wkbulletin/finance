@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>agency管理系统</title>
+	<meta http-equiv="pragma" content="no-cache" />
+	<meta name="keywords" content="${keywords}">
+	<meta name="description" content="${description}">
+
+	<link href="/resources/css/bootstrap.min.css?v=3.4.0" rel="stylesheet" />
+	<link href="/resources/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet" />
+	<link href="/resources/css/style.css?v=2.2.0" rel="stylesheet" />
+	<link href="images/css/login.css?v=2.2.0" rel="stylesheet" />
+
+	<script src="/resources/js/jquery-2.1.1.min.js"></script>
+	<script src="/resources/js/bootstrap.min.js"></script>
+
+	<script src="/resources/js/plugins/easing/jquery.easing.js"></script>
+
+
+	<link href="/resources/js/plugins/layer/skin/layer.css" rel="stylesheet">
+	<script src="/resources/js/plugins/layer/layer.min.js"></script>
+
+	<link href="/resources/js/plugins/form_validate/skins/default/style.css" rel="stylesheet" type="text/css" />
+	<script src="/resources/js/plugins/form_validate/form_validate.js"></script>
+
+	<script src="/resources/js/plugins/x_slide/jquery.x_slide2.js"></script>
+
+
+	<script src="/resources/js/common.js"></script>
+
+	<script src="/resources/js/md5.js"></script>
+
+	<script>
+		if(typeof(window.webClient) == "function"){
+			window.webClient.hide_title();
+		}
+	</script>
+
+<!--[if lt IE 9]>
+<script type="text/javascript">
+//alert(navigator.userAgent)
+//window.location.href= "/no_support.html";
+</script>
+<![endif]-->
+</head>
+<body>
+
+<div>
+
+	<div class="container">
+		<div class="container-bg">
+		<div class="login-w">
+		<div class="top-box">
+			<div class="left">
+				<div class="logo-info">
+					<img src="images/logo.png">
+					<div class="pull-left text">中国体育彩票</div>
+					<div class="pull-left line"></div>
+					<div class="pull-left text font22">agency管理系统</div>
+				</div>
+				<div class="slide">
+					<ul>
+					<!-- 
+						<li>
+							<a href="#">
+								<img src="images/demo1.png">
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<img src="images/demo3.png">
+							</a>
+						</li>
+					 -->	
+						<li>
+							<a href="#">
+								<img src="images/demo2.png">
+							</a>
+						</li>
+						
+					</ul>
+					<div class="banner">
+						<a href="javascript:;"  class="on"></a>
+					<!-- 	<a href="javascript:;" ></a>
+						<a href="javascript:;" ></a> -->
+					</div>
+<!-- 
+					<script>
+				$(document).ready(function(){
+					$(".slide").x_slide();
+				});
+			</script>
+			 -->
+				</div>
+			</div>
+			<div class="opacity"></div>
+			<div class="login">
+				<div class="title text-center">登录平台</div>
+				<div  class="m-t">
+					<form role="form" action="login.do" method="post" id="login_form" name="login_form">
+						<input type="hidden" name="act" value="check" />
+						<input type="hidden" name="ret" id="ret" value="0" />
+						<div class="form-group">
+							<input name="account" id="account" type="text" class="form-control" placeholder="用户名"  > <i class="icon-name"></i><!-- v_rule='{"model":"username2","blen":"4,20","msg_fail":"请输入用户名"}' -->
+						</div>
+						<div class="form-group">
+							<input name="password" id="password" type="password" class="form-control" placeholder="登录密码" > <i class="icon-pass"></i><!-- v_rule='{"model":"password","len":"4,32","msg_fail":"请输入登录密码"}' -->
+						</div>
+						
+						<div class="form-group" id="s_vcode" style="display:none">
+							<input name="vcode" id="vcode" type="text" class="form-control pull-left" style="width:275px;" placeholder="验证码"  ><!-- v_rule='{"model":"number","len":"4,4","msg_fail":"请输入验证码"}' -->
+							<a href="#" id="reload_vcode">
+								<script>document.write('<img src="vcode.do?_t='+new Date().getTime()+'" >')</script>
+							</a>
+						</div>
+						
+						<button type="submit" id="btn" class="btn btn-primary btn-block">登 录</button>
+					</form>
+				</div>
+			</div>
+		</div>
+		</div>
+		</div>
+		<div class="login-footer">
+			<div class="item">
+				<div class="title">系统公告</div>
+				<ul id="system_notice">
+					
+				</ul>
+				<div class="line"></div>
+			</div>
+			<div class="item">
+				<div class="title">服务支持</div>
+				<div class="service">
+					<!-- <div>
+						<s class="icon01"></s>
+						<span>帮助中心</span>
+					</div> -->
+					<div>
+						<s class="icon02"></s>
+						<a href="http://www.shouyoucai.com/mobile/">下载中心</a>
+					</div>
+				</div>
+				<div class="service">
+					<!-- <div>
+						<s class="icon03"></s>
+						<span>下载中心</span>
+					</div> -->
+					<div>
+						<s class="icon04"></s>
+						<span>
+							咨询QQ：
+							<span>3366809460</span>
+						</span>
+					</div>
+				</div>
+				<div class="service">
+					<!-- <div>
+						<s class="icon05"></s>
+						<span>安全指南</span>
+					</div> -->
+					<div>
+						<s class="icon06"></s>
+						<span>
+							咨询电话：
+							<span>010-59826006</span>
+						</span>
+					</div>
+				</div>
+				<div class="line"></div>
+			</div>
+			<div class="item">
+				<div class="title">温馨提示</div>
+				<p>
+					<i>1、</i>
+					为了更好的体验新版查询平台的功能，建议使用<b>谷歌、火狐、IE9.0</b>及以上版本浏览器；
+				</p>
+				<p>
+					<i>2、</i>
+					使用过程中欢迎提交宝贵意见，以帮助我们更好的完善产品；
+				</p>
+			</div>
+		</div>
+	</div>
+
+<div class="modal inmodal" id="my_modal_win2" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+   <div class="modal-content animated" >
+	  <div class="modal-body" style="padding:0;" >
+		<div class="ibox-title"  style="border:none;">
+			<button data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+			<h5></h5>
+		</div>
+		<div class="ibox-content">
+			
+		</div>
+	  </div>
+    </div>
+  </div>
+</div>
+	<script>
+$(document).ready(function(){
+	$('form').attr("autocomplete", "off");
+
+	var resize_fun = function (){
+		$('#login_body').width($(window).width()).height($(window).height());
+		$('#login_box').css({
+			"left":(($(window).width()-$('#login_box').width())/2)+"px",
+			"top":(($(window).height()-$('#login_box').height())/2)+"px",
+		});
+	}
+	resize_fun();
+	$(window).resize(resize_fun);
+
+	$("#reload_vcode").click(function (event){
+		event.preventDefault();
+		reload_rand();
+	});
+
+	form_v.init("#login_form",function(){
+	
+		var account=$("#account").val();
+		var ret=$("#ret").val();
+		if(account.length==0){
+			show_error("请输入用户名");
+			return false;
+		}
+		else if($("#password").val().length==0){
+			show_error("请输入登录密码");
+			return false;
+		}
+		else if(ret=='1'&&$("#vcode").val().length==0){
+			show_error("请输入验证码");
+			return false;
+		}
+		
+		var login_form = $(this);
+		layer.load('请稍候......', 0);
+		
+		var post_data;
+		if(typeof(pwd_pre_fun) == 'function'){
+			post_data = pwd_pre_fun(login_form);
+		}else{
+			post_data = frm.serialize();
+		}
+		
+		my_ajax_json('login.do',post_data,function(data){
+				layer.closeAll();
+				if(typeof(window.webClient) == "function"){
+					window.webClient.show_title();
+				}
+				if(data.result == 1){
+					window.location="/";
+					return;
+				}
+				$("#s_vcode").show();
+				$("#ret").val("1");
+				reload_rand();
+				show_error(data.message);
+			},
+			function(XMLHttpRequest, textStatus, errorThrown){
+				reload_rand();
+				show_error("服务器错误:XMLHttpRequest="+XMLHttpRequest+",textStatus="+textStatus+",errorThrown="+errorThrown);
+			}
+		);
+		return false;
+	},  null, "dialog");
+
+});
+
+
+function pwd_pre_fun(frm){
+	frm.find("input[name=password]").val(hex_md5(frm.find("input[name=password]").val()));
+	var post_data = frm.serialize();
+	frm.find("input[name=password]").val("");
+	frm.find("input[name=vcode]").val("");
+	return post_data;
+}
+
+
+
+function reload_rand(){
+	$("#reload_vcode").find("img").attr("src", 'vcode.do?_t='+new Date().getTime());
+}
+function show_error(msg){
+	layer.closeAll();
+	my_alert(msg);
+}
+
+
+</script>
+</body>
+
+</html>

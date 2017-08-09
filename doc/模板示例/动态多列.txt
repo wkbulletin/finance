@@ -1,0 +1,19 @@
+  说明：%2表示每行2列数据
+  
+  
+	<table cellpadding="0" cellspacing="0" border="0" width="100%" align="center" >
+ 	<!-- for(_data : _datalist) -->
+	<!-- if((for.iter.index+1)%2==1) -->
+ 	<tr>
+	<!-- end -->
+ 		<td align="right" width="200" height="32">${_data.starttime}-${_data.endtime}&nbsp;</td>	
+  	<td align="left">
+  		<input type="text" value="${_data.alarmcounthigh}" name="alarmcounthigh${_data.idx}" />
+  		<input type="hidden" value="${_data.idx}" name="idx" />
+  	</td>
+	<!-- if((for.iter.index+1)%2==0) -->
+ 	</tr>
+	<tr><td colspan="4" height="1" bgcolor="#FFF"></td></tr>
+	<!-- end -->
+  	<!-- end -->
+ 	</table>

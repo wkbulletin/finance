@@ -1,0 +1,125 @@
+.form_v_msg{
+
+	width:300px;
+	height:25px;
+	position:absolute;
+	left:0px;
+	top:0px;
+	z-index:100;
+	display:none;
+
+}
+.form_v_msg_tip{
+	z-index:101;
+}
+
+.form_v_msg .form_v_msg_top{
+	background:url(arrow.png) no-repeat;
+	width:9px;
+	height:6px;
+	overflow:hidden;
+	position:absolute;
+	left:13px;
+	top:-5px;
+}
+.form_v_msg .form_v_msg_bottom{
+	background:url(arrow.png) no-repeat 0px -6px;
+	width:9px;
+	height:6px;
+	overflow:hidden;
+	position:absolute;
+	left:13px;
+	bottom:-5px;
+}
+.form_v_msg .form_v_msg_left{
+	background:url(arrow.png) no-repeat 0px -12px;
+	width:6px;
+	height:9px;
+	overflow:hidden;
+	position:absolute;
+	left:-5px;
+	top:8px;
+}
+.form_v_msg .form_v_msg_right{
+	background:url(arrow.png) no-repeat 0px -21px;
+	width:6px;
+	height:9px;
+	overflow:hidden;
+	position:absolute;
+	right:-5px;
+	top:8px;
+}
+
+
+.form_v_msg .spacer{
+	width:1px;
+	overflow:hidden;
+}
+
+
+.form_v_msg>table{
+	border:0px;
+}
+
+.form_v_msg .form_v_msg_l_t{
+	background:url(border.png) no-repeat;
+	width:1px;
+	height:1px;
+}
+.form_v_msg .form_v_msg_c_t{
+	background:url(border.png) repeat-x;
+}
+.form_v_msg .form_v_msg_r_t{
+	background:url(border.png) no-repeat;
+	width:1px;
+}
+
+
+.form_v_msg .form_v_msg_l_m{
+	overflow:hidden;
+	width:1px;
+	background:url(border.png) repeat-y;
+}
+.form_v_msg .form_v_msg_c_m{
+	background:url(bg.png);
+
+	font-family:Arial, 宋体;
+	font-size:12px;
+	color:#333333;
+	padding:4px 6px 4px 6px;
+}
+.form_v_msg .form_v_msg_c_m div{
+	font-family:Arial, 宋体;
+	font-size:12px;
+	color:#333333;
+}
+.form_v_msg .form_v_msg_alert{
+	background:url(msg_alert.png) no-repeat 0px center;
+	padding-left:19px;
+	color:#CC0000 !important;
+
+}
+.form_v_msg .form_v_msg_ok{
+	background:url(msg_ok.png) no-repeat 0px center;
+	padding-left:19px;
+	color:#454545 !important;
+}
+.form_v_msg .form_v_msg_tip{
+	color:#999 !important;
+}
+
+
+.form_v_msg .form_v_msg_r_m{
+	background:url(border.png) repeat-y;
+}
+
+.form_v_msg .form_v_msg_l_b{
+	background:url(border.png) no-repeat;
+	height:1px;
+}
+.form_v_msg .form_v_msg_c_b{
+	background:url(border.png) repeat-x;
+}
+.form_v_msg .form_v_msg_r_b{
+	background:url(border.png) no-repeat;
+}

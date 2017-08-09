@@ -1,0 +1,199 @@
+<!--#include file="/common/header_detail.html" -->
+
+<link rel="stylesheet" href="images/js/zTreeStyle.css" type="text/css">
+
+<script type="text/javascript" src="images/js/jquery.ztree.all.js"></script>
+
+<!-- <form action="/privilege/role_priv.do" method="post" name="edit_from" id="edit_from" onsubmit="return submit_form(this)">
+
+<div class="box_space" style="height:20px;"></div>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="edit_table">
+	<input name="act" type="hidden" value="save"/>
+	<input name="role_id" type="hidden" value="${role_id}"/>
+	<tr>
+		<td width="120" align="right" class="title">角色名称：</td>
+		<td>${role_name}</td>
+	</tr>
+	<tr>
+		<td align="right" class="title">操作：</td>
+		<td><a href="#" onclick="selectNode('checkAllTrue');return false;" class="link_green">全部选择</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="selectNode('checkAllFalse');return false;" class="link_green">取消选择</a></td>
+	</tr>
+	<tr>
+		<td align="right" valign="top" class="title">分配权限：</td>
+		<td>
+		<input type="hidden" name="privilege_list" id="privilege_list" value=""/>
+		
+		<ul id="tree_list" class="ztree">
+			
+		</ul></td>
+	</tr>
+</table>
+<div class="box_space" style="height:20px;"></div>
+	<table width="100%" border="0" cellpadding="0" cellspacing="0" class="edit_table">
+    	<tr>
+		<td width="120" align="right"></td>
+		<td>
+            <input type="submit" value="确认" id="btn_submit" />
+            <input type="button" value="返回" id="btn_close"  />
+	</td></tr>
+	</table>
+</form> -->
+
+
+<div id="body">
+
+<form action="/privilege/role_priv.do" method="post" class="form-horizontal" name="edit_from" role="frm" id="frm" onsubmit="return submit_form(this)">
+<input name="act" type="hidden" value="save"/>
+<input name="role_id" type="hidden" value="${role_id}"/>
+<div class="row" style="height:400px;overflow:auto;background-color:white">
+ <div class="col-lg-12">
+	<div class="ibox-content" style="height:400px;">
+		
+		<div class="form-group">
+			<label class="col-sm-2 control-label">角色名称：</label>
+	      <div class="col-sm-5">
+	          ${role_name}
+	      </div>
+	      <div class="col-sm-5"></div>
+	   </div>
+	  
+	    <div class="form-group">
+	       <label class="col-sm-2 control-label">操作：</label>
+	       <div class="col-sm-5">
+	           <a href="#" onclick="selectNode('checkAllTrue');return false;" class="link_green">全部选择</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="selectNode('checkAllFalse');return false;" class="link_green">取消选择</a>
+	       </div>
+	       <div class="col-sm-5"></div>
+	    </div>
+	    <div class="form-group">
+	       <label class="col-sm-2 control-label">分配权限：</label>
+	       <div class="col-sm-5">
+	           <input type="hidden" name="privilege_list" id="privilege_list" value=""/>
+			   <ul id="tree_list" class="ztree"></ul>
+	       </div>
+	       <div class="col-sm-5"></div>
+	    </div>   
+	</div>
+</div>
+</div>
+
+<div class="modal-footer">
+	
+	<button class="btn btn-primary" id="save-data" type="submit" >保存</button>
+	<button data-dismiss="modal" class="btn btn-white" type="button">关闭</button>
+</div>
+</form>
+</div>
+
+
+<script>
+var setting = {
+	check: {
+		enable: true
+	},
+	data: {
+		simpleData: {
+			enable: true
+		}
+	},
+	callback: {
+		onCollapse: resize_scroll,
+		onExpand: resize_scroll,
+		onClick: resize_scroll,
+		onCheck: zTreeOnCheck
+	}
+};
+function resize_scroll(){
+	//$(".row").getNiceScroll().show().resize();
+}
+setting.check.chkboxType =  { "Y" : "ps", "N" : "ps" };
+var zNodes_tmp = ${treeNodes};
+var zNodes = new Array();
+var node_childs = new Array();
+for(var i in zNodes_tmp){
+	if(!node_childs[zNodes_tmp[i].pId]){
+		node_childs[zNodes_tmp[i].pId] = new Array();
+	}
+	node_childs[zNodes_tmp[i].pId].push(zNodes_tmp[i]);
+}
+//过滤无关联数据
+filterNodes(0);
+function filterNodes(pid) {
+	if(node_childs[pid]&&node_childs[pid].length>0){
+		for(var i in node_childs[pid]){
+			zNodes.push(node_childs[pid][i]);
+			filterNodes(node_childs[pid][i].id);
+		}
+	}
+}
+
+//zNodes = ${treeNodes};
+function selectNode(type) {
+	var zTree = $.fn.zTree.getZTreeObj("tree_list");
+	if (type == "checkAllTrue") {
+		zTree.checkAllNodes(true);
+		getTreeData();
+	} else if (type == "checkAllFalse") {
+		zTree.checkAllNodes(false);
+		$("#privilege_list").val("");
+	}
+}
+function getTreeData() {
+	var zTree = $.fn.zTree.getZTreeObj("tree_list");
+	checkCount = zTree.getCheckedNodes(true).length;
+	//alert(checkCount);
+	nodes = zTree.getCheckedNodes(true);
+	l=nodes.length;
+	//alert(l);
+	var arr = new Array();
+	for (var i=0; i<l; i++) {
+		arr.push(nodes[i].id);
+	}
+	
+	$("#privilege_list").val(arr.join(","));
+
+	//alert(arr);
+
+
+}
+function zTreeOnCheck(event, treeId, treeNode) {
+	getTreeData();
+}
+ 
+$(document).ready(function(){
+	
+	$.fn.zTree.init($("#tree_list"), setting, zNodes);
+	var zTree = $.fn.zTree.getZTreeObj("tree_list");
+	
+	$(".col-sm-5").css("margin-top","7px");
+	getTreeData();
+});
+
+function submit_form(){
+	var frm = $("#frm");
+	var post_data = frm.serialize();
+	setTimeout(function(){
+	    layer.load("请稍候......", 10);
+	}, 0);
+	$.post(frm.attr("action"), post_data, function (data){
+		layer.closeAll('loading');
+		if(data && data.result == 1){
+			layer.alert(data.message,1 ,function (index){
+				layer.close(index);
+				parent.$('#myModal').modal('hide');
+				parent.page_reload();
+			});
+			return;
+		}else if(data){
+			layer.alert(data.message,8,function(index){
+				layer.close(index);
+			});
+			return;
+		}
+		layer.alert('操作失败');
+		
+	}, "json");
+	return false;
+}
+
+</script>
+<!--#include file="/common/footer_detail.html" -->

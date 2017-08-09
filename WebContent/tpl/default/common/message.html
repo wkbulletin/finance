@@ -1,0 +1,56 @@
+﻿<!--#include file="/common/header.html" -->
+<div class="wrapper wrapper-content animated fadeInRight">
+	<div class="row">
+		<div class="col-lg-12">
+ 
+			<div class="ibox">
+				<div class="ibox-title">
+					<h5>${message_title}</h5>
+				</div>
+				<div class="ibox-content">
+					<p>
+					${message_content}
+					</p>
+
+					<div style="height:40px;"></div>
+					<p>
+					<button id="btn_ok" type="button" class="btn btn-w-m btn-primary">确 定</button>
+					</p>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+</div>
+
+
+<script>
+function go_page(url){
+	if(url.length == 0){
+		window.location="/";
+	}else if(url == "back"){
+		if(document.referrer && (document.referrer+"").length>0){
+			window.location=document.referrer;
+		}else{
+			window.history.back();
+		}
+	}else{
+		window.location=url;
+	}
+	return false;
+}
+$(document).ready(function() {
+
+	$("#btn_ok").click(function (event){
+		event.preventDefault();
+		go_page("${message_url}");
+	
+	});
+	
+	${message_js}
+});
+
+
+</script>
+<!--#include file="/common/footer.html" -->

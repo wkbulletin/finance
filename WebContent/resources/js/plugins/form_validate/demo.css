@@ -1,0 +1,25 @@
+/*公共属性*/
+body, dl, dt, dd, ol, ul, pre, form, field, p, blockquote,  h1, h2, h3, h4, h5, h6 { 
+	font-family:"宋体",Tahoma,'Simsun',Arial,Helvetica,sans-serif;
+
+
+	margin:0; padding:0; 
+	color:#898E94; 
+	font-size:12px;
+}
+th, td { font-family:"宋体",Tahoma,'Simsun',Arial,Helvetica,sans-serif;   color:#898E94; font-size:12px;}
+h1,h2,h3,h4,h5{font-family:"宋体",Tahoma,'Simsun',Arial,Helvetica,sans-serif; }
+
+a{text-decoration:none;color:#454545;}
+a:link, a:visited { }
+a:hover, a:active {text-decoration:underline;color:#336699;}
+
+ul, ol { list-style:none;list-style-type:none;}
+input, textarea, select, button, file {	font-size:12px;}
+img { border:0;}
+.img {display:block;}
+.icon {margin-right:3px;vertical-align:-2px;}
+
+b{font-size:bold;}
+
+ 

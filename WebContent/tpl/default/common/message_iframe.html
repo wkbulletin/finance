@@ -1,0 +1,85 @@
+<!--#include file="/common/header_detail.html" -->
+<style>
+.message_title{
+	font-size:14px;
+	font-weight:bold;
+}
+.message_content{
+	font-size:14px;
+	color:#ff0000;
+}
+</style>
+<div class="box_space" style="height:20px;"></div>
+<table width='100%' border='0' cellpadding='0' cellspacing='0' class="table_form">
+    <tr>
+  <td width="80">&nbsp;
+
+    </td>
+      <td>
+        <span class="message_title"></span>
+            </td>
+    </tr>
+    
+    <tr>
+  <td>&nbsp;
+
+    </td>
+      <td>
+	<span class="message_content">${message_content}</span>
+	</td>
+    </tr >
+	<tr style="height:10px;">
+
+    <tr class="btns" >
+      <td>&nbsp;
+
+    </td>
+	<td>
+		<table width="90%" border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td width="70"><input id="btn_ok" type="button" size="30" value="确 定" class="btn btn-primary" /></td>
+				<td align="left">&nbsp;</td>
+			</tr>
+		</table>
+        
+	</td>
+    </tr>
+
+</table>
+<script>
+function go_page(url){
+	switch(url){
+		case 'reload':
+			window.location.reload();
+		break;
+		case 'parent_reload':
+			parent.location.reload();
+		break;
+		case 'back':
+			if(document.referrer && (document.referrer+"").length>0){
+				window.location=document.referrer;
+			}else{
+				window.history.back();
+			}
+		break;
+		default:
+			window.location=url;
+			
+		break;
+	}
+
+	return false;
+}
+$(document).ready(function() {
+	//parent.x_open.resize_open(600, 260);
+	$("#btn_ok").click(function (event){
+		//event.preventDefault();
+		go_page("${message_url}");
+	});
+	
+	//${message_js}
+});
+
+
+</script>
+<!--#include file="/common/footer_detail.html" -->

@@ -1,0 +1,73 @@
+<!--#include file="/common/header.html" -->
+ 
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox-content">
+        <div class="m-b-sm m-t-sm text-left"> </div>
+        
+        <br />
+        <div class="table-responsive">
+          <table class="table table-striped ">
+            <thead>
+              <tr>
+                <th >编号</th>
+                <th class="text-left" >模块</th>
+                <th  class="text-left" >事件</th>
+                <th  >模板内容/th>
+                <th   >状态</th>
+                <th  width="300" class="text-center" >操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+              <!-- for(row : list) -->
+             
+              <tr>
+              	<td>${row.template_id}</td>
+                <td>${row.template_module}</td>
+                <td>${row.template_event}</td>
+                <td>${row.template_content}</td>
+                <td><!--if(row.template_status == 1)-->启用<!--else-->关闭<!--end--></td>
+              	<td  class="text-center">
+                <a href="javascript:;" _open_msg="编辑"  _open_url="template_edit.do?template_id=${row.template_id}" class="btn btn-primary btn-outline btn-xs">编辑</a>
+                 
+                </td>
+              </tr>
+              <!-- end -->
+            </tbody>
+          </table>
+        </div>
+        <div class="row"> ${pageStr} </div>
+      </div>
+    </div>
+  </div>
+</div>
+<iframe name="export_ifm" id="export_ifm" style="display:none;"></iframe>
+<!-- Data Tables --> 
+<script src="/resources/js/plugins/layer/laydate/laydate.js"></script> 
+<script>
+function updateResult(json){
+	 
+	window.parent.my_alert("操作成功",function(){
+		window.top.location.href = window.top.location.href; 
+	});
+}
+$(document).ready(function(){
+	
+    
+  
+});
+function exportuser(id,name){
+	$("#export_ifm").attr("src","/yhyy/task/export.do?id="+id+"&name="+name);
+}
+
+function update_status(a, data){
+        //alert('==data.message'+data.message);
+	    layer.alert(data.message,1 ,function (index){
+		layer.close(index);
+		parent.page_reload();
+	});		
+}
+</script>
+<!--#include file="/common/footer.html" -->

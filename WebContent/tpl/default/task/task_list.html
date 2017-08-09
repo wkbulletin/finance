@@ -1,0 +1,346 @@
+<!--#include file="/common/header.html" -->
+<!-- {var checkFileIsUpload     = native com.huacai.web.controller.task.TaskController.checkFileIsUpload(Object[]);} -->
+<!-- {var checkAuthorized     = native com.huacai.web.controller.task.TaskController.checkAuthorized(java.util.HashSet,String, boolean, boolean);} -->
+
+
+<!-- {var status_map = {	"-1" :"删除","0" :"初始","1" :"完结"};}-->
+<script>
+	$(document).ready(function(e) {
+         //日期范围限制
+		var begin_time = {
+			elem: '#begin_time',
+			format: 'YYYY-MM-DD',
+			//min: '${nowdate}', //laydate.now()设定最小日期为当前日期
+			max: '${end_time}', //最大日期
+			//start: '${nowdate}',
+			istime: false,
+			fixed: true, //是否固定在可视区域
+			istoday: false,
+			choose: function (datas) {
+				end_time.min = datas;
+			}
+		};
+		var end_time = {
+			elem: '#end_time',
+			format: 'YYYY-MM-DD',
+			min: '${begin_time}', //laydate.now()设定最小日期为当前日期
+			//max: '${nowdate}', //最大日期
+			//start: '${nowdate}',
+			istime: false,
+			fixed: true, //是否固定在可视区域
+			istoday: false,
+			choose: function (datas) {
+				begin_time.max = datas;
+			}
+		};
+		
+	  
+		laydate(begin_time)
+		laydate(end_time)
+		
+    });
+	
+</script>
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox-content">
+        <div class="m-b-sm m-t-sm text-left"> </div>
+        <div class="search_box" id="search_box">
+          <form action="?act=search"   method="post"  name="search_from" id="search_from">
+            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+				    	<tr>
+						 <td>
+							<table cellpadding="0" cellspacing="0" border="0">
+								<tr>
+								<td align="right" > &nbsp;&nbsp;&nbsp;&nbsp;任务名称：</td>
+								<td align="left"  >
+									<input type="text" name="task_name" id="task_name" value="${task_name}"   class="input-sm form-control"  style="width:200px;" placeholder="请输入任务名称"/></td>
+								<td align="right" >&nbsp;&nbsp;&nbsp;&nbsp;创建时间：</td>
+								<td align="left"><input type="text" name="begin_time" id="begin_time" value="${begin_time}" readonly="readonly" class="input-sm form-control"  style="width:100px;"/></td><td style="padding:0 8px;">-</td><td align="left"><input type="text" name="end_time" id="end_time" value="${end_time}" readonly="readonly" class="input-sm form-control"   style="width:100px;"/></td>
+
+								<td>&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" class="btn btn-sm btn-primary">搜索</button></td>
+                                <!-- if(checkAuthorized(privSet,"创建任务.创建ALS评估任务",true,true))-->
+                                <td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:;" _open_msg="详情"  _open_url="/task/create.do?task_type=1" class="btn btn-primary btn-outline btn-xs">创建-ALS评估任务</a></td>
+                                <!-- end-->
+                                <!-- if(checkAuthorized(privSet,"创建任务.创建最低资本变动分析任务",true,true))-->
+                                <td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:;" _open_msg="详情"  _open_url="/task/create.do?task_type=2" class="btn btn-primary btn-outline btn-xs">创建-最低资本变动分析任务</a></td>
+								 <!-- end-->
+								 </tr>
+							</table>
+						</td>
+				
+				       </tr>
+				    </table>
+          </form>
+        </div>
+        <br />
+        <div class="table-responsive">
+          <table class="table table-striped ">
+            <thead>
+              <tr>
+                <th >编号</th>
+                <th class="text-left" >任务名称</th>
+                <th  class="text-left" >任务类型</th>
+                <th  >创建时间</th>
+                <th   >状态</th>
+                <th  width="300" class="text-center" >操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+              <!-- for(row : list) -->
+             
+              <tr>
+              	<td>${row.task_id}</td>
+                <td>${row.task_name}</td>
+                <td><!--if(row.task_type== 1) -->ALS评估任务<!--else-->最低资本变动分析任务<!--end--></td>
+                <td>${row.task_createtime}</td>
+                <td>${status_map[row.task_status+""]}</td>
+              	<td  class="text-center">
+                <a href="javascript:;" _open_msg="详情"  _open_url="detail.do?task_id=${row.task_id}" class="btn btn-primary btn-outline btn-xs">详情</a>
+                <a href="javascript:;" _open_msg="编辑"  _open_url="edit.do?task_id=${row.task_id}" class="btn btn-primary btn-outline btn-xs">编辑</a>
+                <a href="#" class="btn btn-primary btn-outline btn-xs"  _confirm_ajax_url="/task/copy.do?task_id=${row.task_id}" _confirm_ajax_call="updateResult" _confirm_msg="确定要复制？">复制</a>
+                <a href="#" class="btn btn-primary btn-outline btn-xs"  _confirm_ajax_url="/task/delete.do?task_id=${row.task_id}" _confirm_ajax_call="updateResult" _confirm_msg="确定要删除？">删除</a>
+                <a href="#" class="btn btn-primary btn-outline btn-xs"  _confirm_ajax_url="/task/clear.do?task_id=${row.task_id}" _confirm_ajax_call="updateResult" _confirm_msg="确定要清空数据？">清空</a>
+                </td>
+              </tr>   
+              <tr>
+              	<td  colspan="10">
+                <table   style="width:100%">
+                	<tr>
+                    
+                    <!-- if(row.task_type ==1) -->
+                    <td align="center" valign="top">
+                	<table class="table ">
+                    	<th>
+                        	<td colspan="4">模块1 ( <!--if(row.task_m1status==1)-->开启<!--else-->未开启<!--end-->)</td>
+                        </th>
+                    	<tr>
+                        	<td align="right">财务部:</td>
+                            <td width="50">
+                            <!-- if(checkAuthorized(privSet,"模块1.财务部.上传",row.task_m1status == 1,true))-->
+                            <a href="javascript:;" _open_msg="详情"  _open_url="upload.do?module=m1_1file&type=1&task_id=${row.task_id}" class="btn btn-primary btn-outline btn-xs">上传</a>
+                            <!--else-->
+                            <a href="javascript:;" _open_msg="详情"   class="btn btn-outline btn-xs">上传</a>
+                            <!--end-->
+                            </td>
+                            
+                            
+                            <td width="50"> <!-- if(checkAuthorized(privSet,"模块1.财务部.选择历史数据",row.task_m1status == 1,true))--><a href="javascript:;" _open_msg="详情"  _open_url="upload.do?module=m1_1file&type=2&task_id=${row.task_id}"   class="btn btn-primary btn-outline btn-xs"  id="export_btn">选择<!--else-->选择<!--end--></a></td>
+                            
+                            
+                            <td width="50"> <!-- if(row.m1_1file && checkAuthorized(privSet,"模块1.财务部.查看",row.task_m1status == 1,true))--><a href="view.do?task_id=${row.task_id}&module=m1_1file&type=1" target="_blank" class="btn btn-primary btn-outline btn-xs"  >下载<!--else-->下载<!--end--></a></td>
+                       </tr>
+                       <tr>     
+                            <td align="right">精算部:</td>
+                            
+                            <td width="50">
+                            <!-- if(checkAuthorized(privSet,"模块1.精算部.上传",row.task_m1status == 1,true))-->
+                            <a href="javascript:;" _open_msg="详情"  _open_url="upload.do?module=m1_2file&type=1&task_id=${row.task_id}" class="btn btn-primary btn-outline btn-xs">上传</a>
+                            <!--else-->
+                            <a href="javascript:;" _open_msg="详情"   class="btn btn-outline btn-xs">上传</a>
+                            <!--end-->
+                            </td>
+                            
+                            
+                           <td width="50"> <!-- if(checkAuthorized(privSet,"模块1.精算部.选择历史数据",row.task_m1status == 1,true))--><a href="javascript:;" _open_msg="详情"  _open_url="upload.do?module=m1_2file&type=2&task_id=${row.task_id}"  class="btn btn-primary btn-outline btn-xs"  id="export_btn">选择<!--else-->选择<!--end--></a></td>
+                            <td width="50"> <!-- if(row.m1_2file && checkAuthorized(privSet,"模块1.精算部.查看",row.task_m1status == 1,true))--><a href="view.do?task_id=${row.task_id}&module=m1_2file&type=1" target="_blank" class="btn btn-primary btn-outline btn-xs"  id="export_btn">下载<!--else-->下载<!--end--></a></td>
+                       </tr>
+                       <tr>     
+                            <td align="right">投资部:</td>
+                            
+                             <td width="50">
+                            <!-- if(checkAuthorized(privSet,"模块1.投资部.上传",row.task_m1status == 1,true))-->
+                            <a href="javascript:;" _open_msg="详情"  _open_url="upload.do?module=m1_3file&type=1&task_id=${row.task_id}" class="btn btn-primary btn-outline btn-xs">上传</a>
+                            <!--else-->
+                            <a href="javascript:;" _open_msg="详情"   class="btn btn-outline btn-xs">上传</a>
+                            <!--end-->
+                            </td>
+                            <td width="50"> <!-- if(checkAuthorized(privSet,"模块1.投资部.选择历史数据",row.task_m1status == 1,true))--><a href="javascript:;" _open_msg="详情"  _open_url="upload.do?module=m1_3file&type=2&task_id=${row.task_id}"  class="btn btn-primary btn-outline btn-xs"  id="export_btn">选择<!--else-->选择<!--end--></a></td>
+                            
+                            <td width="50"> <!-- if(row.m1_1file && checkAuthorized(privSet,"模块1.投资部.查看",row.task_m1status == 1,true))--><a href="view.do?task_id=${row.task_id}&module=m1_3file&type=2" target="_blank" class="btn btn-primary btn-outline btn-xs"  id="export_btn">查看</a><a href="view.do?task_id=${row.task_id}&module=m1_3file&type=1" target="_blank" class="btn btn-primary btn-outline btn-xs"  id="export_btn">下载</a><!--else-->下载<!--end--></td>
+                       </tr>
+                       <tr>     
+                            <td colspan="8" align="center">模块1输出</td>
+                        </tr>
+                       <tr>     
+                          <td align="right">运行:</td><td colspan="3"  align="center">
+                       
+                       <!-- if(checkAuthorized(privSet,"模块1.其他.运行",row.task_m1status == 1,checkFileIsUpload([row.m1_1file,row.m1_2file,row.m1_3file])))-->
+                          <!--if(row.m1_status ==0)-->  
+                            <!--if(row.m1_1file&&row.m1_2file&&row.m1_3file)-->
+                            <a href="#" class="btn btn-primary btn-outline btn-xs"  _confirm_ajax_url="run.do?task_id=${row.task_id}&module=m1&type=1" _confirm_ajax_call="updateResult" _confirm_msg="确定要运行？">运行</a>
+                            
+                            <!--else-->
+                            运行
+                            <!--end-->
+                          <!--else if(row.m1_status ==1)-->
+                          	 运行中() <a href="javascript:;" _open_msg="日志"  _open_url="viewlog.do?task_id=${row.task_id}&module=m1" class="btn btn-primary btn-outline btn-xs">日志</a>
+                              <a href="#" class="btn btn-primary btn-outline btn-xs"  _confirm_ajax_url="stop.do?task_id=${row.task_id}&module=m1" _confirm_ajax_call="updateResult" _confirm_msg="确定要终止？">终止</a>	
+                          <!--else if(row.m1_status ==2)-->
+                          	 已终止 <a href="javascript:;" _open_msg="日志"  _open_url="viewlog.do?task_id=${row.task_id}&module=m1" class="btn btn-primary btn-outline btn-xs">日志</a>
+                              <a href="#" class="btn btn-primary btn-outline btn-xs"  _confirm_ajax_url="run.do?task_id=${row.task_id}&module=m1&type=1" _confirm_ajax_call="updateResult" _confirm_msg="确定要运行？">运行</a> 
+                          <!--else if(row.m1_status ==3)-->
+                          	 数据错误 <a href="javascript:;" _open_msg="日志"  _open_url="viewlog.do?task_id=${row.task_id}&module=m1" class="btn btn-primary btn-outline btn-xs">日志</a>
+                              <a href="#" class="btn btn-primary btn-outline btn-xs"  _confirm_ajax_url="run.do?task_id=${row.task_id}&module=m1&type=1" _confirm_ajax_call="updateResult" _confirm_msg="确定要运行？">重新运行</a>   
+                          <!--else  -->
+                          	运行完成 <a href="javascript:;" _open_msg="日志"  _open_url="viewlog.do?task_id=${row.task_id}&module=m1" class="btn btn-primary btn-outline btn-xs">日志</a>
+                              <a href="#" class="btn btn-primary btn-outline btn-xs"  _confirm_ajax_url="run.do?task_id=${row.task_id}&module=m1&type=2" _confirm_ajax_call="updateResult" _confirm_msg="确定要运行？">运行</a> 
+                          <!--end--> 
+                    <!-- else-->
+                    	运行        
+                    <!--end-->         
+                            </td> 
+                        </tr>
+                        <tr>
+                        	<td  align="right">报告:</td><td colspan="3"  align="center">
+                        <!-- if(checkAuthorized(privSet,"模块1.其他.获取报告",row.task_m1status == 1,checkFileIsUpload([row.m1_1file,row.m1_2file,row.m1_3file])))-->
+                            <!--if(row.m1_status ==9)-->  
+                            <a href="javascript:;" _open_msg="报表"  _open_url="report.do?task_id=${row.task_id}&module=m1" class="btn btn-primary btn-outline btn-xs">查看报表</a>
+                            <!--else  -->
+                          	----
+                           <!--end-->
+                        <!-- else-->
+                        ==
+                        <!--end-->
+                            </td>
+                        </tr>
+                    </table>
+                    </td>
+                    <td align="center" valign="top">
+                    <table class="table ">
+                    	<th>
+                        	<td colspan="4">模块2</td>
+                        </th>
+                    	<tr>
+                        	<td align="right">财务部:</td>
+                            <td width="50"><a href="javascript:;" _open_msg="详情"  _open_url="upload.do?module=m2_1file&task_id=${row.task_id}&type=1" class="btn btn-primary btn-outline btn-xs">上传</a></td>
+                            <td width="50"><a href="javascript:;" _open_msg="详情"  _open_url="upload.do?task_id=${row.task_id}&module=m2_1file&type=2" class="btn btn-primary btn-outline btn-xs">选择</a></td>
+                            <td width="50"><!--if(row.m2_1file)--><a href="${row.m2_1file}" class="btn btn-primary btn-outline btn-xs"  id="export_btn">查看<!--else-->查看<!--end--></a></td>
+                       </tr>
+                       <tr>     
+                            <td align="right">精算部:</td>
+                            
+                            <td width="50"><a href="javascript:;" _open_msg="详情"  _open_url="upload.do?task_id=${row.task_id}&module=m2_2file&type=1" class="btn btn-primary btn-outline btn-xs">上传</a></td>
+                            <td width="50"><a href="javascript:;" _open_msg="详情"  _open_url="upload.do?task_id=${row.task_id}&module=m2_2file&type=2" class="btn btn-primary btn-outline btn-xs">选择</a></td>
+                            <td width="50"><!--if(row.m2_2file)--><a href="${row.m2_2file}" class="btn btn-primary btn-outline btn-xs"  id="export_btn">查看</a><!--else-->查看<!--end--></td>
+                       </tr>
+                       <tr>     
+                            <td align="right">投资部:</td>
+                            
+                            <td width="50"><a href="javascript:;" _open_msg="详情"  _open_url="upload.do?task_id=${row.task_id}&module=m2_3file&type=1" class="btn btn-primary btn-outline btn-xs">上传</a></td>
+                            <td width="50"><a href="javascript:;" _open_msg="详情"  _open_url="upload.do?task_id=${row.task_id}&module=m2_3file&type=2" class="btn btn-primary btn-outline btn-xs">选择</a></td>
+                            <td width="50"><!--if(row.m2_3file)--><a href="${row.m2_3file}" class="btn btn-primary btn-outline btn-xs"  id="export_btn">查看</a><!--else-->查看<!--end--></td>
+                       </tr>
+                       <tr>     
+                            <td> </td><td>运行</td><td>报告</td>
+                        </tr>
+                    </table>
+                     </td>
+                   <td align="center" valign="top">
+                     <table class="table ">
+                    	<th>
+                        	<td colspan="4">模块3</td>
+                        </th>
+                    	 
+                       <tr>     
+                            <td align="right">投资部:</td>
+                            
+                            <td width="50"><a href="javascript:;" _open_msg="详情"  _open_url="upload.do?task_id=${row.task_id}&module=m3_3file&type=1" class="btn btn-primary btn-outline btn-xs">上传</a></td>
+                            <td width="50"><a href="javascript:;" _open_msg="详情"  _open_url="upload.do?task_id=${row.task_id}&module=m3_3file&type=2" class="btn btn-primary btn-outline btn-xs">选择</a></td>
+                            <td width="50"><!--if(row.m3_3file)--><a href="${row.m3_3file}" class="btn btn-primary btn-outline btn-xs"  id="export_btn">查看</a><!--else-->查看<!--end--></td>
+                       </tr>
+                       <tr>     
+                            <td> </td><td>运行</td><td>报告</td>
+                        </tr>
+                    </table>
+                     </td>
+                    <td align="center" valign="top">
+                    <table class="table ">
+                    	<th>
+                        	<td colspan="4">模块5</td>
+                        </th>
+                    	 
+                       <tr>     
+                            <td align="right">风险投资部:</td>
+                            
+                            <td width="50"><a href="javascript:;" _open_msg="详情"  _open_url="m5_input.do?task_id=${row.task_id}&task_name=${row.task_name}" class="btn btn-primary btn-outline btn-xs">填写</a></td>
+                            <td width="50"></td>
+                            <td width="50"><a href="javascript:;" _open_msg="详情"  _open_url="m5_input.do?task_id=${row.task_id}&task_name=${row.task_name}&m5_param1=${row.m5_param1}&m5_param2=${row.m5_param2}" class="btn btn-primary btn-outline btn-xs">查看</a></td>
+                       </tr>
+                       <tr>     
+                            <td> </td><td>运行</td><td>报告</td>
+                        </tr>
+                    </table>
+                    </td>
+                   <!--else-->
+                   <td align="left" valign="top">
+                    <table class="table " style="width:25%">
+                    	<th>
+                        	<td colspan="4">模块4</td>
+                        </th>
+                    	 
+                       <tr>
+                        	<td align="right">财务部:</td>
+                            <td width="50"><a href="javascript:;" _open_msg="详情"  _open_url="upload.do?task_id=${row.task_id}&module=m4_1file&type=1" class="btn btn-primary btn-outline btn-xs">上传</a></td>
+                            <td width="50"><a href="javascript:;" _open_msg="详情"  _open_url="upload.do?task_id=${row.task_id}&module=m4_1file&type=2" class="btn btn-primary btn-outline btn-xs">选择</a></td>
+                            <td width="50"><!--if(row.m4_1file)--><a href="${row.m4_1file}" class="btn btn-primary btn-outline btn-xs"  id="export_btn">查看<!--else-->查看<!--end--></a></td>
+                       </tr>
+                       <tr>     
+                            <td align="right">精算部:</td>
+                            
+                            <td width="50"><a href="javascript:;" _open_msg="详情"  _open_url="upload.do?task_id=${row.task_id}&module=m4_2file&type=1" class="btn btn-primary btn-outline btn-xs">上传</a></td>
+                            <td width="50"><a href="javascript:;" _open_msg="详情"  _open_url="upload.do?task_id=${row.task_id}&module=m4_2file&type=2" class="btn btn-primary btn-outline btn-xs">选择</a></td>
+                            <td width="50"><!--if(row.m4_2file)--><a href="${row.m4_2file}" class="btn btn-primary btn-outline btn-xs"  id="export_btn">查看</a><!--else-->查看<!--end--></td>
+                       </tr>
+                       <tr>     
+                            <td> </td><td>运行</td><td>报告</td>
+                        </tr>
+                    </table>
+                    </td>
+                   <!-- end -->
+                   
+                   </tr>
+                  </table>
+                </td>
+              </tr>
+            
+              <!-- end -->
+            </tbody>
+          </table>
+        </div>
+        <div class="row"> ${pageStr} </div>
+      </div>
+    </div>
+  </div>
+</div>
+<iframe name="export_ifm" id="export_ifm" style="display:none;"></iframe>
+<!-- Data Tables --> 
+<script src="/resources/js/plugins/layer/laydate/laydate.js"></script> 
+<script>
+function updateResult(json){
+	 
+	window.parent.my_alert("操作成功",function(){
+		window.top.location.href = window.top.location.href; 
+	});
+}
+
+$(document).ready(function(){
+	
+    
+  
+});
+function exportuser(id,name){
+	$("#export_ifm").attr("src","/yhyy/task/export.do?id="+id+"&name="+name);
+}
+
+function update_status(a, data){
+        //alert('==data.message'+data.message);
+	    layer.alert(data.message,1 ,function (index){
+		layer.close(index);
+		parent.page_reload();
+	});		
+}
+</script>
+<!--#include file="/common/footer.html" -->
